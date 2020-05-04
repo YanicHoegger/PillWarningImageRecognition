@@ -20,7 +20,7 @@ namespace DrugCheckingCrawler
         {
             var resourceDownloader = new ResourceDownloader();
 
-            foreach(var (downloadTask, address) in resourceDownloader.GetPdfs())
+            foreach (var (downloadTask, address) in resourceDownloader.GetPdfs())
             {
                 await CreateResource(downloadTask, address);
             }

@@ -2,7 +2,6 @@
 using iText.Kernel.Pdf.Canvas.Parser;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -49,7 +48,7 @@ namespace DrugCheckingCrawler
         {
             var match = Regex.Match(input, RegexPattern, RegexOptions.Singleline);
 
-            if(!match.Success)
+            if (!match.Success)
             {
                 return (false, string.Empty, Enumerable.Empty<string>(), DateTime.MinValue);
             }

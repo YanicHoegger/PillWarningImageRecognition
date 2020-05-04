@@ -10,7 +10,7 @@ namespace DrugCheckingCrawler
 
         public IEnumerable<(Task<byte[]> downloadTask, string address)> GetPdfs()
         {
-            for(var i = 1; i <= MaxNumber; i++)
+            for (var i = 1; i <= MaxNumber; i++)
             {
                 var address = @$"https://de.drugchecking.ch/pdf.php?p={i}";
                 using var client = new WebClient();
