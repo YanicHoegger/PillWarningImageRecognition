@@ -15,11 +15,21 @@ namespace DrugCheckingCrawler
         private const string Name = "name";
         private const string Colors = "colors";
         private const string Date = "date";
-        private static readonly string RegexPattern = @$"(?<{Date}>(\w+ [0-9]+)).*Name (?<{Name}>[\w \.]+).*Farbe (?<{Colors}>[\w, ]+).*";
+        private static readonly string RegexPattern = @$"\n(?<{Date}>(\w+ [0-9]+))\nName (?<{Name}>[\w \.]+).*Farbe (?<{Colors}>[\w, ]+).*";
 
         public ParserResult ParseFile(byte[] fileContent)
         {
-            var document = new PdfDocument(new PdfReader(new MemoryStream(fileContent)));
+            PdfDocument document;
+            try
+            {
+                document = new PdfDocument(new PdfReader(new MemoryStream(fileContent)));
+            }
+            catch (iText.IO.IOException)
+            {
+                Console.WriteLine("Content is not a valid pdf");
+                return null;
+            }
+
             var firstPage = document.GetPage(1);
 
             var text = ExtractText(firstPage);
@@ -28,7 +38,11 @@ namespace DrugCheckingCrawler
             if (!match)
                 return null;
 
-            return new ParserResult(name, colors, creation, ExtractImages(firstPage));
+            var image = ExtractImages(firstPage);
+            if (image == null)
+                return null;
+
+            return new ParserResult(name, colors, creation, image);
         }
 
         private static (bool match, string name, IEnumerable<string> colors, DateTime creation) ParseText(string input)
@@ -57,10 +71,13 @@ namespace DrugCheckingCrawler
             var pdfCanvasProcessor = new PdfCanvasProcessor(imageExtractor);
             pdfCanvasProcessor.ProcessPageContent(pdfPage);
 
-            //TODO: Remove when run through once
-            Debug.Assert(imageExtractor.Result.Count() == 1);
+            if (imageExtractor.Result.Count() == 1)
+            {
+                return imageExtractor.Result.First();
+            }
 
-            return imageExtractor.Result.First();
+            Console.WriteLine($"File does not contain an image");
+            return null;
         }
     }
 }

@@ -13,7 +13,9 @@ namespace DrugCheckingCrawler.UnitTests
         {
             new TestCaseData("Delfin.pdf", "Delfin", new string[] { "grün", "gelb" }, DateTime.Parse("August 2012", CultureInfo.GetCultureInfo("de-CH"))),
             new TestCaseData("Kreuz.pdf", "Kreuz", new string[] { "braun" }, DateTime.Parse("Mai 2012", CultureInfo.GetCultureInfo("de-CH"))),
-            new TestCaseData("No1.pdf", "No. 1", new string[] { "grün" }, DateTime.Parse("Juni 2012", CultureInfo.GetCultureInfo("de-CH")))
+            new TestCaseData("No1.pdf", "No. 1", new string[] { "grün" }, DateTime.Parse("Juni 2012", CultureInfo.GetCultureInfo("de-CH"))),
+            new TestCaseData("Smiley.pdf", "Smiley", new string[] { "blau" }, DateTime.Parse("September 2015", CultureInfo.GetCultureInfo("de-CH"))),
+            new TestCaseData("NoName.pdf", "no name", new string[] { "blau" }, DateTime.Parse("Juli 2019", CultureInfo.GetCultureInfo("de-CH")))
         };
 
         [TestCaseSource(nameof(ParserInfoTestCaseData))]

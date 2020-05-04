@@ -9,6 +9,8 @@
     <None Remove="TestFiles\Empty.pdf" />
     <None Remove="TestFiles\Kreuz.pdf" />
     <None Remove="TestFiles\No1.pdf" />
+    <None Remove="TestFiles\NoName.pdf" />
+    <None Remove="TestFiles\Smiley.pdf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +24,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestFiles\No1.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\NoName.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\Smiley.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
