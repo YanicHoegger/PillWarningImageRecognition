@@ -1,4 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace DrugCheckingCrawler
 {
@@ -6,18 +10,12 @@ namespace DrugCheckingCrawler
     {
         internal static void Main()
         {
+            var parser = new Parser();
+            var parserResult = parser.ParseFile(File.ReadAllBytes(@"C:\Users\Yanic\Desktop\Temp\doc.pdf"));
 
-            var collector = new PdfCollector();
-
-            var index = 1;
-            var writer = new PdfFileWriter(@"C:\Users\Yanic\Desktop\Temp");
-            foreach(var file in collector.GetPdfs())
-            {
-                writer.WriteFile(index++.ToString(), file);
-            }
-
-            Console.WriteLine("Hello World!");
-
+            var memoryStream = new MemoryStream(parserResult.Image.First());
+            var image = Image.FromStream(memoryStream);
+            image.Save(@"C:\Users\Yanic\Desktop\Temp\74.jpg", ImageFormat.Jpeg);
         }
     }
 }
