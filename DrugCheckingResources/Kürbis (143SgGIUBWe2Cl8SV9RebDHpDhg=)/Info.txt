@@ -1,0 +1,1 @@
+{"Name":"K\u00FCrbis","Colors":["hellblau"],"Tested":"2015-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=433","Id":"143SgGIUBWe2Cl8SV9RebDHpDhg="}

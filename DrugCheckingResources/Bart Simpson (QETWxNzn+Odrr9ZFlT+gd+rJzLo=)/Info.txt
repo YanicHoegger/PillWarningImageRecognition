@@ -1,0 +1,1 @@
+{"Name":"Bart Simpson","Colors":["gr\u00FCn"],"Tested":"2013-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=219","Id":"QETWxNzn\u002BOdrr9ZFlT\u002Bgd\u002BrJzLo="}

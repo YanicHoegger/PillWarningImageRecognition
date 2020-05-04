@@ -1,0 +1,1 @@
+{"Name":"Stern","Colors":["violett"],"Tested":"2016-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=744","Id":"aDeNtBj5uE42w3Q0\u002BhFVEVRiB48="}

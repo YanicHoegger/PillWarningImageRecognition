@@ -1,0 +1,1 @@
+{"Name":"Ananas","Colors":["orange"],"Tested":"2017-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=777","Id":"oN9nJdJigA4kOjWZTCZhftEupdY="}

@@ -1,0 +1,1 @@
+{"Name":"Auge des Pharao","Colors":["rot"],"Tested":"2014-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=234","Id":"MXHOMT8k7aqQip5idAZkeGYZ\u002B5Q="}

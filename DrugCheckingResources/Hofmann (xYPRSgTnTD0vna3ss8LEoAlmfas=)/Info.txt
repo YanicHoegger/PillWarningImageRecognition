@@ -1,0 +1,1 @@
+{"Name":"Hofmann","Colors":["schwarz","blau","gelb"],"Tested":"2019-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1569","Id":"xYPRSgTnTD0vna3ss8LEoAlmfas="}

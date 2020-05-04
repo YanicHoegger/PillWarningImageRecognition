@@ -1,0 +1,1 @@
+{"Name":"Champagner ","Colors":["beige"],"Tested":"2019-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1486","Id":"Qc\u002B1LmQesFuAQ9sBIzORLeXX\u002BU0="}

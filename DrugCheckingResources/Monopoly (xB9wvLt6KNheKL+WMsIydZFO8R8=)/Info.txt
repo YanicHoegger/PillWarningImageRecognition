@@ -1,0 +1,1 @@
+{"Name":"Monopoly","Colors":["weiss","schwarz"],"Tested":"2019-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1294","Id":"xB9wvLt6KNheKL\u002BWMsIydZFO8R8="}

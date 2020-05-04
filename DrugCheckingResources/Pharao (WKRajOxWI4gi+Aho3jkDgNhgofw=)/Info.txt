@@ -1,0 +1,1 @@
+{"Name":"Pharao","Colors":["hellgr\u00FCn","gelb"],"Tested":"2018-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1183","Id":"WKRajOxWI4gi\u002BAho3jkDgNhgofw="}

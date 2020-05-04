@@ -1,0 +1,1 @@
+{"Name":"Sunshine","Colors":["rosa","gelb"],"Tested":"2015-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=532","Id":"Hf6p3F6jaQ3v7Hs3xikcM9\u002BCjxU="}

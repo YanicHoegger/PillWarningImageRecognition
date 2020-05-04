@@ -1,0 +1,1 @@
+{"Name":"Violettes Dreieck","Colors":["violett"],"Tested":"2013-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=213","Id":"4vyZR9JRBGVD8tLVtU2EjW0rQ9c="}

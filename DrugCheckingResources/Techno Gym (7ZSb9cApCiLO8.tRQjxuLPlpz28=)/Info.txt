@@ -1,0 +1,1 @@
+{"Name":"Techno Gym","Colors":["weiss","gelb"],"Tested":"2019-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1448","Id":"7ZSb9cApCiLO8.tRQjxuLPlpz28="}

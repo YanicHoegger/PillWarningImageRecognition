@@ -1,0 +1,1 @@
+{"Name":"Burger King ","Colors":["rot"],"Tested":"2014-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=356","Id":"KwZWumXAR3YC3uGXP41HqaeK2Vw="}

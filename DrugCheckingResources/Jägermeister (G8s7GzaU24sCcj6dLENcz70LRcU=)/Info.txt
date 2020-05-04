@@ -1,0 +1,1 @@
+{"Name":"J\u00E4germeister","Colors":["rosa"],"Tested":"2019-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1583","Id":"G8s7GzaU24sCcj6dLENcz70LRcU="}

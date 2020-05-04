@@ -1,0 +1,1 @@
+{"Name":"Handgranate","Colors":["rot"],"Tested":"2019-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1399","Id":"o\u002BRdV5s4bpMm9m4Z8J2qt2xPfC4="}

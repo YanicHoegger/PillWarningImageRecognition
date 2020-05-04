@@ -1,0 +1,1 @@
+{"Name":"Superman","Colors":["gelb"],"Tested":"2014-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=251","Id":"wR7Nn\u002B2dpFXWWfBQrNR6bDdGZh0="}

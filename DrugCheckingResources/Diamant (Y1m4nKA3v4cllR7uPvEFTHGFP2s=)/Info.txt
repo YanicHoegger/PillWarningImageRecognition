@@ -1,0 +1,1 @@
+{"Name":"Diamant","Colors":["gelb"],"Tested":"2018-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1224","Id":"Y1m4nKA3v4cllR7uPvEFTHGFP2s="}

@@ -1,0 +1,1 @@
+{"Name":"no name","Colors":["gr\u00FCn"],"Tested":"2017-06-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=861","Id":"7SnyjF2Zob3QQsGz1quwcvRASSs="}

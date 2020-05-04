@@ -1,0 +1,1 @@
+{"Name":"Hello Kitty","Colors":["hellblau"],"Tested":"2015-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=434","Id":"NVxgK5YuF65p5EsjUvxx25YSMrU="}

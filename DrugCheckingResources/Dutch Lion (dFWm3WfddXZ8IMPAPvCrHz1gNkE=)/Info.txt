@@ -1,0 +1,1 @@
+{"Name":"Dutch Lion","Colors":["rot"],"Tested":"2016-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=565","Id":"dFWm3WfddXZ8IMPAPvCrHz1gNkE="}

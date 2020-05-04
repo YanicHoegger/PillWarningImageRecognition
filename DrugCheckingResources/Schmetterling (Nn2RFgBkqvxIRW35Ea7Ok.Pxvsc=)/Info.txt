@@ -1,0 +1,1 @@
+{"Name":"Schmetterling","Colors":["gelb"],"Tested":"2013-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=175","Id":"Nn2RFgBkqvxIRW35Ea7Ok.Pxvsc="}

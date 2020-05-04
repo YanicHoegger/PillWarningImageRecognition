@@ -1,0 +1,1 @@
+{"Name":"Magenta Dreieck","Colors":["rot"],"Tested":"2013-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=212","Id":"e2R8y1fNxR30f7XcRYpx7Ufi4\u002B4="}

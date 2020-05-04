@@ -1,0 +1,1 @@
+{"Name":"My Brand ","Colors":["grau","silber"],"Tested":"2019-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1311","Id":"faZBB8ePZuF2LLIMLXiOT2mB6UQ="}

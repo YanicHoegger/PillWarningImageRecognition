@@ -1,0 +1,1 @@
+{"Name":"Smiley","Colors":["hellgr\u00FCn"],"Tested":"2017-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=914","Id":"039HckQpo43MmJ1gGYfYC01hPT8="}

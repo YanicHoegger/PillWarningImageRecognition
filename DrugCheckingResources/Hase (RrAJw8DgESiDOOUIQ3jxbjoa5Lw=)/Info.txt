@@ -1,0 +1,1 @@
+{"Name":"Hase","Colors":["rot"],"Tested":"2018-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1081","Id":"RrAJw8DgESiDOOUIQ3jxbjoa5Lw="}

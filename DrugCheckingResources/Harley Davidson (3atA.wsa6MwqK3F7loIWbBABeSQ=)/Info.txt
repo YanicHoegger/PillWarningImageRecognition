@@ -1,0 +1,1 @@
+{"Name":"Harley Davidson","Colors":["schwarz"],"Tested":"2016-06-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=620","Id":"3atA.wsa6MwqK3F7loIWbBABeSQ="}

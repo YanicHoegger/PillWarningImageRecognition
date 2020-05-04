@@ -1,0 +1,1 @@
+{"Name":"Vendetta","Colors":["rosa"],"Tested":"2016-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=753","Id":"52qfA0gPh4x3mUyjhmS53Na7QaY="}

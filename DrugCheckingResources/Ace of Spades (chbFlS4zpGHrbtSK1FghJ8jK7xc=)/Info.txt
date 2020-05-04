@@ -1,0 +1,1 @@
+{"Name":"Ace of Spades","Colors":["gelb","gold"],"Tested":"2017-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=893","Id":"chbFlS4zpGHrbtSK1FghJ8jK7xc="}

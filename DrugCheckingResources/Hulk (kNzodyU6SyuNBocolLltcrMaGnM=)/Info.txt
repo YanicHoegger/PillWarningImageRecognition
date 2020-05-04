@@ -1,0 +1,1 @@
+{"Name":"Hulk","Colors":["gr\u00FCn"],"Tested":"2017-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=895","Id":"kNzodyU6SyuNBocolLltcrMaGnM="}

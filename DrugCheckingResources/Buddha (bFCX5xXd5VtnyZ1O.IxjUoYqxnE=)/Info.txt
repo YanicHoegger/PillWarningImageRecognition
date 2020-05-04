@@ -1,0 +1,1 @@
+{"Name":"Buddha","Colors":["beige"],"Tested":"2016-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=611","Id":"bFCX5xXd5VtnyZ1O.IxjUoYqxnE="}

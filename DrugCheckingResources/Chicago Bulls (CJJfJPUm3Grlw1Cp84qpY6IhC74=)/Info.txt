@@ -1,0 +1,1 @@
+{"Name":"Chicago Bulls","Colors":["violett"],"Tested":"2017-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=887","Id":"CJJfJPUm3Grlw1Cp84qpY6IhC74="}

@@ -1,0 +1,1 @@
+{"Name":"Herz","Colors":["orange"],"Tested":"2019-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1556","Id":"fvD3jGmz1DTZfxpt8O7nRZBsJvs="}

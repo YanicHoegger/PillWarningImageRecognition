@@ -1,0 +1,1 @@
+{"Name":"R\u00F6ssli","Colors":["gelb"],"Tested":"2012-06-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=49","Id":"aJGGbh5mqzjz2cHqnNlatGZ4Dgk="}

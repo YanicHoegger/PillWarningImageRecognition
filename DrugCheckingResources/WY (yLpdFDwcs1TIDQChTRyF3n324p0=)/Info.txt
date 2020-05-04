@@ -1,0 +1,1 @@
+{"Name":"WY","Colors":["rot"],"Tested":"2014-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=236","Id":"yLpdFDwcs1TIDQChTRyF3n324p0="}

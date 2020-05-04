@@ -1,0 +1,1 @@
+{"Name":"Emoji Kothaufen","Colors":["hellblau"],"Tested":"2019-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1652","Id":"a3VFM\u002B6QevPjazVXDtrLL8xstNc="}

@@ -1,0 +1,1 @@
+{"Name":"Bert","Colors":["gelb"],"Tested":"2018-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1197","Id":"jmBukoxuUKp220oKHpEQUVhf0b0="}

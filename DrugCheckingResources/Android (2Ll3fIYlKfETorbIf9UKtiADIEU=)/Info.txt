@@ -1,0 +1,1 @@
+{"Name":"Android","Colors":["gr\u00FCn"],"Tested":"2014-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=226","Id":"2Ll3fIYlKfETorbIf9UKtiADIEU="}

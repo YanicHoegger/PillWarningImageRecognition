@@ -1,0 +1,1 @@
+{"Name":"My Brand ","Colors":["gold"],"Tested":"2020-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1671","Id":"YOGa6lfOHFlG9qiVPoBvX7aojYw="}

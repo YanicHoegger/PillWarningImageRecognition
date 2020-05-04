@@ -1,0 +1,1 @@
+{"Name":"Mandala","Colors":["blau"],"Tested":"2016-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=647","Id":"OHCIq35W6wxRWOzA0meS08MfJ3g="}
