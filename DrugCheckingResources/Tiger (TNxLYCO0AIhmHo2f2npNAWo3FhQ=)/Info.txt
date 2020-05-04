@@ -1,0 +1,1 @@
+{"Name":"Tiger","Colors":["orange"],"Tested":"2019-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1323","Id":"TNxLYCO0AIhmHo2f2npNAWo3FhQ="}

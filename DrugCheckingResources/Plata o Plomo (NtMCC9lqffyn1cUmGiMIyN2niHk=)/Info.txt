@@ -1,0 +1,1 @@
+{"Name":"Plata o Plomo","Colors":["silber"],"Tested":"2019-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1366","Id":"NtMCC9lqffyn1cUmGiMIyN2niHk="}

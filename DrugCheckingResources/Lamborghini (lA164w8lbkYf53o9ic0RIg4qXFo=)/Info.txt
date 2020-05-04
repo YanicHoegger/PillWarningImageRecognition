@@ -1,0 +1,1 @@
+{"Name":"Lamborghini","Colors":["blau"],"Tested":"2016-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=681","Id":"lA164w8lbkYf53o9ic0RIg4qXFo="}

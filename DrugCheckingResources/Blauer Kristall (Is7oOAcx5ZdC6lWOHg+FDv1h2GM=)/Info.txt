@@ -1,0 +1,1 @@
+{"Name":"Blauer Kristall","Colors":["blau"],"Tested":"2015-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=466","Id":"Is7oOAcx5ZdC6lWOHg\u002BFDv1h2GM="}

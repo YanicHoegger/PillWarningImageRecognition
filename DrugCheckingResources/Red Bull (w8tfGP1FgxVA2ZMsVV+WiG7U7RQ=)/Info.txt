@@ -1,0 +1,1 @@
+{"Name":"Red Bull","Colors":["violett"],"Tested":"2020-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1753","Id":"w8tfGP1FgxVA2ZMsVV\u002BWiG7U7RQ="}

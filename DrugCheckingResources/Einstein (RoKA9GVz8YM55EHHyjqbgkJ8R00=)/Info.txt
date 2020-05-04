@@ -1,0 +1,1 @@
+{"Name":"Einstein","Colors":["weiss","schwarz"],"Tested":"2017-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=989","Id":"RoKA9GVz8YM55EHHyjqbgkJ8R00="}

@@ -1,0 +1,1 @@
+{"Name":"Tulpe","Colors":["gelb"],"Tested":"2016-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=692","Id":"bmP4cPCl7QAMfrt2cAeucE\u002BHWzw="}

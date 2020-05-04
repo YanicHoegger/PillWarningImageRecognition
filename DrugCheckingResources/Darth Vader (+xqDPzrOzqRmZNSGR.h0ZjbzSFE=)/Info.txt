@@ -1,0 +1,1 @@
+{"Name":"Darth Vader","Colors":["weinrot"],"Tested":"2019-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1330","Id":"\u002BxqDPzrOzqRmZNSGR.h0ZjbzSFE="}

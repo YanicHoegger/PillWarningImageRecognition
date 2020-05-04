@@ -1,0 +1,1 @@
+{"Name":"Beatles","Colors":["orange","blau","gelb"],"Tested":"2014-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=261","Id":"ynazFtotCt8JlBlYpCBvEa.CKGI="}

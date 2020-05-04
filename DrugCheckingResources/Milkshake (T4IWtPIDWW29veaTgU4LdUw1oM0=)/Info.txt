@@ -1,0 +1,1 @@
+{"Name":"Milkshake","Colors":["violett"],"Tested":"2015-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=383","Id":"T4IWtPIDWW29veaTgU4LdUw1oM0="}

@@ -1,0 +1,1 @@
+{"Name":"Spongebob","Colors":["gelb"],"Tested":"2016-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=560","Id":"V7WovCvTJMN9830YW8Ydx\u002BDym8o="}

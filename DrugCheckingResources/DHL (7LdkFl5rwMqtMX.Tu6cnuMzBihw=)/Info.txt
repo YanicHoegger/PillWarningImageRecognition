@@ -1,0 +1,1 @@
+{"Name":"DHL","Colors":["rosa"],"Tested":"2020-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1667","Id":"7LdkFl5rwMqtMX.Tu6cnuMzBihw="}

@@ -1,0 +1,1 @@
+{"Name":"Angry Bird","Colors":["gelb"],"Tested":"2019-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1333","Id":"BdLymLRKu31A0QX9tpj1toFrOmQ="}

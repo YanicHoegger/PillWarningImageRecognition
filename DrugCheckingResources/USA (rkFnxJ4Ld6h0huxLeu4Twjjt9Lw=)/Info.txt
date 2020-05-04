@@ -1,0 +1,1 @@
+{"Name":"USA","Colors":["gelb"],"Tested":"2018-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1188","Id":"rkFnxJ4Ld6h0huxLeu4Twjjt9Lw="}

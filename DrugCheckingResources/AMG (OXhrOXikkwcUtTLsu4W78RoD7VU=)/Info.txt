@@ -1,0 +1,1 @@
+{"Name":"AMG","Colors":["silber"],"Tested":"2018-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1100","Id":"OXhrOXikkwcUtTLsu4W78RoD7VU="}

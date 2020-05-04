@@ -1,0 +1,1 @@
+{"Name":"Ahorn","Colors":["gelb"],"Tested":"2019-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1297","Id":"5En8EkvyNDQKgTXLjq9OXLiZOD8="}

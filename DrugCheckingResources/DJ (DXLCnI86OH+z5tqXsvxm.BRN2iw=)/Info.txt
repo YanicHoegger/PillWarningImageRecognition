@@ -1,0 +1,1 @@
+{"Name":"DJ","Colors":["rosa"],"Tested":"2019-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1593","Id":"DXLCnI86OH\u002Bz5tqXsvxm.BRN2iw="}

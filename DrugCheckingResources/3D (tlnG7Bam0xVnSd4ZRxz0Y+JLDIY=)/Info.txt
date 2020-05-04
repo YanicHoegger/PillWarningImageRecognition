@@ -1,0 +1,1 @@
+{"Name":"3D","Colors":["etc"],"Tested":"2018-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1048","Id":"tlnG7Bam0xVnSd4ZRxz0Y\u002BJLDIY="}

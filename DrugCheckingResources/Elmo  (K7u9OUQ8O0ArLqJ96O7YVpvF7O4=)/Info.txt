@@ -1,0 +1,1 @@
+{"Name":"Elmo ","Colors":["grau","rot"],"Tested":"2018-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1061","Id":"K7u9OUQ8O0ArLqJ96O7YVpvF7O4="}

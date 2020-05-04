@@ -1,0 +1,1 @@
+{"Name":"Chupa Chups","Colors":["rosa"],"Tested":"2018-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1184","Id":"zFdWxwXw5qQSgfhhtrf2DzSlHqk="}

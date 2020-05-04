@@ -1,0 +1,1 @@
+{"Name":"Gold","Colors":["gelb"],"Tested":"2015-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=489","Id":"ryeRP9Fp.oLW7b7TyrZk5zAdX0U="}

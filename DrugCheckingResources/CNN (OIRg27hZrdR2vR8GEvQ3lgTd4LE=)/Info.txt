@@ -1,0 +1,1 @@
+{"Name":"CNN","Colors":["grau","silber"],"Tested":"2019-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1559","Id":"OIRg27hZrdR2vR8GEvQ3lgTd4LE="}

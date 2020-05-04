@@ -1,0 +1,1 @@
+{"Name":"Route 66","Colors":["hellgr\u00FCn"],"Tested":"2015-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=393","Id":"DTGceF1tZhRSYRKKjUx5lGx6cw4="}

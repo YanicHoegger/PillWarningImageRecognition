@@ -1,0 +1,1 @@
+{"Name":"L\u00F6wenwappen","Colors":["gelb"],"Tested":"2016-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=690","Id":"9a3p\u002B5NOtLpPYgKFztJkqbK3k6g="}

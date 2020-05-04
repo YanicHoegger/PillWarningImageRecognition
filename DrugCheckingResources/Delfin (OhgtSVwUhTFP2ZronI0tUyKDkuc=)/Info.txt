@@ -1,0 +1,1 @@
+{"Name":"Delfin","Colors":["weiss"],"Tested":"2015-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=524","Id":"OhgtSVwUhTFP2ZronI0tUyKDkuc="}

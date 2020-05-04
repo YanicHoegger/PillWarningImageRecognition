@@ -1,0 +1,1 @@
+{"Name":"Vogel","Colors":["rosa"],"Tested":"2020-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1716","Id":"oe4mlS4iYzes7dAzXc34FIZdrL0="}

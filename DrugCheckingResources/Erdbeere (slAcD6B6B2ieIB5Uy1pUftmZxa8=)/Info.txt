@@ -1,0 +1,1 @@
+{"Name":"Erdbeere","Colors":["rosa"],"Tested":"2018-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1243","Id":"slAcD6B6B2ieIB5Uy1pUftmZxa8="}

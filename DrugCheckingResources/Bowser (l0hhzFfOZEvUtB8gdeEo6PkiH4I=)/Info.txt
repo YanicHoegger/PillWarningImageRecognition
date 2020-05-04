@@ -1,0 +1,1 @@
+{"Name":"Bowser","Colors":["beige"],"Tested":"2019-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1329","Id":"l0hhzFfOZEvUtB8gdeEo6PkiH4I="}

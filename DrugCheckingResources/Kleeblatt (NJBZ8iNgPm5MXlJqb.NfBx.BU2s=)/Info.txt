@@ -1,0 +1,1 @@
+{"Name":"Kleeblatt","Colors":["gelb"],"Tested":"2015-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=364","Id":"NJBZ8iNgPm5MXlJqb.NfBx.BU2s="}

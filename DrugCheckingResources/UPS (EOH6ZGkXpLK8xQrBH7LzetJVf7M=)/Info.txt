@@ -1,0 +1,1 @@
+{"Name":"UPS","Colors":["rot"],"Tested":"2015-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=442","Id":"EOH6ZGkXpLK8xQrBH7LzetJVf7M="}

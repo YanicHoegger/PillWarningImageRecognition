@@ -1,0 +1,1 @@
+{"Name":"Warner Brothers","Colors":["violett","hellgr\u00FCn"],"Tested":"2019-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1453","Id":"EhCIDoO2f3rXD1hPk8Jfts8rBP4="}

@@ -1,0 +1,1 @@
+{"Name":"Philipp Plein","Colors":["grau"],"Tested":"2019-06-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1410","Id":"0vpjKCYWmGR4wASN4R6ArrWeBpg="}

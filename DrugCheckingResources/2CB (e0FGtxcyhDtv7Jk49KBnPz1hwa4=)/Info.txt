@@ -1,0 +1,1 @@
+{"Name":"2CB","Colors":["rosa"],"Tested":"2019-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1304","Id":"e0FGtxcyhDtv7Jk49KBnPz1hwa4="}

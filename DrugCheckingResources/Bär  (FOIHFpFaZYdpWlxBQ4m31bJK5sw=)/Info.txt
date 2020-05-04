@@ -1,0 +1,1 @@
+{"Name":"B\u00E4r ","Colors":["rot"],"Tested":"2016-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=566","Id":"FOIHFpFaZYdpWlxBQ4m31bJK5sw="}

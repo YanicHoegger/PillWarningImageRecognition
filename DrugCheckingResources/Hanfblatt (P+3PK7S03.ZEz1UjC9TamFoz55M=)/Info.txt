@@ -1,0 +1,1 @@
+{"Name":"Hanfblatt","Colors":["hellgr\u00FCn"],"Tested":"2017-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=867","Id":"P\u002B3PK7S03.ZEz1UjC9TamFoz55M="}
