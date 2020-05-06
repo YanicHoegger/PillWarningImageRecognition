@@ -5,6 +5,10 @@ namespace DrugCheckingCrawler.ContentWriter
 {
     public class InfoFileContent
     {
+        public InfoFileContent()
+        {
+        }
+
         public InfoFileContent(ParserResult parserResult, string webUrl, string id)
         {
             WebUrl = webUrl;
@@ -14,10 +18,10 @@ namespace DrugCheckingCrawler.ContentWriter
             Tested = parserResult.Tested;
         }
 
-        public string Name { get; }
-        public IEnumerable<string> Colors { get; }
-        public DateTime Tested { get; }
-        public string WebUrl { get; }
-        public string Id { get; }
+        public string Name { get; set; }
+        public IEnumerable<string> Colors { get; set; }
+        public DateTime Tested { get; set; }
+        public string WebUrl { get; set; }
+        public string Id { get; set; }
     }
 }
