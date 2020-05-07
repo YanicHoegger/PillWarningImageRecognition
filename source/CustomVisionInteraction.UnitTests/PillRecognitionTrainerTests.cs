@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using CustomVisionInteraction.Training;
+using FluentAssertions;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,17 +55,17 @@ namespace CustomVisionInteraction.UnitTests
             {
                 DownloadingImages = new List<byte[]>
                 {
-                    ReadImage("Skulls1.jpg"),
-                    ReadImage("Skulls2.jpg"),
-                    ReadImage("Skulls3.jpg"),
-                    ReadImage("Skulls4.jpg"),
-                    ReadImage("Skulls5.jpg")
+                    TestHelper.ReadImage("Skulls1.jpg"),
+                    TestHelper.ReadImage("Skulls2.jpg"),
+                    TestHelper.ReadImage("Skulls3.jpg"),
+                    TestHelper.ReadImage("Skulls4.jpg"),
+                    TestHelper.ReadImage("Skulls5.jpg")
                 }
             };
 
             _inputData = new List<(byte[] image, string tag)>
             {
-                (ReadImage("Skulls1.jpg"), "Skull")
+                (TestHelper.ReadImage("Skulls1.jpg"), "Skull")
             };
         }
 
@@ -83,8 +83,8 @@ namespace CustomVisionInteraction.UnitTests
 
             _inputData = new List<(byte[] image, string tag)>
             {
-                (ReadImage("Skulls1.jpg"), TagName),
-                (ReadImage("Skulls1.jpg"), TagName)
+                (TestHelper.ReadImage("Skulls1.jpg"), TagName),
+                (TestHelper.ReadImage("Skulls1.jpg"), TagName)
             };
         }
 
@@ -110,11 +110,11 @@ namespace CustomVisionInteraction.UnitTests
 
             _inputData = new List<(byte[] image, string tag)>
             {
-                (ReadImage("Skulls1.jpg"), "Skull"),
-                (ReadImage("Skulls2.jpg"), "Skull"),
-                (ReadImage("Skulls3.jpg"), "Skull"),
-                (ReadImage("Skulls4.jpg"), "Skull"),
-                (ReadImage("Skulls5.jpg"), "Skull"),
+                (TestHelper.ReadImage("Skulls1.jpg"), "Skull"),
+                (TestHelper.ReadImage("Skulls2.jpg"), "Skull"),
+                (TestHelper.ReadImage("Skulls3.jpg"), "Skull"),
+                (TestHelper.ReadImage("Skulls4.jpg"), "Skull"),
+                (TestHelper.ReadImage("Skulls5.jpg"), "Skull"),
             };
         }
 
@@ -136,11 +136,6 @@ namespace CustomVisionInteraction.UnitTests
         private void ThenFiveImagesImported()
         {
             _trainerCommunicatorMock.AddedImage.Count().Should().Be(5);
-        }
-
-        private static byte[] ReadImage(string fileName)
-        {
-            return ImageHelper.ReadImage(Path.Combine(TestContext.CurrentContext.WorkDirectory, "TestFiles", fileName));
         }
     }
 }

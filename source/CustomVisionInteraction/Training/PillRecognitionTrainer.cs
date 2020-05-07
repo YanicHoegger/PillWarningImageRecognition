@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Utilities;
 
-namespace CustomVisionInteraction
+namespace CustomVisionInteraction.Training
 {
     public class PillRecognitionTrainer
     {
