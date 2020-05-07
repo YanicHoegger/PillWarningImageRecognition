@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace CustomVisionInteraction.Prediction
@@ -23,11 +24,17 @@ namespace CustomVisionInteraction.Prediction
                 return PredictionResult.GetNoSuccess();
 
             var (hasDetection, boundingBox) = await _pillDetection.GetBestDetection(image);
-            if(!hasDetection)
-                return PredictionResult.GetNoSuccess();
 
-            var croppedImage = new CroppingService().CropImage(image, boundingBox);
-            var color = await _colorAnalyzer.GetColor(croppedImage);
+            Color color;
+            if(hasDetection)
+            {
+                var croppedImage = new CroppingService().CropImage(image, boundingBox);
+                color = await _colorAnalyzer.GetColor(croppedImage);
+            }
+            else
+            {
+                color = await _colorAnalyzer.GetColor(image);
+            }
 
             return PredictionResult.FromSuccess(tags, color);
         }
