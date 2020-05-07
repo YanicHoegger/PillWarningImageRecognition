@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace CustomVisionInteraction
+namespace Utilities
 {
-    //TODO: create heler or utilities assembly and move it there
     public class ByteArrayComparer : IEqualityComparer<byte[]>
     {
         public bool Equals([AllowNull] byte[] a, [AllowNull] byte[] b)

@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
+﻿using CustomVisionInteraction.Training;
+using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

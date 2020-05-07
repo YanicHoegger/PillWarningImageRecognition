@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace CustomVisionInteraction
+namespace CustomVisionInteraction.Training
 {
     public class TrainerCommunicator : ITrainerCommunicator
     {
