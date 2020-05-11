@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Utilities
 {
-    public static class ImageHelper
+    public static class ImageFileHelper
     {
         public static Stream ReadImage(string path)
         {

@@ -9,6 +9,7 @@ namespace CustomVisionInteraction.Prediction
     public class ColorAnalyzer
     {
         private readonly IComputerVisionCommunication _computerVisionCommunication;
+        private readonly PillDetection _pillDetection;
         private readonly Dictionary<string, Color> _colorMapping = new Dictionary<string, Color>
         {
             //According to documentation this are the only colors that can appear
@@ -26,16 +27,33 @@ namespace CustomVisionInteraction.Prediction
             { "Yellow", Color.Yellow }
         };
 
-        public ColorAnalyzer(IComputerVisionCommunication computerVisionCommunication)
+        public ColorAnalyzer(IComputerVisionCommunication computerVisionCommunication, PillDetection pillDetection)
         {
             _computerVisionCommunication = computerVisionCommunication;
+            _pillDetection = pillDetection;
         }
 
         public async Task<Color> GetColor(byte[] image)
         {
-            var result = await _computerVisionCommunication.GetComputerVision(new MemoryStream(image), new[] { VisualFeatureTypes.Color });
+            var croppedImage = await CropImage(image);
+
+            var result = await _computerVisionCommunication.GetComputerVision(new MemoryStream(croppedImage), new[] { VisualFeatureTypes.Color });
 
             return _colorMapping[result.Color.DominantColorForeground];
+        }
+
+        private async Task<byte[]> CropImage(byte[] image)
+        {
+            var (hasDetection, boundingBox) = await _pillDetection.GetBestDetection(image);
+
+            if (hasDetection)
+            {
+                return new CroppingService().CropImage(image, boundingBox);
+            }
+            else
+            {
+                return image;
+            }
         }
     }
 }

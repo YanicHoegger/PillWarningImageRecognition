@@ -5,15 +5,19 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugCheckingCrawler", "DrugCheckingCrawler\DrugCheckingCrawler.csproj", "{E06CBB04-9ABD-41CE-8C3B-40BA5CD4AAFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugCheckingCrawler.UnitTests", "DrugCheckingCrawler.UnitTests\DrugCheckingCrawler.UnitTests.csproj", "{AF0227A3-E043-4D3F-8CE7-BAB0ED1989B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugCheckingCrawler.UnitTests", "DrugCheckingCrawler.UnitTests\DrugCheckingCrawler.UnitTests.csproj", "{AF0227A3-E043-4D3F-8CE7-BAB0ED1989B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollector", "DataAnalyzer\DataCollector.csproj", "{35EEFEE1-6C8C-4343-AF85-05F945FA112E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCollector", "DataAnalyzer\DataCollector.csproj", "{35EEFEE1-6C8C-4343-AF85-05F945FA112E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomVisionInteraction", "CustomVisionInteraction\CustomVisionInteraction.csproj", "{D2E7CBA4-D4F7-4158-A5B9-11897E740CBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomVisionInteraction", "CustomVisionInteraction\CustomVisionInteraction.csproj", "{D2E7CBA4-D4F7-4158-A5B9-11897E740CBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomVisionInteraction.UnitTests", "CustomVisionInteraction.UnitTests\CustomVisionInteraction.UnitTests.csproj", "{D4856812-ECDE-4D00-8339-C454CB7D789A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomVisionInteraction.UnitTests", "CustomVisionInteraction.UnitTests\CustomVisionInteraction.UnitTests.csproj", "{D4856812-ECDE-4D00-8339-C454CB7D789A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{F932F684-0F38-490D-908D-6281211C788F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{F932F684-0F38-490D-908D-6281211C788F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseInteraction", "DatabaseInteraction\DatabaseInteraction.csproj", "{72F2ECAD-C790-4D47-B1DF-038FF8D4BCF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{B146B65F-75F6-427A-93E4-C7646FAA3A9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{F932F684-0F38-490D-908D-6281211C788F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F932F684-0F38-490D-908D-6281211C788F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F932F684-0F38-490D-908D-6281211C788F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72F2ECAD-C790-4D47-B1DF-038FF8D4BCF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F2ECAD-C790-4D47-B1DF-038FF8D4BCF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F2ECAD-C790-4D47-B1DF-038FF8D4BCF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F2ECAD-C790-4D47-B1DF-038FF8D4BCF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using System.IO;
 using Utilities;
 
-namespace CustomVisionInteraction.UnitTests
+namespace Utilities.UnitTests
 {
     public static class TestHelper
     {

@@ -6,15 +6,13 @@ namespace DrugCheckingCrawler
 {
     public class ResourceDownloader
     {
-        private const int MaxNumber = 2000;
-
-        public IEnumerable<(Task<byte[]> downloadTask, string address)> GetPdfs()
+        public IEnumerable<(Task<byte[]> downloadTask, string address, int index)> GetPdfs(int startIndex)
         {
-            for (var i = 1; i <= MaxNumber; i++)
+            for (var i = startIndex; true; i++)
             {
                 var address = @$"https://de.drugchecking.ch/pdf.php?p={i}";
                 using var client = new WebClient();
-                yield return (client.DownloadDataTaskAsync(address), address);
+                yield return (client.DownloadDataTaskAsync(address), address, i);
             }
         }
     }

@@ -11,19 +11,19 @@ namespace DrugCheckingCrawler.UnitTests
     {
         public static IEnumerable<TestCaseData> ParserInfoTestCaseData = new TestCaseData[]
         {
-            new TestCaseData("Delfin.pdf", "Delfin", new string[] { "grün", "gelb" }, DateTime.Parse("August 2012", CultureInfo.GetCultureInfo("de-CH"))),
-            new TestCaseData("Kreuz.pdf", "Kreuz", new string[] { "braun" }, DateTime.Parse("Mai 2012", CultureInfo.GetCultureInfo("de-CH"))),
-            new TestCaseData("No1.pdf", "No. 1", new string[] { "grün" }, DateTime.Parse("Juni 2012", CultureInfo.GetCultureInfo("de-CH"))),
-            new TestCaseData("Smiley.pdf", "Smiley", new string[] { "blau" }, DateTime.Parse("September 2015", CultureInfo.GetCultureInfo("de-CH"))),
-            new TestCaseData("NoName.pdf", "no name", new string[] { "blau" }, DateTime.Parse("Juli 2019", CultureInfo.GetCultureInfo("de-CH")))
+            new TestCaseData("Delfin.pdf", "Delfin", DateTime.Parse("August 2012", CultureInfo.GetCultureInfo("de-CH"))),
+            new TestCaseData("Kreuz.pdf", "Kreuz", DateTime.Parse("Mai 2012", CultureInfo.GetCultureInfo("de-CH"))),
+            new TestCaseData("No1.pdf", "No. 1", DateTime.Parse("Juni 2012", CultureInfo.GetCultureInfo("de-CH"))),
+            new TestCaseData("Smiley.pdf", "Smiley", DateTime.Parse("September 2015", CultureInfo.GetCultureInfo("de-CH"))),
+            new TestCaseData("NoName.pdf", "no name", DateTime.Parse("Juli 2019", CultureInfo.GetCultureInfo("de-CH")))
         };
 
         [TestCaseSource(nameof(ParserInfoTestCaseData))]
-        public void ParserInfoTest(string fileName, string expectedName, IEnumerable<string> expectedColors, DateTime expectedCreation)
+        public void ParserInfoTest(string fileName, string expectedName, DateTime expectedCreation)
         {
             GivenFileContent(fileName);
             WhenParse();
-            ThenCorrectInfoParsed(expectedName, expectedColors, expectedCreation);
+            ThenCorrectInfoParsed(expectedName, expectedCreation);
         }
 
         [Test]
@@ -48,10 +48,9 @@ namespace DrugCheckingCrawler.UnitTests
             parserResult = new Parser().ParseFile(fileContent);
         }
 
-        private void ThenCorrectInfoParsed(string expectedName, IEnumerable<string> expectedColors, DateTime expectedCreation)
+        private void ThenCorrectInfoParsed(string expectedName, DateTime expectedCreation)
         {
             Assert.AreEqual(expectedName, parserResult.Name);
-            Assert.AreEqual(expectedColors, parserResult.Colors);
             Assert.AreEqual(expectedCreation, parserResult.Tested);
         }
 

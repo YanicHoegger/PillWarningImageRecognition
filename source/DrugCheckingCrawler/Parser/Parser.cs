@@ -1,7 +1,6 @@
 ﻿using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,9 +11,8 @@ namespace DrugCheckingCrawler
     public class Parser
     {
         private const string Name = "name";
-        private const string Colors = "colors";
         private const string Date = "date";
-        private static readonly string RegexPattern = @$"\n(?<{Date}>(\w+ [0-9]+))\nName (?<{Name}>[\w \.]+).*Farbe (?<{Colors}>[\w, ]+).*";
+        private static readonly string RegexPattern = @$"\n(?<{Date}>(\w+ [0-9]+))\nName (?<{Name}>[\w \.]+)";
 
         public ParserResult ParseFile(byte[] fileContent)
         {
@@ -32,7 +30,7 @@ namespace DrugCheckingCrawler
             var firstPage = document.GetPage(1);
 
             var text = ExtractText(firstPage);
-            (bool match, string name, IEnumerable<string> colors, DateTime creation) = ParseText(text);
+            (bool match, string name, DateTime creation) = ParseText(text);
 
             if (!match)
                 return null;
@@ -41,22 +39,21 @@ namespace DrugCheckingCrawler
             if (image == null)
                 return null;
 
-            return new ParserResult(name, colors, creation, image);
+            return new ParserResult(name, creation, image);
         }
 
-        private static (bool match, string name, IEnumerable<string> colors, DateTime creation) ParseText(string input)
+        private static (bool match, string name, DateTime creation) ParseText(string input)
         {
             var match = Regex.Match(input, RegexPattern, RegexOptions.Singleline);
 
             if (!match.Success)
             {
-                return (false, string.Empty, Enumerable.Empty<string>(), DateTime.MinValue);
+                return (false, string.Empty, DateTime.MinValue);
             }
 
-            var colors = match.Groups[Colors].Value.Split(", ");
             var date = DateTime.Parse(match.Groups[Date].Value, CultureInfo.GetCultureInfo("de-CH"));
 
-            return (true, match.Groups[Name].Value, colors, date);
+            return (true, match.Groups[Name].Value, date);
         }
 
         private static string ExtractText(PdfPage pdfPage)
