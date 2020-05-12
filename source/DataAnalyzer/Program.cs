@@ -1,11 +1,4 @@
-﻿using CustomVisionInteraction;
-using DrugCheckingCrawler.ContentWriter;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-
-namespace DataAnalyzer
+﻿namespace DataAnalyzer
 {
     internal class Program
     {
