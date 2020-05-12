@@ -57,10 +57,5 @@ namespace DatabaseInteraction
                 await Insert(entity);
             }
         }
-
-        public async Task DeleteContainer()
-        {
-            await _container.DeleteContainerAsync();
-        }
     }
 }
