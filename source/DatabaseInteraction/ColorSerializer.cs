@@ -1,19 +1,20 @@
-﻿using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
+﻿using System;
 using System.Drawing;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace DatabaseInteraction
 {
-    public class ColorSerializer : SerializerBase<Color>
+    public class ColorSerializer : JsonConverter<Color>
     {
-        public override Color Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+        public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return Color.FromArgb(context.Reader.ReadInt32());
+            return Color.FromArgb(reader.GetInt32());
         }
 
-        public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, Color value)
+        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
         {
-            context.Writer.WriteInt32(value.ToArgb());
+            writer.WriteNumberValue(value.ToArgb());
         }
     }
 }

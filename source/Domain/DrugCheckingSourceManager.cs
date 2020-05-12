@@ -2,8 +2,6 @@
 using CustomVisionInteraction.Training;
 using DatabaseInteraction;
 using DrugCheckingCrawler;
-using System;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,15 +56,7 @@ namespace Domain
         {
             foreach (var item in crawlerResult.Items)
             {
-                Color color;
-                try
-                {
-                    color = await _colorAnalyzer.GetColor(item.ParserResult.Image);
-                }
-                catch (Exception ex)
-                {
-                    return;
-                }
+                var color = await _colorAnalyzer.GetColor(item.ParserResult.Image);
 
                 await _drugCheckingSourceHandler.StoreSources(new DrugCheckingSource
                 {

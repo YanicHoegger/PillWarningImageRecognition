@@ -1,12 +1,11 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace DatabaseInteraction
 {
     public interface IEntity
     {
-        [BsonId(IdGenerator = typeof(GuidGenerator))]
+        [JsonProperty(PropertyName = "id")]
         public Guid Id { get; set; }
     }
 }

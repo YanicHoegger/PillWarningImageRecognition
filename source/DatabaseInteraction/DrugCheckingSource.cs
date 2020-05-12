@@ -1,7 +1,6 @@
-﻿using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace DatabaseInteraction
 {
@@ -9,7 +8,7 @@ namespace DatabaseInteraction
     {
         public string Name { get; set; }
 
-        [BsonSerializer(typeof(ColorSerializer))]
+        [JsonConverter(typeof(ColorSerializer))]
         public Color Color { get; set; }
 
         public DateTime Creation { get; set; }

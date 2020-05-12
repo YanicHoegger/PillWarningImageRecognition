@@ -11,7 +11,8 @@ namespace Domain
 
         public DrugCheckingSourceHandler(IContext context)
         {
-            _repository = new Repository<DrugCheckingSource>(context);
+            //TODO: Should be initialized somewhere else
+            _repository = RepositoryFactory.Create<DrugCheckingSource>(context).Result;
         }
 
         public async Task StoreSources(IEnumerable<DrugCheckingSource> sources)

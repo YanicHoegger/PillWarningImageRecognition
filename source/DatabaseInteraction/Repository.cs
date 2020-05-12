@@ -1,39 +1,53 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Azure.Cosmos;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DatabaseInteraction
 {
     public class Repository<T> where T : IEntity
     {
-        private readonly IMongoCollection<T> _collection;
+        private readonly Container _container;
 
-        public Repository(IContext context)
+        public Repository(Container container)
         {
-            var client = ClientFactory.Create(context);
-            var database = client.GetDatabase(context.DatabaseName);
-
-            _collection = database.GetCollection<T>(typeof(T).ToString());
+            _container = container;
         }
 
         public async Task<List<T>> Get()
         {
-            return (await _collection.FindAsync(x => true)).ToList();
+            var resultList = new List<T>();
+            var queryDefinition = QueryResolver.SelectOfType<T>();
+
+            var feedIterator = _container.GetItemQueryIterator<T>(queryDefinition);
+            while (feedIterator.HasMoreResults)
+            {
+                var response = await feedIterator.ReadNextAsync();
+                resultList.AddRange(response.ToList());
+            }
+
+            return resultList;
         }
 
         public async Task Insert(T entity)
         {
-            await _collection.InsertOneAsync(entity);
+            entity.Id = Guid.NewGuid();
+
+            await _container.CreateItemAsync(entity);
         }
 
-        public async Task Insert(IEnumerable<T> entitys)
+        public async Task Insert(IEnumerable<T> entities)
         {
-            await _collection.InsertManyAsync(entitys);
+            foreach (var entity in entities)
+            {
+                await Insert(entity);
+            }
         }
 
-        public async Task DeleteAll()
+        public async Task DeleteContainer()
         {
-            await _collection.DeleteManyAsync(x => true);
+            await _container.DeleteContainerAsync();
         }
     }
 }

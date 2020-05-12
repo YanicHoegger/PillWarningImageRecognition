@@ -16,8 +16,9 @@ namespace Domain
 
         public CrawlerInformationHandler(IContext context)
         {
-            _crawlerRepository = new Repository<CrawlerAction>(context);
-            _drugCheckingRepository = new Repository<DrugCheckingSource>(context);
+            //TODO: Should be initialized somewhere else
+            _crawlerRepository = RepositoryFactory.Create<CrawlerAction>(context).Result;
+            _drugCheckingRepository = RepositoryFactory.Create<DrugCheckingSource>(context).Result;
         }
 
         public async Task<int> GetLastIndex()
