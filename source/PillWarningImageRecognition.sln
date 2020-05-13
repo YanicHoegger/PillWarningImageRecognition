@@ -19,13 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseInteraction", "Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B146B65F-75F6-427A-93E4-C7646FAA3A9F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{8855632F-565C-48EA-8AB6-A920F6BAE454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebInterface.Server", "WebInterface\Server\WebInterface.Server.csproj", "{3F7F3ECE-876B-4E8B-8A21-C2D3052BCBA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface.Server", "WebInterface\Server\WebInterface.Server.csproj", "{3F7F3ECE-876B-4E8B-8A21-C2D3052BCBA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebInterface.Client", "WebInterface\Client\WebInterface.Client.csproj", "{6E87035B-C3F8-4381-8A1D-AD5D8DE0CE8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface.Client", "WebInterface\Client\WebInterface.Client.csproj", "{6E87035B-C3F8-4381-8A1D-AD5D8DE0CE8C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface.Shared", "WebInterface\Shared\WebInterface.Shared.csproj", "{31C47A31-49D8-4F57-9F26-5BED9EE01D8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebInterface.Shared", "WebInterface\Shared\WebInterface.Shared.csproj", "{31C47A31-49D8-4F57-9F26-5BED9EE01D8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +63,6 @@ Global
 		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8855632F-565C-48EA-8AB6-A920F6BAE454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8855632F-565C-48EA-8AB6-A920F6BAE454}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8855632F-565C-48EA-8AB6-A920F6BAE454}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8855632F-565C-48EA-8AB6-A920F6BAE454}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F7F3ECE-876B-4E8B-8A21-C2D3052BCBA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F7F3ECE-876B-4E8B-8A21-C2D3052BCBA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F7F3ECE-876B-4E8B-8A21-C2D3052BCBA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
