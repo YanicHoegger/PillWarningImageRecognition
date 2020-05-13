@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 
-namespace WebInterface.Server
+namespace Webinterface.Server
 {
     public class Startup
     {

@@ -2,19 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>77f663f0-06a5-47dd-89ca-e2940531ef2f</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0-rc1.20223.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\WebInterface.Client.csproj" />
-    <ProjectReference Include="..\Shared\WebInterface.Shared.csproj" />
+    <ProjectReference Include="..\Client\Webinterface.Client.csproj" />
+    <ProjectReference Include="..\Shared\Webinterface.Shared.csproj" />
   </ItemGroup>
 
 
