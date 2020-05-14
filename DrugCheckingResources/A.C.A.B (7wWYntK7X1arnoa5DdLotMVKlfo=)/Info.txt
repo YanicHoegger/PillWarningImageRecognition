@@ -1,1 +1,0 @@
-{"Name":"A.C.A.B","Colors":["gelb"],"Tested":"2017-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=763","Id":"7wWYntK7X1arnoa5DdLotMVKlfo="}

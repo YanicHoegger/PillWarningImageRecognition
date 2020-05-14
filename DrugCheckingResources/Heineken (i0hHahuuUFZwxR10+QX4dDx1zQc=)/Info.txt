@@ -1,1 +1,0 @@
-{"Name":"Heineken","Colors":["rot"],"Tested":"2015-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=520","Id":"i0hHahuuUFZwxR10\u002BQX4dDx1zQc="}

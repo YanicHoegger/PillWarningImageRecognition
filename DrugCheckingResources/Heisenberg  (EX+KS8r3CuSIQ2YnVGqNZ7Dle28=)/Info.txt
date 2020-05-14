@@ -1,1 +1,0 @@
-{"Name":"Heisenberg ","Colors":["orange"],"Tested":"2016-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=713","Id":"EX\u002BKS8r3CuSIQ2YnVGqNZ7Dle28="}

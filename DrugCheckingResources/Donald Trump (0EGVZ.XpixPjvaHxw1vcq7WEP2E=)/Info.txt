@@ -1,1 +1,0 @@
-{"Name":"Donald Trump","Colors":["grau"],"Tested":"2019-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1395","Id":"0EGVZ.XpixPjvaHxw1vcq7WEP2E="}

@@ -1,1 +1,0 @@
-{"Name":"Kamel","Colors":["orange"],"Tested":"2018-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1222","Id":"ttvIt93r23HJOE7ObnoFbexG4oc="}

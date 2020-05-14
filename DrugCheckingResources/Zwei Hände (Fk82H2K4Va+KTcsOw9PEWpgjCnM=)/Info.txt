@@ -1,1 +1,0 @@
-{"Name":"Zwei H\u00E4nde","Colors":["rot","orange"],"Tested":"2014-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=252","Id":"Fk82H2K4Va\u002BKTcsOw9PEWpgjCnM="}

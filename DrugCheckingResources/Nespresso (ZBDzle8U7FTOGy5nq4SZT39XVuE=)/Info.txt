@@ -1,1 +1,0 @@
-{"Name":"Nespresso","Colors":["grau"],"Tested":"2016-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=605","Id":"ZBDzle8U7FTOGy5nq4SZT39XVuE="}

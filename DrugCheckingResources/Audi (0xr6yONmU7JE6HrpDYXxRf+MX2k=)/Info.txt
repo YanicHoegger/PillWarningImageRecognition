@@ -1,1 +1,0 @@
-{"Name":"Audi","Colors":["blau"],"Tested":"2012-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=114","Id":"0xr6yONmU7JE6HrpDYXxRf\u002BMX2k="}

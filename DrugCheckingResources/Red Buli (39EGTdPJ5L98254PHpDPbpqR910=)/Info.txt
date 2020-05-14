@@ -1,1 +1,0 @@
-{"Name":"Red Buli","Colors":["etc"],"Tested":"2020-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1725","Id":"39EGTdPJ5L98254PHpDPbpqR910="}

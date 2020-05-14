@@ -1,1 +1,0 @@
-{"Name":"Euro","Colors":["rosa"],"Tested":"2019-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1530","Id":"5MhaFbT970zn1k0pmJXfMR4GFu0="}

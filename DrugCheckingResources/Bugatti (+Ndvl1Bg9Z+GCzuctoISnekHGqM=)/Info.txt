@@ -1,1 +1,0 @@
-{"Name":"Bugatti","Colors":["grau"],"Tested":"2018-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1013","Id":"\u002BNdvl1Bg9Z\u002BGCzuctoISnekHGqM="}

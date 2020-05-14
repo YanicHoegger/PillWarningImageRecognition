@@ -1,1 +1,0 @@
-{"Name":"Nike","Colors":["rot"],"Tested":"2014-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=267","Id":"sv6LyM03y0..Z06gu4C7uAFL6Pc="}

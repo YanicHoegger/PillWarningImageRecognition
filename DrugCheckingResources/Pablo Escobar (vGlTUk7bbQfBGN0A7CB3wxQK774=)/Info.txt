@@ -1,1 +1,0 @@
-{"Name":"Pablo Escobar","Colors":["grau"],"Tested":"2017-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=926","Id":"vGlTUk7bbQfBGN0A7CB3wxQK774="}

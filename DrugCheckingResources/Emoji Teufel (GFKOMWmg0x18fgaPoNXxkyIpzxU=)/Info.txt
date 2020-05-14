@@ -1,1 +1,0 @@
-{"Name":"Emoji Teufel","Colors":["violett"],"Tested":"2016-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=592","Id":"GFKOMWmg0x18fgaPoNXxkyIpzxU="}

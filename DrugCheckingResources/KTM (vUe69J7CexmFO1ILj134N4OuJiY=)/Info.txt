@@ -1,1 +1,0 @@
-{"Name":"KTM","Colors":["hellblau"],"Tested":"2018-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1139","Id":"vUe69J7CexmFO1ILj134N4OuJiY="}

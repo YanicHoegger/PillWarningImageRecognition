@@ -1,1 +1,0 @@
-{"Name":"Bitcoin","Colors":["rosa"],"Tested":"2019-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1283","Id":"Qzx9wbc675owxSrolwmprMrq6G0="}

@@ -1,1 +1,0 @@
-{"Name":"Facebook","Colors":["weiss","gr\u00FCn"],"Tested":"2014-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=263","Id":"3q20JPk\u002BoKbd7m8WUDtIDlett0I="}

@@ -1,1 +1,0 @@
-{"Name":"Oxa","Colors":["rot"],"Tested":"2013-06-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=156","Id":"TzZmcJd6PN1kOtSyRTHpu59j0lA="}

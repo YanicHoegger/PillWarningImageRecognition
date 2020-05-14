@@ -1,1 +1,0 @@
-{"Name":"Dolce ","Colors":["rot"],"Tested":"2012-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=15","Id":"kP.Pra9f2gz126uu27SgzRbwvJ0="}

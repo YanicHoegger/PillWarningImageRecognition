@@ -1,1 +1,0 @@
-{"Name":"Gr\u00FCnes Dreieck","Colors":["gr\u00FCn"],"Tested":"2014-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=250","Id":"JC6ycKlrKBJi5fi9Xs2GG5Lgbrk="}

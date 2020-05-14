@@ -1,1 +1,0 @@
-{"Name":"Mickey Mouse","Colors":["violett"],"Tested":"2019-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1581","Id":"WInZ5rMqCJ3dhn9sANWSV4NBYXI="}

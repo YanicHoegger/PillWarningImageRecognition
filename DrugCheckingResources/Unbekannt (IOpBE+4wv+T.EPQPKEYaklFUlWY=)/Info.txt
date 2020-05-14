@@ -1,1 +1,0 @@
-{"Name":"Unbekannt","Colors":["weiss","schwarz","rot","gelb"],"Tested":"2020-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1717","Id":"IOpBE\u002B4wv\u002BT.EPQPKEYaklFUlWY="}

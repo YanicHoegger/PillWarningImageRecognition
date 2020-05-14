@@ -1,1 +1,0 @@
-{"Name":"Bandit ","Colors":["grau"],"Tested":"2018-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1259","Id":"7\u002BF1WR62A2ey7K6F9pJ8uKY6UoM="}

@@ -1,1 +1,0 @@
-{"Name":"Netflix","Colors":["gold"],"Tested":"2017-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=834","Id":"mM7y7ukaQN8L4ttW2D6GOvDL8wo="}

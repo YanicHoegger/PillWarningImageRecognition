@@ -1,1 +1,0 @@
-{"Name":"Batman","Colors":["gelb"],"Tested":"2019-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1651","Id":"AMwKd\u002B7Ku0l0OJzdAWiLpyzCetk="}

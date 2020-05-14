@@ -1,1 +1,0 @@
-{"Name":"Lieferando","Colors":["pistache"],"Tested":"2019-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1466","Id":"1AVBu.id1VUB1wnSs7R54ldQmy8="}

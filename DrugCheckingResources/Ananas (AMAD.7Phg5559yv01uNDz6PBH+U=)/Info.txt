@@ -1,1 +1,0 @@
-{"Name":"Ananas","Colors":["lachs","orange"],"Tested":"2017-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=952","Id":"AMAD.7Phg5559yv01uNDz6PBH\u002BU="}

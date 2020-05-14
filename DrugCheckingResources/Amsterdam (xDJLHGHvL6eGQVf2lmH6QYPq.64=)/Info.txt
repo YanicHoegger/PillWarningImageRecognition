@@ -1,1 +1,0 @@
-{"Name":"Amsterdam","Colors":["hellgr\u00FCn"],"Tested":"2016-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=675","Id":"xDJLHGHvL6eGQVf2lmH6QYPq.64="}

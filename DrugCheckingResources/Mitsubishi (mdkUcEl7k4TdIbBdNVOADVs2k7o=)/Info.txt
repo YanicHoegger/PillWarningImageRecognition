@@ -1,1 +1,0 @@
-{"Name":"Mitsubishi","Colors":["gr\u00FCn"],"Tested":"2017-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=874","Id":"mdkUcEl7k4TdIbBdNVOADVs2k7o="}

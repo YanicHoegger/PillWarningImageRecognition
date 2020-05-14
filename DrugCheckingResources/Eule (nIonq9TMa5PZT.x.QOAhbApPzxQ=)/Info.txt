@@ -1,1 +1,0 @@
-{"Name":"Eule","Colors":["orange"],"Tested":"2015-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=416","Id":"nIonq9TMa5PZT.x.QOAhbApPzxQ="}

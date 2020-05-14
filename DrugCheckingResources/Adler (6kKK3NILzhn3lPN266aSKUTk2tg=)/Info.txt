@@ -1,1 +1,0 @@
-{"Name":"Adler","Colors":["rot"],"Tested":"2014-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=229","Id":"6kKK3NILzhn3lPN266aSKUTk2tg="}

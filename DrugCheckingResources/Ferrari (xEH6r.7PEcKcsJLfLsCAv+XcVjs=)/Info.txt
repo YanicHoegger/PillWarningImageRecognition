@@ -1,1 +1,0 @@
-{"Name":"Ferrari","Colors":["orange"],"Tested":"2012-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=88","Id":"xEH6r.7PEcKcsJLfLsCAv\u002BXcVjs="}

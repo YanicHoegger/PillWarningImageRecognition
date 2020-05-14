@@ -1,1 +1,0 @@
-{"Name":"Rock","Colors":["gr\u00FCn"],"Tested":"2017-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=765","Id":"JYJ\u002B.2hw9XUDnbDVgLlR4ROCdhA="}

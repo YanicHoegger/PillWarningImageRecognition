@@ -1,1 +1,0 @@
-{"Name":"Psylo","Colors":["hellgr\u00FCn"],"Tested":"2015-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=451","Id":"DT5z44VyT3hefYcYOVM30OQnOX4="}

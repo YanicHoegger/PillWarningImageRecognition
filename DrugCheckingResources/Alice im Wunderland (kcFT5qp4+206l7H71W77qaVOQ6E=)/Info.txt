@@ -1,1 +1,0 @@
-{"Name":"Alice im Wunderland","Colors":["gr\u00FCn"],"Tested":"2017-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=898","Id":"kcFT5qp4\u002B206l7H71W77qaVOQ6E="}

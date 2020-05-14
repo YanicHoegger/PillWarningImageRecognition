@@ -1,1 +1,0 @@
-{"Name":"NFL","Colors":["hellblau"],"Tested":"2019-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1498","Id":"veAMJxNexh3Sgu697LHWDwQGAPY="}

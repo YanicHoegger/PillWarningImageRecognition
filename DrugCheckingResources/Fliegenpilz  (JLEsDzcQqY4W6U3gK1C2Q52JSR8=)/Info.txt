@@ -1,1 +1,0 @@
-{"Name":"Fliegenpilz ","Colors":["blau"],"Tested":"2014-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=232","Id":"JLEsDzcQqY4W6U3gK1C2Q52JSR8="}

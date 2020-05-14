@@ -1,1 +1,0 @@
-{"Name":"Goblin","Colors":["farbig"],"Tested":"2018-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1390","Id":"6TO56Lfq0syOsQZRmP256NXopkE="}

@@ -1,1 +1,0 @@
-{"Name":"FC Barcelona","Colors":["violett"],"Tested":"2016-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=715","Id":"BR3fHdrdiRYrDSxTP7tjOL0B9bM="}

@@ -1,1 +1,0 @@
-{"Name":"Punisher","Colors":["hellblau"],"Tested":"2019-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1574","Id":"X7wcwkZbGsNCxADr0P1RUty4mB8="}

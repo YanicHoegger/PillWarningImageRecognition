@@ -1,1 +1,0 @@
-{"Name":"skype","Colors":["rot"],"Tested":"2020-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1698","Id":"hWQVi5NaQBQYRTZ.YsWlKW7528A="}

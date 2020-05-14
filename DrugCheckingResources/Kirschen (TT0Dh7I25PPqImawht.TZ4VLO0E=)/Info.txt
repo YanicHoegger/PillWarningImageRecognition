@@ -1,1 +1,0 @@
-{"Name":"Kirschen","Colors":["orange"],"Tested":"2019-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1358","Id":"TT0Dh7I25PPqImawht.TZ4VLO0E="}

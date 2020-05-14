@@ -1,1 +1,0 @@
-{"Name":"Tesla","Colors":["orange"],"Tested":"2016-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=659","Id":"4SGSnyb8ihd\u002B0l\u002BuWfYTCGa5Z54="}

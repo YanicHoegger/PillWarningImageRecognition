@@ -1,1 +1,0 @@
-{"Name":"Shell","Colors":["gelb"],"Tested":"2019-10-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1611","Id":"MBWAP\u002Bv9dyukm5\u002BAA\u002BycIPbR\u002Bm8="}

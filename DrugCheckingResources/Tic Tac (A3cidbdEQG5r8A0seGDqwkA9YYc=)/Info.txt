@@ -1,1 +1,0 @@
-{"Name":"Tic Tac","Colors":["gr\u00FCn"],"Tested":"2019-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1482","Id":"A3cidbdEQG5r8A0seGDqwkA9YYc="}

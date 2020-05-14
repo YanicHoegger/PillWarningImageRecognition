@@ -1,1 +1,0 @@
-{"Name":"Mercedes","Colors":["gr\u00FCn"],"Tested":"2019-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1383","Id":"4cEorG1\u002Bi9M0jaeWs0PBxmJb3uU="}

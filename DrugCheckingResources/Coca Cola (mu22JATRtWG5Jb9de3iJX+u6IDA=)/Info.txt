@@ -1,1 +1,0 @@
-{"Name":"Coca Cola","Colors":["violett"],"Tested":"2016-12-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=756","Id":"mu22JATRtWG5Jb9de3iJX\u002Bu6IDA="}

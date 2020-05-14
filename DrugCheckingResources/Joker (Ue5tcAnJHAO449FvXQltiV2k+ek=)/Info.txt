@@ -1,1 +1,0 @@
-{"Name":"Joker","Colors":["rosa"],"Tested":"2016-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=702","Id":"Ue5tcAnJHAO449FvXQltiV2k\u002Bek="}

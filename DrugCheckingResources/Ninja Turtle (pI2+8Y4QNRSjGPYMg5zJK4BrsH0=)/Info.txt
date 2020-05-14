@@ -1,1 +1,0 @@
-{"Name":"Ninja Turtle","Colors":["beige","lachs"],"Tested":"2019-06-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1450","Id":"pI2\u002B8Y4QNRSjGPYMg5zJK4BrsH0="}

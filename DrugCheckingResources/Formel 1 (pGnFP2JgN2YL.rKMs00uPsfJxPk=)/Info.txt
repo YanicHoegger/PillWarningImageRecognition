@@ -1,1 +1,0 @@
-{"Name":"Formel 1","Colors":["rot"],"Tested":"2019-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1550","Id":"pGnFP2JgN2YL.rKMs00uPsfJxPk="}

@@ -1,1 +1,0 @@
-{"Name":"Master Card","Colors":["rot"],"Tested":"2016-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=739","Id":"qeXPASrzHu9NULvAQbY\u002BArkwFiw="}

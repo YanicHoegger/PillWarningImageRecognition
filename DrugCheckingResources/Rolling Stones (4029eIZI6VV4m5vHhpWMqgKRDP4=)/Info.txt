@@ -1,1 +1,0 @@
-{"Name":"Rolling Stones","Colors":["blau","gr\u00FCn"],"Tested":"2013-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=166","Id":"4029eIZI6VV4m5vHhpWMqgKRDP4="}

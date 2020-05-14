@@ -1,1 +1,0 @@
-{"Name":"Tripadvisor","Colors":["grau","silber"],"Tested":"2020-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1736","Id":"z4Aes8yBjgM4HLBilyiA.CsF5eY="}

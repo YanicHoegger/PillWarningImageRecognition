@@ -1,1 +1,0 @@
-{"Name":"Panda","Colors":["farbig"],"Tested":"2017-06-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=858","Id":"bAZINUvd9jx.9DT88Wcme7xxzlU="}

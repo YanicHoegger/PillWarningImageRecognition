@@ -1,1 +1,0 @@
-{"Name":"Vodafone","Colors":["gelb"],"Tested":"2017-02-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=782","Id":"0YD\u002BupZ6e.kjoubaAVaMM.YABZY="}

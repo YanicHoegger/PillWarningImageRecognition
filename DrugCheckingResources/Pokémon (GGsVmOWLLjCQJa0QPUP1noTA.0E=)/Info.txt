@@ -1,1 +1,0 @@
-{"Name":"Pok\u00E9mon","Colors":["gelb"],"Tested":"2016-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=734","Id":"GGsVmOWLLjCQJa0QPUP1noTA.0E="}

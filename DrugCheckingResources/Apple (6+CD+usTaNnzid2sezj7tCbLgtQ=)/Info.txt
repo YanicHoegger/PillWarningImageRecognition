@@ -1,1 +1,0 @@
-{"Name":"Apple","Colors":["blau"],"Tested":"2012-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=37","Id":"6\u002BCD\u002BusTaNnzid2sezj7tCbLgtQ="}

@@ -1,1 +1,0 @@
-{"Name":"Fl\u00FCgel","Colors":["rosa"],"Tested":"2018-07-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1145","Id":"dpA3mqGMxJ7FErNI3B56dHCyv08="}

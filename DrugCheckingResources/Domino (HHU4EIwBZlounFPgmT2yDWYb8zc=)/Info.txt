@@ -1,1 +1,0 @@
-{"Name":"Domino","Colors":["blau","gr\u00FCn"],"Tested":"2014-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=240","Id":"HHU4EIwBZlounFPgmT2yDWYb8zc="}

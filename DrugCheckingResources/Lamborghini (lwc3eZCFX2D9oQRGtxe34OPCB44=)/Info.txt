@@ -1,1 +1,0 @@
-{"Name":"Lamborghini","Colors":["orange"],"Tested":"2019-08-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1531","Id":"lwc3eZCFX2D9oQRGtxe34OPCB44="}

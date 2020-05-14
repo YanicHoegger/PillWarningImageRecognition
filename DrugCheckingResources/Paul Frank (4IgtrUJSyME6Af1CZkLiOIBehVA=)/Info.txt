@@ -1,1 +1,0 @@
-{"Name":"Paul Frank","Colors":["gr\u00FCn"],"Tested":"2015-04-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=402","Id":"4IgtrUJSyME6Af1CZkLiOIBehVA="}

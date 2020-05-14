@@ -1,1 +1,0 @@
-{"Name":"Berliner B\u00E4r","Colors":["gelb"],"Tested":"2019-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1403","Id":"1Ml2YwQO8s0j4N60MWTS9nLBnH4="}

@@ -1,1 +1,0 @@
-{"Name":"Super Mario","Colors":["hellblau"],"Tested":"2019-01-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=1282","Id":"Vcqj7XMZvJYWZNf9A49SmB9lwEs="}

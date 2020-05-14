@@ -1,1 +1,0 @@
-{"Name":"Bullet Bill","Colors":["gelb"],"Tested":"2013-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=195","Id":"J\u002BwTEyAtriqxGefDOH.QLJmI5mk="}

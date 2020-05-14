@@ -1,1 +1,0 @@
-{"Name":"Anonymous","Colors":["gelb"],"Tested":"2017-05-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=840","Id":"iO2NNVzzvtX4EXmKECItP2yHqK0="}

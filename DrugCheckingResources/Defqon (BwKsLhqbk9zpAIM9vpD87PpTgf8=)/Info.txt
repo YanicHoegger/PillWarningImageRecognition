@@ -1,1 +1,0 @@
-{"Name":"Defqon","Colors":["rot"],"Tested":"2016-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=704","Id":"BwKsLhqbk9zpAIM9vpD87PpTgf8="}

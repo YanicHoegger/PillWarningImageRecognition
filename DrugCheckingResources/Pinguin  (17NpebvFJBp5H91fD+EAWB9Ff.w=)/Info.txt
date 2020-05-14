@@ -1,1 +1,0 @@
-{"Name":"Pinguin ","Colors":["rosa"],"Tested":"2017-11-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=979","Id":"17NpebvFJBp5H91fD\u002BEAWB9Ff.w="}

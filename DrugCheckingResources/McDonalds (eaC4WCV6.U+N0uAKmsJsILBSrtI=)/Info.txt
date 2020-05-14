@@ -1,1 +1,0 @@
-{"Name":"McDonalds","Colors":["gelb"],"Tested":"2013-09-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=194","Id":"eaC4WCV6.U\u002BN0uAKmsJsILBSrtI="}

@@ -1,1 +1,0 @@
-{"Name":"Oranges Dreieck","Colors":["orange"],"Tested":"2014-03-01T00:00:00","WebUrl":"https://de.drugchecking.ch/pdf.php?p=249","Id":"vD.2LM8JMrjXr9IDCyyHCl22Vp8="}
