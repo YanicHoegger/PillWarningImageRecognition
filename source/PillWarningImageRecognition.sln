@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugCheckingCrawler", "Drug
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugCheckingCrawler.UnitTests", "DrugCheckingCrawler.UnitTests\DrugCheckingCrawler.UnitTests.csproj", "{AF0227A3-E043-4D3F-8CE7-BAB0ED1989B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCollector", "DataAnalyzer\DataCollector.csproj", "{35EEFEE1-6C8C-4343-AF85-05F945FA112E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomVisionInteraction", "CustomVisionInteraction\CustomVisionInteraction.csproj", "{D2E7CBA4-D4F7-4158-A5B9-11897E740CBA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomVisionInteraction.UnitTests", "CustomVisionInteraction.UnitTests\CustomVisionInteraction.UnitTests.csproj", "{D4856812-ECDE-4D00-8339-C454CB7D789A}"
@@ -18,6 +16,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseInteraction", "DatabaseInteraction\DatabaseInteraction.csproj", "{72F2ECAD-C790-4D47-B1DF-038FF8D4BCF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B146B65F-75F6-427A-93E4-C7646FAA3A9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface.Server", "WebInterface\Server\WebInterface.Server.csproj", "{F57198AE-B129-4229-8EC0-90DDE21C6592}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface.Client", "WebInterface\Client\WebInterface.Client.csproj", "{783AA3A2-3816-4CDD-BC61-5DDE51C02E69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface.Shared", "WebInterface\Shared\WebInterface.Shared.csproj", "{9DDB72F8-677F-46A1-A220-7097C6B40A94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{04069B47-637A-48DA-9694-A804A0AA47A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +39,6 @@ Global
 		{AF0227A3-E043-4D3F-8CE7-BAB0ED1989B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF0227A3-E043-4D3F-8CE7-BAB0ED1989B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF0227A3-E043-4D3F-8CE7-BAB0ED1989B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{35EEFEE1-6C8C-4343-AF85-05F945FA112E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35EEFEE1-6C8C-4343-AF85-05F945FA112E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35EEFEE1-6C8C-4343-AF85-05F945FA112E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35EEFEE1-6C8C-4343-AF85-05F945FA112E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2E7CBA4-D4F7-4158-A5B9-11897E740CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2E7CBA4-D4F7-4158-A5B9-11897E740CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E7CBA4-D4F7-4158-A5B9-11897E740CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,9 +59,26 @@ Global
 		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B146B65F-75F6-427A-93E4-C7646FAA3A9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57198AE-B129-4229-8EC0-90DDE21C6592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57198AE-B129-4229-8EC0-90DDE21C6592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57198AE-B129-4229-8EC0-90DDE21C6592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57198AE-B129-4229-8EC0-90DDE21C6592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{783AA3A2-3816-4CDD-BC61-5DDE51C02E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783AA3A2-3816-4CDD-BC61-5DDE51C02E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783AA3A2-3816-4CDD-BC61-5DDE51C02E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783AA3A2-3816-4CDD-BC61-5DDE51C02E69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DDB72F8-677F-46A1-A220-7097C6B40A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DDB72F8-677F-46A1-A220-7097C6B40A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DDB72F8-677F-46A1-A220-7097C6B40A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DDB72F8-677F-46A1-A220-7097C6B40A94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F57198AE-B129-4229-8EC0-90DDE21C6592} = {04069B47-637A-48DA-9694-A804A0AA47A0}
+		{783AA3A2-3816-4CDD-BC61-5DDE51C02E69} = {04069B47-637A-48DA-9694-A804A0AA47A0}
+		{9DDB72F8-677F-46A1-A220-7097C6B40A94} = {04069B47-637A-48DA-9694-A804A0AA47A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9C7C28B-A86D-40DE-8AA2-2DB67CFAFA3A}
