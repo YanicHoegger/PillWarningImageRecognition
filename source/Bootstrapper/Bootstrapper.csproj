@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bootstrapper.Interface\Bootstrapper.Interface.csproj" />
+    <ProjectReference Include="..\CustomVisionInteraction\CustomVisionInteraction.csproj" />
+    <ProjectReference Include="..\DatabaseInteraction\DatabaseInteraction.csproj" />
+    <ProjectReference Include="..\Domain.Mock\Domain.Mock.csproj" Condition="'$(Configuration)'=='Debug'"/>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\DrugCheckingCrawler\DrugCheckingCrawler.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,15 +1,22 @@
-﻿namespace DrugCheckingCrawler
+﻿using DrugCheckingCrawler.Interface;
+using System;
+
+namespace DrugCheckingCrawler
 {
-    public class CrawlerResultItem
+    public class CrawlerResultItem : ICrawlerResultItem
     {
         public CrawlerResultItem(ParserResult parserResult, string url, string documentHash)
         {
-            ParserResult = parserResult;
+            Name = parserResult.Name;
+            Tested = parserResult.Tested;
+            Image = parserResult.Image;
             Url = url;
             DocumentHash = documentHash;
         }
 
-        public ParserResult ParserResult { get; }
+        public string Name { get; }
+        public DateTime Tested { get; }
+        public byte[] Image { get; }
         public string Url { get; }
         public string DocumentHash { get; }
     }

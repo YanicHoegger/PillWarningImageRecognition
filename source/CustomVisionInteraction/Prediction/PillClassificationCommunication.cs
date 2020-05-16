@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction;
+﻿using CustomVisionInteraction.Interface;
+using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace CustomVisionInteraction.Prediction
     {
         private readonly IPredictionContext _predictionContext;
 
-        public PillClassificationCommunication(IPredictionContext classificationContext)
+        public PillClassificationCommunication(IPillClassificationContext classificationContext)
         {
             _predictionContext = classificationContext;
         }

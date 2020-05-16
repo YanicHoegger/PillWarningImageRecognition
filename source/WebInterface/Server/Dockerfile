@@ -5,6 +5,13 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+RUN apt-get update \
+    && apt-get install -y --allow-unauthenticated \
+        libc6-dev \
+        libgdiplus \
+        libx11-dev \
+     && rm -rf /var/lib/apt/lists/*
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["WebInterface/Server/WebInterface.Server.csproj", "WebInterface/Server/"]

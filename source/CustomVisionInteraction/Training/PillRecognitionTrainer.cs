@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
+﻿using CustomVisionInteraction.Interface;
+using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using Utilities;
 
 namespace CustomVisionInteraction.Training
 {
-    public class PillRecognitionTrainer
+    public class PillRecognitionTrainer : IPillRecognitionTrainer
     {
         private readonly ITrainerCommunicator _trainerCommunicator;
         private const string PillTag = "Pill";

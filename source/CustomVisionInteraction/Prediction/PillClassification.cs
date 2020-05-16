@@ -1,4 +1,5 @@
-﻿using CustomVisionInteraction.Prediction;
+﻿using CustomVisionInteraction.Interface;
+using CustomVisionInteraction.Prediction;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CustomVisionInteraction
 {
-    public class PillClassification
+    public class PillClassification : IPillClassification
     {
         private readonly IPillClassificationCommunication _pillClassificationCommunication;
 

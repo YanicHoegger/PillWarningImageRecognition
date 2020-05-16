@@ -1,4 +1,4 @@
-﻿using CustomVisionInteraction.Prediction;
+﻿using CustomVisionInteraction.ColorAnalyzer;
 using FluentAssertions;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
 using NUnit.Framework;

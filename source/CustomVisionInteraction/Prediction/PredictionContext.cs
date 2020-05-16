@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomVisionInteraction.Interface;
+using System;
 
 namespace CustomVisionInteraction.Prediction
 {

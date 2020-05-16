@@ -29,6 +29,9 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "MOCK": "True"
+      },
       "publishAllPorts": true,
       "useSSL": true
     }

@@ -1,7 +1,6 @@
-﻿using CustomVisionInteraction.Prediction;
-using CustomVisionInteraction.Training;
-using DatabaseInteraction;
-using DrugCheckingCrawler;
+﻿using CustomVisionInteraction.Interface;
+using DatabaseInteraction.Interface;
+using DrugCheckingCrawler.Interface;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,21 +9,25 @@ namespace Domain
     public class DrugCheckingSourceManager
     {
         private readonly CrawlerInformationHandler _crawlerInformationHandler;
-        private readonly ColorAnalyzer _colorAnalyzer;
+        private readonly IColorAnalyzer _colorAnalyzer;
         private readonly DrugCheckingSourceHandler _drugCheckingSourceHandler;
-        private readonly CustomVisionInteraction.IContext _trainingContext;
+        private readonly IPillRecognitionTrainer _trainer;
+        private readonly IResourceCrawler _resourceCrawler;
+        private readonly IEntityFactory _entityFactory;
 
-        public DrugCheckingSourceManager(IContext databaseContext, CustomVisionInteraction.IContext trainingContext, CustomVisionInteraction.IContext computerVisionContext, IPredictionContext detectionContext)
+        public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler, DrugCheckingSourceHandler drugCheckingSourceHandler, IColorAnalyzer colorAnalyzer, IPillRecognitionTrainer trainer, IResourceCrawler resourceCrawler, IEntityFactory entityFactory)
         {
-            _crawlerInformationHandler = new CrawlerInformationHandler(databaseContext);
-            _drugCheckingSourceHandler = new DrugCheckingSourceHandler(databaseContext);
-            _colorAnalyzer = new ColorAnalyzer(new ComputerVisionCommunication(computerVisionContext), new PillDetection(new PillDetectionCommunication(detectionContext)));
-            _trainingContext = trainingContext;
+            _crawlerInformationHandler = crawlerInformationHandler;
+            _drugCheckingSourceHandler = drugCheckingSourceHandler;
+            _trainer = trainer;
+            _colorAnalyzer = colorAnalyzer;
+            _resourceCrawler = resourceCrawler;
+            _entityFactory = entityFactory;
         }
 
         public async Task SetUpResources()
         {
-            CrawlerResult crawlingResult = await CrawlResources();
+            var crawlingResult = await CrawlResources();
 
             if (!crawlingResult.Items.Any())
                 return;
@@ -36,50 +39,48 @@ namespace Domain
             await train;
         }
 
-        private async Task<CrawlerResult> CrawlResources()
+        private async Task<ICrawlerResult> CrawlResources()
         {
             var lastIndex = await _crawlerInformationHandler.GetLastIndex();
-
-            var resourceCrawler = new ResourceCrawler();
-            var crawlingResult = await resourceCrawler.Crawl(lastIndex + 1);
+            var crawlingResult = await _resourceCrawler.Crawl(lastIndex + 1);
 
             return crawlingResult;
         }
 
-        private async Task StoreResources(CrawlerResult crawlerResult)
+        private async Task StoreResources(ICrawlerResult crawlerResult)
         {
             await StoreItems(crawlerResult);
             await StoreCrawlingResult(crawlerResult);
         }
 
-        private async Task StoreItems(CrawlerResult crawlerResult)
+        private async Task StoreItems(ICrawlerResult crawlerResult)
         {
+
             foreach (var item in crawlerResult.Items)
             {
-                var color = await _colorAnalyzer.GetColor(item.ParserResult.Image);
+                var entity = _entityFactory.Create<DrugCheckingSource>();
 
-                await _drugCheckingSourceHandler.StoreSources(new DrugCheckingSource
-                {
-                    Name = item.ParserResult.Name,
-                    Color = color,
-                    Creation = item.ParserResult.Tested,
-                    PdfLocation = item.Url,
-                    Image = item.ParserResult.Image,
-                    DocumentHash = item.DocumentHash
-                });
+                var color = await _colorAnalyzer.GetColor(item.Image);
+
+                entity.Name = item.Name;
+                entity.Color = color;
+                entity.Creation = item.Tested;
+                entity.PdfLocation = item.Url;
+                entity.Image = item.Image;
+                entity.DocumentHash = item.DocumentHash;
+
+                await _drugCheckingSourceHandler.StoreSources(entity);
             }
         }
 
-        private async Task StoreCrawlingResult(CrawlerResult crawlerResult)
+        private async Task StoreCrawlingResult(ICrawlerResult crawlerResult)
         {
-            await _crawlerInformationHandler.Insert(crawlerResult.LastSuccessfullIndex, crawlerResult.Items.Count);
+            await _crawlerInformationHandler.Insert(crawlerResult.LastSuccessfullIndex, crawlerResult.Items.Count());
         }
 
-        private async Task TrainCustomVision(CrawlerResult crawlerResult)
+        private async Task TrainCustomVision(ICrawlerResult crawlerResult)
         {
-            var trainer = await PillRecognitionTrainerFactory.Create(_trainingContext);
-
-            await trainer.Train(crawlerResult.Items.Select(x => (x.ParserResult.Image, x.ParserResult.Name)));
+            await _trainer.Train(crawlerResult.Items.Select(x => (x.Image, x.Name)));
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using Microsoft.Azure.Cosmos;
-using System;
+﻿using DatabaseInteraction.Interface;
+using Microsoft.Azure.Cosmos;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DatabaseInteraction
 {
-    public class Repository<T> where T : IEntity
+    public class Repository<T> : IRepository<T> where T : Entity, new()
     {
         private readonly Container _container;
 
@@ -45,8 +45,6 @@ namespace DatabaseInteraction
 
         public async Task Insert(T entity)
         {
-            entity.Id = Guid.NewGuid();
-
             await _container.CreateItemAsync(entity);
         }
 

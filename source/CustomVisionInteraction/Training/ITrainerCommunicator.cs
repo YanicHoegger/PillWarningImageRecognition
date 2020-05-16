@@ -13,6 +13,5 @@ namespace CustomVisionInteraction.Training
         Task<Tag> CreateTag(string name);
         IEnumerable<Task<byte[]>> DownloadImages();
         Tag GetTag(string tagName);
-        Task Init();
     }
 }

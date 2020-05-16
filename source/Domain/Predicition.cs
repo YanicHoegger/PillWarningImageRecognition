@@ -1,25 +1,25 @@
-﻿using CustomVisionInteraction.Prediction;
-using DatabaseInteraction;
-using System;
+﻿using CustomVisionInteraction.Interface;
+using DatabaseInteraction.Interface;
+using Domain.Interface;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using IPredictionResult = Domain.Interface.IPredictionResult;
 
 namespace Domain
 {
-    public class Predicition
+    public class Predicition : IPredicition
     {
-        private readonly Repository<DrugCheckingSource> _repository;
+        private readonly IRepository<DrugCheckingSource> _repository;
         private readonly IPrediction _prediction;
 
-        public Predicition(Repository<DrugCheckingSource> repository, IPrediction prediction)
+        public Predicition(IRepositoryFactory repositoryFactory, IPrediction prediction)
         {
-            _repository = repository;
+            _repository = repositoryFactory.Create<DrugCheckingSource>();
             _prediction = prediction;
         }
 
-        public async Task<PredictionResult> Predict(byte[] image)
+        public async Task<IPredictionResult> Predict(byte[] image)
         {
             var internalResult = await _prediction.PredictImage(image);
 
@@ -32,7 +32,7 @@ namespace Domain
             return new PredictionResult(tagFindings, colorFindings);
         }
 
-        private async Task<List<DrugCheckingSource>> GetTagFindings(CustomVisionInteraction.Prediction.PredictionResult internalResult)
+        private async Task<List<DrugCheckingSource>> GetTagFindings(CustomVisionInteraction.Interface.IPredictionResult internalResult)
         {
             var tagFindings = new List<DrugCheckingSource>();
             foreach (var tag in internalResult.Tags)

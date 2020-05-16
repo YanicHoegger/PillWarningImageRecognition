@@ -43,7 +43,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomVisionInteraction\CustomVisionInteraction.csproj" />
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,64 @@
-﻿@page "/"
+﻿@using Blazor.FileReader
+@using WebInterface.Shared
+@page "/"
+@inject IFileReaderService fileReaderService
+@inject HttpClient httpClient
 
-<h1>Hello, world!</h1>
+<div class="row">
+    <input type="file" accept="image/*" id="fileUpload" @ref="fileUpload" @oninput="UploadFile" />
+</div>
+<div class="row">
+    <div class="col">
+        @if (hasFirstInput && result != null)
+        {
+            if (result.SameInprint.Any())
+            {
+                <h3>Same Logo</h3>
+                <div class="d-flex flex-wrap">
+                    @foreach (var warning in result.SameInprint)
+                    {
+                        <div>
+                            <div class="pill-image">
+                                <Image Content="warning.Image" OnClickCallback="@(e => SetWarningUrl(@warning))"></Image>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>We couldn't find anything in our database</p>
+            }
+        }
+    </div>
+    @if (!string.IsNullOrEmpty(warningUrl))
+    {
+        <div class="col">
+            <iframe src="@warningUrl" style="width:100%; height:85vh;"></iframe>
+        </div>
+    }
+</div>
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code{
+
+    ElementReference fileUpload;
+    bool hasFirstInput;
+    PredictionResult result;
+    string warningUrl;
+
+    async Task UploadFile(ChangeEventArgs e)
+    {
+        var file = (await fileReaderService.CreateReference(fileUpload).EnumerateFilesAsync()).First();
+        var content = await file.CreateMemoryStreamAsync();
+        var name = (await file.ReadFileInfoAsync()).Name;
+
+        hasFirstInput = true;
+        result = await httpClient.PostImageAsync<PredictionResult>(content, name, "PillWarning");
+    }
+
+    void SetWarningUrl(PillWarning warning)
+    {
+        warningUrl = warning.PdfLocation;
+    }
+}

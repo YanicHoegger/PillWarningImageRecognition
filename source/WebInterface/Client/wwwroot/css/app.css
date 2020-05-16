@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
 }
 
 a, .btn-link {
@@ -12,6 +13,17 @@ a, .btn-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+}
+
+.pill-image {
+    height: 150px;
+    width: 150px;
+    margin: 5px;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 app {

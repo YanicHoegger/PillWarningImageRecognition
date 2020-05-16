@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using DrugCheckingCrawler.Interface;
+using System.Collections.Generic;
 
 namespace DrugCheckingCrawler
 {
-    public class CrawlerResult
+    public class CrawlerResult : ICrawlerResult
     {
         public CrawlerResult(IList<CrawlerResultItem> items, int lastSuccessfullIndex)
         {
@@ -10,7 +11,7 @@ namespace DrugCheckingCrawler
             LastSuccessfullIndex = lastSuccessfullIndex;
         }
 
-        public IList<CrawlerResultItem> Items { get; }
+        public IEnumerable<ICrawlerResultItem> Items { get; }
         public int LastSuccessfullIndex { get; }
     }
 }

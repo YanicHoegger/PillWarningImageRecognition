@@ -1,19 +1,51 @@
-﻿using System.Threading.Tasks;
+﻿using DatabaseInteraction.Interface;
+using Microsoft.Azure.Cosmos;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DatabaseInteraction
 {
-    public static class RepositoryFactory
+    public class RepositoryFactory : IHostedService, IRepositoryFactory
     {
         private const int MaxThroughput = 400;
 
-        public static async Task<Repository<T>> Create<T>(IContext context) where T : IEntity
+        private readonly ILogger<RepositoryFactory> _logger;
+        private readonly IContext _context;
+
+        private bool _isStarted;
+        private Container _container;
+
+        public RepositoryFactory(IContext context, ILogger<RepositoryFactory> logger)
         {
-            var client = ClientFactory.Create(context);
-            var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(context.DatabaseName, MaxThroughput);
+            _context = context;
+            _logger = logger;
+        }
 
-            var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(context.ContainerId, $"/{nameof(IEntity.Id)}");
+        public IRepository<T> Create<T>() where T : Entity, new()
+        {
+            if (!_isStarted)
+                throw new InvalidOperationException($"{nameof(RepositoryFactory)} must be started first");
 
-            return new Repository<T>(containerResponse.Container);
+            return new Repository<T>(_container);
+        }
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            var client = ClientFactory.Create(_context);
+            var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(_context.DatabaseName, MaxThroughput);
+
+            var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(_context.ContainerId, $"/{nameof(Entity.Id)}");
+            _container = containerResponse.Container;
+
+            _isStarted = true;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }

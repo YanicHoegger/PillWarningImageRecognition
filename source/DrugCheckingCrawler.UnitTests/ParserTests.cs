@@ -1,8 +1,10 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Telerik.JustMock;
 
 namespace DrugCheckingCrawler.UnitTests
 {
@@ -45,7 +47,8 @@ namespace DrugCheckingCrawler.UnitTests
 
         private void WhenParse()
         {
-            parserResult = new Parser().ParseFile(fileContent);
+            var loggerMock = Mock.Create<ILogger<Parser>>();
+            parserResult = new Parser(loggerMock).ParseFile(fileContent);
         }
 
         private void ThenCorrectInfoParsed(string expectedName, DateTime expectedCreation)

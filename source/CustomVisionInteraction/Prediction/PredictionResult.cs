@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CustomVisionInteraction.Interface;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
 namespace CustomVisionInteraction.Prediction
 {
-    public class PredictionResult
+    public class PredictionResult : IPredictionResult
     {
         public PredictionResult(bool success, IEnumerable<string> tags, Color color)
         {

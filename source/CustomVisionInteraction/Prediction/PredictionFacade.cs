@@ -1,19 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using CustomVisionInteraction.Interface;
+using System.Threading.Tasks;
 
 namespace CustomVisionInteraction.Prediction
 {
     public class PredictionFacade : IPrediction
     {
-        private readonly PillClassification _pillClassification;
-        private readonly ColorAnalyzer _colorAnalyzer;
+        private readonly IPillClassification _pillClassification;
+        private readonly IColorAnalyzer _colorAnalyzer;
 
-        public PredictionFacade(IPredictionContext classificationContext, IPredictionContext detectionContext, IContext visionContext)
+        public PredictionFacade(IPillClassification pillClassification, IColorAnalyzer colorAnalyzer)
         {
-            _pillClassification = new PillClassification(new PillClassificationCommunication(classificationContext));
-            _colorAnalyzer = new ColorAnalyzer(new ComputerVisionCommunication(visionContext), new PillDetection(new PillDetectionCommunication(detectionContext)));
+            _pillClassification = pillClassification;
+            _colorAnalyzer = colorAnalyzer;
         }
 
-        public async Task<PredictionResult> PredictImage(byte[] image)
+        public async Task<IPredictionResult> PredictImage(byte[] image)
         {
             var (hasClassification, tags) = await _pillClassification.GetClassification(image);
             if (!hasClassification)

@@ -12,9 +12,7 @@ namespace CustomVisionInteraction
         }
 
         public string Key { get; }
-
         public string EndPoint { get; }
-
         public Guid ProjectId { get; }
     }
 }

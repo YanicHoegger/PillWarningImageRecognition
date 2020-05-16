@@ -1,5 +1,7 @@
-﻿using iText.Kernel.Pdf;
+﻿using Common.Logging;
+using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Globalization;
 using System.IO;
@@ -10,9 +12,16 @@ namespace DrugCheckingCrawler
 {
     public class Parser
     {
-        private const string Name = "name";
-        private const string Date = "date";
-        private static readonly string RegexPattern = @$"\n(?<{Date}>(\w+ [0-9]+))\nName (?<{Name}>[\w \.]+)";
+        private const string _name = "name";
+        private const string _date = "date";
+        private static readonly string _regexPattern = @$"\n(?<{_date}>(\w+ [0-9]+))\nName (?<{_name}>[\w \.]+)";
+
+        private readonly ILogger<Parser> _logger;
+
+        public Parser(ILogger<Parser> logger)
+        {
+            _logger = logger;
+        }
 
         public ParserResult ParseFile(byte[] fileContent)
         {
@@ -23,7 +32,7 @@ namespace DrugCheckingCrawler
             }
             catch (iText.IO.IOException)
             {
-                Console.WriteLine("Content is not a valid pdf");
+                _logger.LogWarning("Content is not a valid pdf");
                 return null;
             }
 
@@ -44,16 +53,16 @@ namespace DrugCheckingCrawler
 
         private static (bool match, string name, DateTime creation) ParseText(string input)
         {
-            var match = Regex.Match(input, RegexPattern, RegexOptions.Singleline);
+            var match = Regex.Match(input, _regexPattern, RegexOptions.Singleline);
 
             if (!match.Success)
             {
                 return (false, string.Empty, DateTime.MinValue);
             }
 
-            var date = DateTime.Parse(match.Groups[Date].Value, CultureInfo.GetCultureInfo("de-CH"));
+            var date = DateTime.Parse(match.Groups[_date].Value, CultureInfo.GetCultureInfo("de-CH"));
 
-            return (true, match.Groups[Name].Value, date);
+            return (true, match.Groups[_name].Value, date);
         }
 
         private static string ExtractText(PdfPage pdfPage)
@@ -61,7 +70,7 @@ namespace DrugCheckingCrawler
             return PdfTextExtractor.GetTextFromPage(pdfPage);
         }
 
-        private static byte[] ExtractImages(PdfPage pdfPage)
+        private byte[] ExtractImages(PdfPage pdfPage)
         {
             var imageExtractor = new ImageExtractor();
             var pdfCanvasProcessor = new PdfCanvasProcessor(imageExtractor);
@@ -72,7 +81,7 @@ namespace DrugCheckingCrawler
                 return imageExtractor.Result.First();
             }
 
-            Console.WriteLine($"File does not contain an image");
+            _logger.LogWarning("File does not contain an image");
             return null;
         }
     }

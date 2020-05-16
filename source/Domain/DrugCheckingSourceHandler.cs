@@ -1,4 +1,5 @@
 ﻿using DatabaseInteraction;
+using DatabaseInteraction.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,12 +8,11 @@ namespace Domain
 {
     public class DrugCheckingSourceHandler
     {
-        private readonly Repository<DrugCheckingSource> _repository;
+        private readonly IRepository<DrugCheckingSource> _repository;
 
-        public DrugCheckingSourceHandler(IContext context)
+        public DrugCheckingSourceHandler(IRepositoryFactory factory)
         {
-            //TODO: Should be initialized somewhere else
-            _repository = RepositoryFactory.Create<DrugCheckingSource>(context).Result;
+            _repository = factory.Create<DrugCheckingSource>();
         }
 
         public async Task StoreSources(IEnumerable<DrugCheckingSource> sources)

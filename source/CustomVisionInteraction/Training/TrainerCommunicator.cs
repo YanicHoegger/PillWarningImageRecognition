@@ -1,15 +1,18 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training;
+﻿using CustomVisionInteraction.Interface;
+using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CustomVisionInteraction.Training
 {
-    public class TrainerCommunicator : ITrainerCommunicator
+    public class TrainerCommunicator : ITrainerCommunicator, IHostedService
     {
         private readonly IContext _context;
         private readonly CustomVisionTrainingClient _customVisionTrainingClient;
@@ -17,7 +20,7 @@ namespace CustomVisionInteraction.Training
         private IList<Tag> _tags;
         private IList<Image> _images;
 
-        public TrainerCommunicator(IContext context)
+        public TrainerCommunicator(ITrainerContext context)
         {
             _context = context;
             _customVisionTrainingClient = new CustomVisionTrainingClient
@@ -27,9 +30,7 @@ namespace CustomVisionInteraction.Training
             };
         }
 
-        public bool IsInitialized { get; private set; }
-
-        public async Task Init()
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
             _tags = await _customVisionTrainingClient.GetTagsAsync(_context.ProjectId);
             _images = (await _customVisionTrainingClient.GetTaggedImagesAsync(_context.ProjectId))
@@ -38,6 +39,13 @@ namespace CustomVisionInteraction.Training
 
             IsInitialized = true;
         }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public bool IsInitialized { get; private set; }
 
         public async Task<Tag> CreateTag(string name)
         {
@@ -82,7 +90,7 @@ namespace CustomVisionInteraction.Training
         private void ThrowIfNotInitialized()
         {
             if (!IsInitialized)
-                throw new InvalidOperationException($"Need to call {nameof(Init)} first");
+                throw new InvalidOperationException($"Must be initialized first");
         }
     }
 }
