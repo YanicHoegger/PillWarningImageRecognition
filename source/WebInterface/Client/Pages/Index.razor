@@ -11,7 +11,7 @@
     <div class="col">
         @if (hasFirstInput && result != null)
         {
-            if (result.SameInprint.Any())
+            if (result.SameInprint?.Any() ?? false)
             {
                 <h3>Same Logo</h3>
                 <div class="d-flex flex-wrap">

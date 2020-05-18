@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using WebInterface.Shared;
 
@@ -39,6 +38,12 @@ namespace WebInterface.Server.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Could not make prediction");
+                return new PredictionResult();
+            }
+
+            if (prediction == null)
+            {
+                _logger.LogInformation("No result out of prediction");
                 return new PredictionResult();
             }
 
