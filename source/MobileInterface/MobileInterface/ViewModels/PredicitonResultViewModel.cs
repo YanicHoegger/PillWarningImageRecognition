@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Clients.Shared;
+using System.Collections.Generic;
 using System.Linq;
-using WebInterface.Shared;
 
 namespace MobileInterface.ViewModels
 {

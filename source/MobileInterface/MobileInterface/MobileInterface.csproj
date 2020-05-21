@@ -25,12 +25,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\WebInterface\Shared\WebInterface.Shared.csproj" />
+		<EmbeddedResource Remove="Services\Mock\MockResources.resx" Condition="'$(Configuration)'=='Release'" />
+		<None Remove="Services\Mock\MockData.json" Condition="'$(Configuration)'=='Release'" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Remove="Services\Mock\MockResources.resx" Condition="'$(Configuration)'=='Release'" />
-		<None Remove="Services\Mock\MockData.json" Condition="'$(Configuration)'=='Release'" />
+	  <ProjectReference Include="..\..\Clients.Shared\Clients.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

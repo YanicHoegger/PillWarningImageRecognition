@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Clients.Shared;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Net.Http;

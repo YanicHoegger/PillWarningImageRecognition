@@ -8,6 +8,7 @@ namespace WebInterface.Shared
 {
     public static class HttpClientExtensions
     {
+        //TODO: Move awai from Utilities --> There should be utitilities for back end and for clients
         public static async Task<T> PostImageAsync<T>(this HttpClient httpClient, Stream image, string fileName, string uri)
         {
             var fileStreamContent = new StreamContent(image);

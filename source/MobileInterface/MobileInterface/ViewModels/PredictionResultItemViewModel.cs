@@ -1,5 +1,5 @@
-﻿using System.IO;
-using WebInterface.Shared;
+﻿using Clients.Shared;
+using System.IO;
 
 namespace MobileInterface.ViewModels
 {

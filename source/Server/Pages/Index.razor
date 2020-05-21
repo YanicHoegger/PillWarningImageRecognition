@@ -1,0 +1,64 @@
+﻿@using Blazor.FileReader
+@using Clients.Shared
+@using Server.Services
+@page "/"
+@inject IFileReaderService fileReaderService
+@inject IPillWarningService pillWarningService
+
+<div class="row">
+    <input type="file" accept="image/*" id="fileUpload" @ref="fileUpload" @oninput="UploadFile" />
+</div>
+<div class="row">
+    <div class="col">
+        @if (hasFirstInput && result != null)
+        {
+            if (result.SameInprint?.Any() ?? false)
+            {
+                <h3>Same Logo</h3>
+                <div class="d-flex flex-wrap">
+                    @foreach (var warning in result.SameInprint)
+                    {
+                        <div>
+                            <div class="pill-image">
+                                <Image Content="warning.Image" OnClickCallback="@(e => SetWarningUrl(@warning))"></Image>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>We couldn't find anything in our database</p>
+            }
+        }
+    </div>
+    @if (!string.IsNullOrEmpty(warningUrl))
+    {
+        <div class="col">
+            <iframe src="@warningUrl" style="width:100%; max-height:85vh;"></iframe>
+        </div>
+    }
+</div>
+
+
+@code{
+
+    ElementReference fileUpload;
+    bool hasFirstInput;
+    PredictionResult result;
+    string warningUrl;
+
+    async Task UploadFile(ChangeEventArgs e)
+    {
+        var file = (await fileReaderService.CreateReference(fileUpload).EnumerateFilesAsync()).First();
+        var content = await file.CreateMemoryStreamAsync(4096);
+
+        hasFirstInput = true;
+        result = await pillWarningService.GetPillWarnings(content);
+    }
+
+    void SetWarningUrl(PillWarning warning)
+    {
+        warningUrl = warning.PdfLocation;
+    }
+}

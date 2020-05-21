@@ -1,8 +1,8 @@
-﻿using MobileInterface.Services;
+﻿using Clients.Shared;
+using MobileInterface.Services;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.Threading.Tasks;
-using WebInterface.Shared;
 
 namespace MobileInterface.ViewModels
 {

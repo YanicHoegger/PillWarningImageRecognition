@@ -29,7 +29,7 @@ namespace MobileInterface.Views
             await Navigate(prediciton);
         }
 
-        async Task Navigate(WebInterface.Shared.PredictionResult predictionResult)
+        async Task Navigate(Clients.Shared.PredictionResult predictionResult)
         {
             if (predictionResult == null)
                 return;
