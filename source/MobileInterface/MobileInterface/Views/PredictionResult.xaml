@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:views="clr-namespace:MobileInterface.Views"
+             mc:Ignorable="d"
+             x:Class="MobileInterface.Views.PredictionResult">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <views:ByteToImageSourceConverter x:Key="imageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <CollectionView x:Name="ItemsCollectionView" ItemsSource="{Binding Items}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Image Source="{Binding Image, Converter={StaticResource imageConverter}}" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnImageTapped" NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

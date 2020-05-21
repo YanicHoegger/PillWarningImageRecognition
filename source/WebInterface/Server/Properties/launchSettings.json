@@ -30,7 +30,7 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "MOCK": "True"
+        "MOCK": "False",
       },
       "publishAllPorts": true,
       "useSSL": true

@@ -20,10 +20,6 @@ namespace WebInterface.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //services.AddControllersWithViews().AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            //});
             services.AddRazorPages();
             services.AddDomain(Configuration);
         }
