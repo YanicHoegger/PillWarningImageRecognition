@@ -1,16 +1,22 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace WebInterface.Shared
 {
     public static class HttpClientExtensions
     {
-        //TODO: Move awai from Utilities --> There should be utitilities for back end and for clients
-        public static async Task<T> PostImageAsync<T>(this HttpClient httpClient, Stream image, string fileName, string uri)
+        public static async Task<T> PostImageAsync<T>([NotNull] this HttpClient httpClient, [NotNull] Stream image, [NotNull] string fileName, [NotNull] string uri)
         {
+            httpClient.CheckNotNull(nameof(httpClient));
+            image.CheckNotNull(nameof(image));
+            fileName.CheckNotNullOrEmpty(nameof(fileName));
+            uri.CheckNotNullOrEmpty(nameof(uri));
+
             var fileStreamContent = new StreamContent(image);
 
             fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")

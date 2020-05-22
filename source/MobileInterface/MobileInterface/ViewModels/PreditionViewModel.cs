@@ -8,6 +8,7 @@ namespace MobileInterface.ViewModels
 {
     public class PreditionViewModel : BaseViewModel
     {
+        private const string _fileName = "PillWarningPredictionImage.jpg";
         private readonly IPredictionService _predictionService;
 
         public PreditionViewModel(IPredictionService predictionService)
@@ -20,12 +21,16 @@ namespace MobileInterface.ViewModels
 
         public async Task<PredictionResult> PredictFromTakePhoto()
         {
+            SetIsBusy(true);
+
             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
             return await PredictFromPhoto(file);
         }
 
         public async Task<PredictionResult> PredictFromPickPhoto()
         {
+            SetIsBusy(true);
+
             var file = await CrossMedia.Current.PickPhotoAsync();
             return await PredictFromPhoto(file);
         }
@@ -33,27 +38,23 @@ namespace MobileInterface.ViewModels
         private async Task<PredictionResult> PredictFromPhoto(MediaFile file)
         {
             if (file == null)
+            {
+                SetIsBusy(false);
                 return null;
+            }
 
-            IsBusyInternal = true;
+            var predictionResult = await _predictionService.Predict(file.GetStream(), _fileName);
 
-            var fileName = file.Path.Replace(file.AlbumPath, "");
-            var predictionResult = await _predictionService.Predict(file.GetStream(), fileName);
-
-            IsBusyInternal = false;
+            SetIsBusy(false);
 
             return predictionResult;
         }
 
-        private bool IsBusyInternal
+        private void SetIsBusy(bool value)
         {
-            get => IsBusy;
-            set
-            {
-                IsBusy = value;
-                OnPropertyChanged(nameof(CanTakePhoto));
-                OnPropertyChanged(nameof(CanPickPhoto));
-            }
+            IsBusy = value;
+            OnPropertyChanged(nameof(CanTakePhoto));
+            OnPropertyChanged(nameof(CanPickPhoto));
         }
     }
 }
