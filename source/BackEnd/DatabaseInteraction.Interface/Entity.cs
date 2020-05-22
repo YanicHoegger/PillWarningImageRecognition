@@ -1,5 +1,4 @@
-﻿using DatabaseInteraction.Interface;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace DatabaseInteraction
