@@ -1,7 +1,7 @@
 ﻿using CustomVisionInteraction.Interface;
-using Utilities;
 using Microsoft.Extensions.Configuration;
 using System;
+using Utilities;
 
 namespace CustomVisionInteraction.Training
 {

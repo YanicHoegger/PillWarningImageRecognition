@@ -41,11 +41,8 @@ namespace MobileInterface
                         }))
                         .Build();
 
-
-
             ServiceProvider = host.Services;
         }
-
 
         public static void Start()
         {

@@ -32,7 +32,7 @@ namespace Bootstrapper
 
 #endif
 
-            foreach(var composite in _compositeBootstrappers)
+            foreach (var composite in _compositeBootstrappers)
             {
                 composite.ConfigureServices(services, configuration);
             }

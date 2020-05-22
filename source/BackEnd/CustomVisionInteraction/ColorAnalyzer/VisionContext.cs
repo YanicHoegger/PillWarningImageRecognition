@@ -1,6 +1,6 @@
 ﻿using CustomVisionInteraction.Interface;
-using Utilities;
 using Microsoft.Extensions.Configuration;
+using Utilities;
 
 namespace CustomVisionInteraction.ColorAnalyzer
 {

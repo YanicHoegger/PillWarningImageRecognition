@@ -27,10 +27,10 @@ namespace CustomVisionInteraction.UnitTests
             ThenOneImageImported();
         }
 
-        [TestCase(3,1)]
-        [TestCase(1,2)]
-        [TestCase(2,2)]
-        [TestCase(0,4)]
+        [TestCase(3, 1)]
+        [TestCase(1, 2)]
+        [TestCase(2, 2)]
+        [TestCase(0, 4)]
         public async Task NeedFiveTagsFilteringTest(int existingImageCount, int addingImageCount)
         {
             GivenExistingAndToAddTags(existingImageCount, addingImageCount);

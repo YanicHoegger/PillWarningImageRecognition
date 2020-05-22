@@ -1,5 +1,4 @@
-﻿using DatabaseInteraction;
-using DatabaseInteraction.Interface;
+﻿using DatabaseInteraction.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +27,7 @@ namespace Domain
         {
             var alreadyPresent = await _repository.Get();
 
-            if(CheckIfPresent(alreadyPresent, source))
+            if (CheckIfPresent(alreadyPresent, source))
             {
                 return;
             }

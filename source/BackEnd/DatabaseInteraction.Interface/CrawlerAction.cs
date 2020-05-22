@@ -1,5 +1,4 @@
-﻿using DatabaseInteraction.Interface;
-using System;
+﻿using System;
 
 namespace DatabaseInteraction
 {

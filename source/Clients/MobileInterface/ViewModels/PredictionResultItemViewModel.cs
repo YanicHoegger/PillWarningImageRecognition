@@ -1,5 +1,4 @@
 ﻿using Clients.Shared;
-using System.IO;
 
 namespace MobileInterface.ViewModels
 {

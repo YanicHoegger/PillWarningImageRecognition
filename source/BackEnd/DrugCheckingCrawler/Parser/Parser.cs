@@ -1,5 +1,4 @@
-﻿using Common.Logging;
-using iText.Kernel.Pdf;
+﻿using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using Microsoft.Extensions.Logging;
 using System;

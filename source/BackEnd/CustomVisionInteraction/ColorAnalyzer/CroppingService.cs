@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
-using System.IO;
-using System.Drawing;
 using System;
+using System.Drawing;
+using System.IO;
 using Utilities;
 
 namespace CustomVisionInteraction.ColorAnalyzer

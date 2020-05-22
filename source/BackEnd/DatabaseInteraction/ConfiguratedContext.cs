@@ -1,5 +1,5 @@
-﻿using Utilities;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Utilities;
 
 namespace DatabaseInteraction
 {

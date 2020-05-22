@@ -9,7 +9,7 @@ namespace MobileInterface.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is byte[] image)
+            if (value is byte[] image)
             {
                 return ImageSource.FromStream(() => new MemoryStream(image));
             }

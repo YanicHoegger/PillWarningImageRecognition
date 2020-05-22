@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json;
 
 namespace DatabaseInteraction
 {
@@ -27,7 +27,7 @@ namespace DatabaseInteraction
                 return propertyName;
 
             var interfaces = propertyInfo.DeclaringType.GetInterfaces();
-            foreach(var @interface in interfaces)
+            foreach (var @interface in interfaces)
             {
                 var property = @interface.GetProperty(propertyInfo.Name);
                 if (property == null)

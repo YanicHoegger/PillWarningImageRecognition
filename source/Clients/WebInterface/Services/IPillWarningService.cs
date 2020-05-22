@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using Clients.Shared;
+using System.IO;
 using System.Threading.Tasks;
-using Clients.Shared;
 
 namespace WebInterface.Services
 {
