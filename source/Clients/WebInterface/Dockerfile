@@ -14,10 +14,23 @@ RUN apt-get update \
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["WebInterface/WebInterface.csproj", "Server/"]
-RUN dotnet restore "WebInterface/WebInterface.csproj"
+COPY ["Clients/WebInterface/WebInterface.csproj", "Clients/WebInterface/"]
+COPY ["Clients/Clients.Shared/Clients.Shared.csproj", "Clients/Clients.Shared/"]
+COPY ["Utilities/Utilities.csproj", "Utilities/"]
+COPY ["Bootstrapper/Bootstrapper.csproj", "Bootstrapper/"]
+COPY ["BackEnd/DatabaseInteraction/DatabaseInteraction.csproj", "BackEnd/DatabaseInteraction/"]
+COPY ["Bootstrapper.Interface/Bootstrapper.Interface.csproj", "Bootstrapper.Interface/"]
+COPY ["BackEnd/DatabaseInteraction.Interface/DatabaseInteraction.Interface.csproj", "BackEnd/DatabaseInteraction.Interface/"]
+COPY ["BackEnd/Domain/Domain.csproj", "BackEnd/Domain/"]
+COPY ["BackEnd/DrugCheckingCrawler.Interface/DrugCheckingCrawler.Interface.csproj", "BackEnd/DrugCheckingCrawler.Interface/"]
+COPY ["BackEnd/CustomVisionInteraction.Interface/CustomVisionInteraction.Interface.csproj", "BackEnd/CustomVisionInteraction.Interface/"]
+COPY ["BackEnd/Domain.Interface/Domain.Interface.csproj", "BackEnd/Domain.Interface/"]
+COPY ["BackEnd/DrugCheckingCrawler/DrugCheckingCrawler.csproj", "BackEnd/DrugCheckingCrawler/"]
+COPY ["BackEnd/CustomVisionInteraction/CustomVisionInteraction.csproj", "BackEnd/CustomVisionInteraction/"]
+COPY ["BackEnd/Domain.Mock/Domain.Mock.csproj", "BackEnd/Domain.Mock/"]
+RUN dotnet restore "Clients/WebInterface/WebInterface.csproj"
 COPY . .
-WORKDIR "/src/WebInterface"
+WORKDIR "/src/Clients/WebInterface"
 RUN dotnet build "WebInterface.csproj" -c Release -o /app/build
 
 FROM build AS publish
