@@ -1,5 +1,6 @@
 ﻿using Bootstrapper.Interface;
 using DrugCheckingCrawler.Interface;
+using DrugCheckingCrawler.Parsers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

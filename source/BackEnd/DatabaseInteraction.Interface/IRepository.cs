@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DatabaseInteraction.Interface
@@ -8,5 +9,6 @@ namespace DatabaseInteraction.Interface
         Task<List<T>> Get();
         Task Insert(T entity);
         Task Insert(IEnumerable<T> entities);
+        Task Update(T toUpdate, Guid id);
     }
 }

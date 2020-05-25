@@ -15,7 +15,12 @@ namespace Domain
         private readonly IResourceCrawler _resourceCrawler;
         private readonly IEntityFactory _entityFactory;
 
-        public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler, DrugCheckingSourceHandler drugCheckingSourceHandler, IColorAnalyzer colorAnalyzer, IPillRecognitionTrainer trainer, IResourceCrawler resourceCrawler, IEntityFactory entityFactory)
+        public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler, 
+            DrugCheckingSourceHandler drugCheckingSourceHandler, 
+            IColorAnalyzer colorAnalyzer, 
+            IPillRecognitionTrainer trainer, 
+            IResourceCrawler resourceCrawler, 
+            IEntityFactory entityFactory)
         {
             _crawlerInformationHandler = crawlerInformationHandler;
             _drugCheckingSourceHandler = drugCheckingSourceHandler;

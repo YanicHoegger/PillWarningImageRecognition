@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DrugCheckingCrawler
+namespace DrugCheckingCrawler.Parsers
 {
     public class ParserResult
     {

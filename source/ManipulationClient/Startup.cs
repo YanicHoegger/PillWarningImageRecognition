@@ -1,9 +1,8 @@
-﻿using DatabaseInteraction;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Threading;
 
 namespace ManipulationClient
@@ -16,13 +15,18 @@ namespace ManipulationClient
         {
             var host = Host
                 .CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
                 .ConfigureAppConfiguration((hostContext, builder) =>
                 {
                     builder.AddUserSecrets<Program>();
                 })
                 .ConfigureServices((hostBuilderContext, serviceCollection) =>
                 {
-                    ConfigureServices(hostBuilderContext, serviceCollection);
+                    ServiceConfigurator.ConfigureServices(hostBuilderContext.Configuration, serviceCollection);
                 })
                 .Build();
 
@@ -33,11 +37,6 @@ namespace ManipulationClient
             {
                 service.StartAsync(cancellationTokenSource.Token).Wait();
             }
-        }
-
-        private static void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
-        {
-            new DatabaseBootstrapper().ConfigureServices(services, ctx.Configuration);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DrugCheckingCrawler.Interface;
+using DrugCheckingCrawler.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;

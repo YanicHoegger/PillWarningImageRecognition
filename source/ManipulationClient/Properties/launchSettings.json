@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ManipulationClient": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "CrawlDrugCheckingSource": "True"
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ using iText.Kernel.Pdf.Canvas.Parser.Data;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using System.Collections.Generic;
 
-namespace DrugCheckingCrawler
+namespace DrugCheckingCrawler.Parsers
 {
     public class ImageExtractor : IEventListener
     {

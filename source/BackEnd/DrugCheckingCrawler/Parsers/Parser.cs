@@ -2,12 +2,13 @@
 using iText.Kernel.Pdf.Canvas.Parser;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace DrugCheckingCrawler
+namespace DrugCheckingCrawler.Parsers
 {
     public class Parser
     {
@@ -35,15 +36,28 @@ namespace DrugCheckingCrawler
                 return null;
             }
 
-            var firstPage = document.GetPage(1);
+            var allPages = new List<PdfPage>();
+            for (var i = 1; i <= document.GetNumberOfPages(); i++)
+            {
+                allPages.Add(document.GetPage(i));
+            }
 
-            var text = ExtractText(firstPage);
+            var text = ExtractText(allPages);
+
+            var textParser = new TextParser(text);
+            textParser.Parse();
+
+            if (!textParser.Success)
+                return null;
+
+            new ParsedPreparer(textParser).Prepare();
+
             (bool match, string name, DateTime creation) = ParseText(text);
 
             if (!match)
                 return null;
 
-            var image = ExtractImages(firstPage);
+            var image = ExtractImages(allPages.First());
             if (image == null)
                 return null;
 
@@ -64,9 +78,9 @@ namespace DrugCheckingCrawler
             return (true, match.Groups[_name].Value, date);
         }
 
-        private static string ExtractText(PdfPage pdfPage)
+        private static string ExtractText(List<PdfPage> allPages)
         {
-            return PdfTextExtractor.GetTextFromPage(pdfPage);
+            return string.Join(ParserConstants.NewLine, allPages.Select(PdfTextExtractor.GetTextFromPage));
         }
 
         private byte[] ExtractImages(PdfPage pdfPage)
