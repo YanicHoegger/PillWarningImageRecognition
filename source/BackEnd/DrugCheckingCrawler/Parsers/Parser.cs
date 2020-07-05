@@ -1,21 +1,14 @@
 ﻿using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace DrugCheckingCrawler.Parsers
 {
     public class Parser
     {
-        private const string _name = "name";
-        private const string _date = "date";
-        private static readonly string _regexPattern = @$"\n(?<{_date}>(\w+ [0-9]+))\nName (?<{_name}>[\w \.]+)";
-
         private readonly ILogger<Parser> _logger;
 
         public Parser(ILogger<Parser> logger)
@@ -50,32 +43,17 @@ namespace DrugCheckingCrawler.Parsers
             if (!textParser.Success)
                 return null;
 
-            new ParsedPreparer(textParser).Prepare();
+            var preparer = new ParsedPreparer(textParser);
+            preparer.Prepare();
 
-            (bool match, string name, DateTime creation) = ParseText(text);
-
-            if (!match)
+            if (!preparer.Success)
                 return null;
 
             var image = ExtractImages(allPages.First());
             if (image == null)
                 return null;
 
-            return new ParserResult(name, creation, image);
-        }
-
-        private static (bool match, string name, DateTime creation) ParseText(string input)
-        {
-            var match = Regex.Match(input, _regexPattern, RegexOptions.Singleline);
-
-            if (!match.Success)
-            {
-                return (false, string.Empty, DateTime.MinValue);
-            }
-
-            var date = DateTime.Parse(match.Groups[_date].Value, CultureInfo.GetCultureInfo("de-CH"));
-
-            return (true, match.Groups[_name].Value, date);
+            return new ParserResult(preparer.Name, preparer.Tested, image);
         }
 
         private static string ExtractText(List<PdfPage> allPages)

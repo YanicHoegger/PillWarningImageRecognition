@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DrugCheckingCrawler.Parsers
 {
@@ -45,8 +46,11 @@ namespace DrugCheckingCrawler.Parsers
 
         private void ReadMiscellaneous()
         {
-            Header = _stringReader.ReadLine();
-            Date = _stringReader.ReadLine();
+            (var lineSeparetedHeader, var date) = ReadTillFind(new Regex("[\\w]+ [0-9]{4,4}"));
+
+            Header = lineSeparetedHeader.Replace(ParserConstants.NewLine, string.Empty);
+            Date = date;
+
             GeneralInfo = ReadTillFind(_riskEstimationLiteral).read;
         }
 
@@ -78,6 +82,16 @@ namespace DrugCheckingCrawler.Parsers
 
         private (string read, string foundLine) ReadTillFind(string toFind)
         {
+            return ReadTillFind(x => x.Contains(toFind));
+        }
+
+        private (string read, string foundLine) ReadTillFind(Regex regex)
+        {
+            return ReadTillFind(x => regex.Match(x).Success);
+        }
+
+        private (string read, string foundLine) ReadTillFind(Func<string, bool> predicate)
+        {
             var stringBuilder = new StringBuilder();
             do
             {
@@ -86,7 +100,7 @@ namespace DrugCheckingCrawler.Parsers
                 if (readLine == null)
                     throw new TextParserException(_allText);
 
-                if (readLine.Contains(toFind))
+                if (predicate(readLine))
                 {
                     return (stringBuilder.ToString(), readLine);
                 }

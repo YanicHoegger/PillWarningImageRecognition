@@ -1,43 +1,74 @@
-﻿using System.Drawing.Printing;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace DrugCheckingCrawler.Parsers
 {
     public static class GeneralInfoPreparer
     {
-        public static string Prepare(string toPrepare)
-        {
-            return toPrepare
-                .InsertAt("Name")
-                .InsertAt(true, "Gewicht")
-                .InsertAt(true, "Durchmesser")
-                .InsertAt("Dicke")
-                .InsertAt("Bruchrille")
-                .InsertAt("Farbe")
-                .InsertAt("Inhaltsstoffe", "Inhaltsstoff")
-                .InsertAt("Getestet in");
-        }
+        private const string _generalInfoSeperator = "\t\t\t";
 
-        private static string InsertAt(this string toInsert, params string[] positions)
+        public static IEnumerable<(string name, string value)> Prepare(string toPrepare)
         {
-            return toInsert.InsertAt(false, positions);
-        }
+            var prePrepared = PrepareInternal(toPrepare);
 
-        private static string InsertAt(this string toInsert, bool isOptional, params string[] positions)
-        {
-            var indicies = positions.Select(x => (Index: toInsert.IndexOf(x), Position: x));
-
-            if (indicies.All(x => x.Index < 0))
+            var stringReader = new StringReader(prePrepared);
+            string line;
+            while ((line = stringReader.ReadLine()) != null)
             {
-                if (isOptional)
-                    return toInsert;
+                var splitted = line.Split(_generalInfoSeperator);
+                yield return (splitted[0], splitted[1]);
+            }
+        }
 
-                throw new GeneralInfoPreparerException(string.Join(" or ", positions));
+        private static string PrepareInternal(string toPrepare)
+        {
+            var stringReader = new StringReader(toPrepare);
+            var result = toPrepare;
+
+            string line;
+            var lastknownGeneralInfo = string.Empty;
+            while((line = stringReader.ReadLine()) != null)
+            {
+                var knownGeneralInfo = KnownGeneralInfos
+                    .List
+                    .Where(x => line.Contains(x))
+                    //If an element of the list contains an other, then more then one option would be possible.
+                    //So we take the longer.
+                    //E.g.: 'Inhaltsstoff' and 'Inhaltsstoffe'
+                    .OrderByDescending(x => x.Length)
+                    .FirstOrDefault();
+
+                if (knownGeneralInfo == null)
+                {
+                    if(KnownGeneralInfos.PossibleLongContents.Contains(lastknownGeneralInfo))
+                    {
+                        var position = result.IndexOf(ParserConstants.NewLine, result.IndexOf(lastknownGeneralInfo));
+                        result = result.Remove(position, ParserConstants.NewLine.Length);
+                        result = result.Insert(position, " ");
+
+                        continue;
+                    }
+                    else
+                    {
+                        throw new GeneralInfoPreparerException(line);
+                    }
+                }
+
+                lastknownGeneralInfo = knownGeneralInfo;
+
+                var knownGeneralInfoWithSpace = $"{knownGeneralInfo} ";
+
+                if(line.Contains(knownGeneralInfoWithSpace) && line.Length > knownGeneralInfoWithSpace.Length)
+                {
+                    result = result.Replace($"{knownGeneralInfo} ", $"{knownGeneralInfo}{_generalInfoSeperator}");
+                    continue;
+                }
+
+                //TODO: Log incomplete general info
             }
 
-            var (Index, Position) = indicies.First(x => x.Index >= 0);
-
-            return toInsert.Insert(Index + Position.Length, "\t");
+            return result;
         }
     }
 }
