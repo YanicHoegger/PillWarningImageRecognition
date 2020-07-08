@@ -4,13 +4,14 @@ using System.Linq;
 
 namespace DrugCheckingCrawler.Parsers
 {
-    public static class GeneralInfoPreparer
+    public static class GeneralInfoParser
     {
         private const string _generalInfoSeperator = "\t\t\t";
 
-        public static IEnumerable<(string name, string value)> Prepare(string toPrepare)
+        //TODO: Make non static
+        public static IEnumerable<(string name, string value)> Parse(string toPrepare)
         {
-            var prePrepared = PrepareInternal(toPrepare);
+            var prePrepared = ParseInternal(toPrepare);
 
             var stringReader = new StringReader(prePrepared);
             string line;
@@ -21,7 +22,7 @@ namespace DrugCheckingCrawler.Parsers
             }
         }
 
-        private static string PrepareInternal(string toPrepare)
+        private static string ParseInternal(string toPrepare)
         {
             var stringReader = new StringReader(toPrepare);
             var result = toPrepare;
@@ -44,14 +45,14 @@ namespace DrugCheckingCrawler.Parsers
                     if(KnownGeneralInfos.PossibleLongContents.Contains(lastknownGeneralInfo))
                     {
                         var position = result.IndexOf(ParserConstants.NewLine, result.IndexOf(lastknownGeneralInfo));
-                        result = result.Remove(position, ParserConstants.NewLine.Length);
-                        result = result.Insert(position, " ");
+
+                        result = result.Replace(ParserConstants.NewLine, " ", position);
 
                         continue;
                     }
                     else
                     {
-                        throw new GeneralInfoPreparerException(line);
+                        throw new GeneralInfoParserException(line);
                     }
                 }
 

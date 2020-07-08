@@ -2,9 +2,9 @@
 
 namespace DrugCheckingCrawler.Parsers
 {
-    public class GeneralInfoPreparerException : Exception
+    public class GeneralInfoParserException : Exception
     {
-        public GeneralInfoPreparerException(string line)
+        public GeneralInfoParserException(string line)
              : base(CreateExceptionMessage(line))
         {
         }

@@ -37,14 +37,14 @@ namespace DrugCheckingCrawler.Parsers
 
             var text = ExtractText(allPages);
 
-            var textParser = new TextParser(text);
+            var textParser = new SectionParser(text);
             textParser.Parse();
 
             if (!textParser.Success)
                 return null;
 
-            var preparer = new ParsedPreparer(textParser);
-            preparer.Prepare();
+            var preparer = new DetailParser(textParser);
+            preparer.Parse();
 
             if (!preparer.Success)
                 return null;
@@ -53,7 +53,7 @@ namespace DrugCheckingCrawler.Parsers
             if (image == null)
                 return null;
 
-            return new ParserResult(preparer.Name, preparer.Tested, image);
+            return new ParserResult(preparer, image);
         }
 
         private static string ExtractText(List<PdfPage> allPages)

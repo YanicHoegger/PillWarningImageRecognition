@@ -4,11 +4,11 @@
     {
         public TextItem(string titel, string content)
         {
-            Titel = titel;
+            Title = titel;
             Content = content;
         }
 
-        public string Titel { get; }
+        public string Title { get; }
         public string Content { get; }
     }
 }

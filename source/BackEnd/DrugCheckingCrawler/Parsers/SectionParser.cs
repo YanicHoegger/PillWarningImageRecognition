@@ -6,14 +6,17 @@ using System.Text.RegularExpressions;
 
 namespace DrugCheckingCrawler.Parsers
 {
-    public class TextParser
+    public class SectionParser
     {
         private const string _infoTitleLiteral = "Info zu";
         private const string _riskEstimationLiteral = "Risikoeinschätzung";
-        private readonly string _allText;
-        private StringReader _stringReader;
 
-        public TextParser(string allText)
+        private readonly string _allText;
+
+        private StringReader _stringReader;
+        private string _rawHeader;
+
+        public SectionParser(string allText)
         {
             _stringReader = new StringReader(allText);
             _allText = allText;
@@ -46,11 +49,9 @@ namespace DrugCheckingCrawler.Parsers
 
         private void ReadMiscellaneous()
         {
-            (var lineSeparetedHeader, var date) = ReadTillFind(new Regex("[\\w]+ [0-9]{4,4}"));
+            (_rawHeader, Date) = ReadTillFind(new Regex("[\\w]+ [0-9]{4,4}"));
 
-            Header = lineSeparetedHeader.Replace(ParserConstants.NewLine, string.Empty);
-            Date = date;
-
+            Header = _rawHeader.Replace(ParserConstants.NewLine, string.Empty);
             GeneralInfo = ReadTillFind(_riskEstimationLiteral).read;
         }
 
@@ -58,7 +59,7 @@ namespace DrugCheckingCrawler.Parsers
         {
             var leftText = _stringReader.ReadToEnd();
             var strippedText = leftText
-                .Replace(Header + ParserConstants.NewLine, string.Empty)
+                .Replace(_rawHeader, string.Empty)
                 .Replace(Date + ParserConstants.NewLine, string.Empty);
 
             _stringReader = new StringReader(strippedText);
@@ -69,14 +70,17 @@ namespace DrugCheckingCrawler.Parsers
             var (riskEstimationContent, infoTitel) = ReadTillFind(_infoTitleLiteral);
 
             RiskEstimation = new TextItem(_riskEstimationLiteral, riskEstimationContent);
+
             while (HasMoreInfos())
             {
                 var (read, foundLine) = ReadTillFind(_infoTitleLiteral);
                 Infos.Add(new TextItem(infoTitel, read));
                 infoTitel = foundLine;
             }
+
             var (lastInfoContent, saferUseTitel) = ReadTillFind("Safer Use Regeln");
             Infos.Add(new TextItem(infoTitel, lastInfoContent));
+
             SaferUseRules = new TextItem(saferUseTitel, _stringReader.ReadToEnd());
         }
 

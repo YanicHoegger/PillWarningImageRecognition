@@ -4,15 +4,13 @@ namespace DrugCheckingCrawler.Parsers
 {
     public class ParserResult
     {
-        public ParserResult(string name, DateTime tested, byte[] image)
+        public ParserResult(DetailParser parsed, byte[] image)
         {
-            Name = name;
-            Tested = tested;
             Image = image;
+            Parsed = parsed;
         }
 
-        public string Name { get; }
-        public DateTime Tested { get; }
+        public DetailParser Parsed { get; }
         public byte[] Image { get; }
     }
 }
