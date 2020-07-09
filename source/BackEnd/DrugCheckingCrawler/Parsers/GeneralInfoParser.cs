@@ -18,7 +18,11 @@ namespace DrugCheckingCrawler.Parsers
             while ((line = stringReader.ReadLine()) != null)
             {
                 var splitted = line.Split(_generalInfoSeperator);
-                yield return (splitted[0], splitted[1]);
+                if(splitted.Length == 2)
+                {
+                    yield return (splitted[0], splitted[1]);
+                }
+                //TODO: Log if no information
             }
         }
 
