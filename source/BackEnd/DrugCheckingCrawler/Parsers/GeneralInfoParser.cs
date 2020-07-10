@@ -22,7 +22,7 @@ namespace DrugCheckingCrawler.Parsers
                 {
                     yield return (splitted[0], splitted[1]);
                 }
-                //TODO: Log if no information
+                //TODO: Log incomplete general info
             }
         }
 
