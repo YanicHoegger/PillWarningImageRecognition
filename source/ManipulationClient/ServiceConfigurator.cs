@@ -2,6 +2,7 @@
 using DatabaseInteraction;
 using Domain;
 using DrugCheckingCrawler;
+using Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,28 +12,20 @@ namespace ManipulationClient
     {
         public static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
-            if(GetBoolValue(configuration, "CrawlDrugCheckingSource"))
-            {
-                ConfigureDrugCheckingSourceCrawler(configuration, services);
-            }
-        }
-
-        private static void ConfigureDrugCheckingSourceCrawler(IConfiguration configuration, IServiceCollection services)
-        {
-            //TODO: this logic belongs into the bootstrapper
+            //TODO: this logic belongs into the bootstrapper --> Then also the project references can get removed
             new DatabaseBootstrapper().ConfigureServices(services, configuration);
             new CustomVisionBootstrapper().ConfigureServices(services, configuration);
             new DrugCheckingSourceBootstrapper().ConfigureServices(services, configuration);
             new ResourceCrawlerBootstrapper().ConfigureServices(services, configuration);
 
-            //services.AddScoped<IExecuter, DrugCheckingCrawler>();
-            services.AddScoped<IExecuter, DrugCheckingUpdater>();
-        }
-
-        private static bool GetBoolValue(IConfiguration configuration, string configName)
-        {
-            var hasConversation = bool.TryParse(configuration[configName], out var parsed);
-            return hasConversation && parsed;
+            if (configuration.ReadBool("Update"))
+            {
+                services.AddScoped<IExecuter, DrugCheckingUpdater>();
+            }
+            if (configuration.ReadBool("Crawl"))
+            {
+                services.AddScoped<IExecuter, DrugCheckingCrawler>();
+            }
         }
     }
 }

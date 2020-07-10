@@ -3,7 +3,9 @@
     "ManipulationClient": {
       "commandName": "Project",
       "environmentVariables": {
-        "CrawlDrugCheckingSource": "True"
+        "Update": "True",
+        "Crawl": "False",
+        "CACHED_DATABASE": "True"
       }
     }
   }

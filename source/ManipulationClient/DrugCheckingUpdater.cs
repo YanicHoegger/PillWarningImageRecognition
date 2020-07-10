@@ -1,4 +1,4 @@
-﻿using DrugCheckingCrawler.Interface;
+﻿using Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -10,9 +10,8 @@ namespace ManipulationClient
     {
         public async Task Execute(IConfiguration configuration, IServiceProvider serviceProvider)
         {
-            var crawler = serviceProvider.GetService<IResourceCrawler>();
-
-            await crawler.Crawl(1);
+            var manager = serviceProvider.GetService<DrugCheckingSourceManager>();
+            await manager.UpdateResources();
         }
     }
 }

@@ -8,10 +8,12 @@ namespace Domain
     public class DrugCheckingSourceHandler
     {
         private readonly IRepository<DrugCheckingSource> _repository;
+        private readonly IDataBaseUpdater _dataBaseUpdater;
 
-        public DrugCheckingSourceHandler(IRepositoryFactory factory)
+        public DrugCheckingSourceHandler(IRepositoryFactory factory, IDataBaseUpdater dataBaseUpdater)
         {
             _repository = factory.Create<DrugCheckingSource>();
+            _dataBaseUpdater = dataBaseUpdater;
         }
 
         public async Task StoreSources(IEnumerable<DrugCheckingSource> sources)
@@ -35,9 +37,19 @@ namespace Domain
             await _repository.Insert(source);
         }
 
+        public async Task UpdateResources(DrugCheckingSource toUpdate)
+        {
+            await _dataBaseUpdater.Update(_repository, toUpdate, x => CompareFunction(x, toUpdate));
+        }
+
         private bool CheckIfPresent(IEnumerable<DrugCheckingSource> alreadyPresent, DrugCheckingSource toCheck)
         {
-            return alreadyPresent.Any(y => y.DocumentHash.Equals(toCheck.DocumentHash));
+            return alreadyPresent.Any(y => CompareFunction(y, toCheck));
+        }
+
+        private static bool CompareFunction(DrugCheckingSource x, DrugCheckingSource y)
+        {
+            return x.PdfLocation.Equals(y.PdfLocation);
         }
     }
 }

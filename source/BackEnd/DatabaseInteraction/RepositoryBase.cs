@@ -60,6 +60,19 @@ namespace DatabaseInteraction
             return resultList;
         }
 
+        protected async Task<List<TT>> RetrieveListTemp<TT>(FeedIterator<TT> feedIterator)
+        {
+            var resultList = new List<TT>();
+
+            while (feedIterator.HasMoreResults)
+            {
+                var response = await feedIterator.ReadNextAsync();
+                resultList.AddRange(response.ToList());
+            }
+
+            return resultList;
+        }
+
         protected virtual void OnInsert() { }
 
         private async Task InsertInternal(T entity)
