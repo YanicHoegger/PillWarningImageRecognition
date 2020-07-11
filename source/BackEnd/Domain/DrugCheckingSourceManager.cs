@@ -110,6 +110,7 @@ namespace Domain
 
         private async Task TrainCustomVision(ICrawlerResult crawlerResult)
         {
+            //TODO: Check if images are pill
             await _trainer.Train(crawlerResult.Items.Select(x => (x.Image, x.Name)));
         }
     }

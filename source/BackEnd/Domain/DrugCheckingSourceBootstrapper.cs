@@ -8,9 +8,9 @@ namespace Domain
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<DrugCheckingSourceManager>();
-            services.AddScoped<CrawlerInformationHandler>();
-            services.AddScoped<DrugCheckingSourceHandler>();
+            services.AddSingleton<DrugCheckingSourceManager>();
+            services.AddSingleton<CrawlerInformationHandler>();
+            services.AddSingleton<DrugCheckingSourceHandler>();
         }
     }
 }
