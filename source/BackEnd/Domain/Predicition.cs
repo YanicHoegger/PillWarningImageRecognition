@@ -27,7 +27,6 @@ namespace Domain
                 return null;
 
             var tagFindings = await GetTagFindings(internalResult);
-            //var colorFindings = await _repository.Find($"SELECT * FROM c WHERE c.Color = {internalResult.Color.ToArgb()} ORDER BY c.Creation DESC OFFSET 0 LIMIT 20");
             var colorFindings = (await _repository.Get()).Where(x => x.Color.Equals(internalResult.Color)).OrderByDescending(x => x.Creation).Take(20);
 
             return new PredictionResult(tagFindings, colorFindings);
@@ -38,7 +37,6 @@ namespace Domain
             var tagFindings = new List<DrugCheckingSource>();
             foreach (var tag in internalResult.Tags)
             {
-                //tagFindings.AddRange(await _repository.Find($"SELECT * FROM c WHERE c.Name = \"{tag}\""));
                 tagFindings.AddRange((await _repository.Get()).Where(x => x.Name.Equals(tag)));
             }
 

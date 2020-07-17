@@ -17,7 +17,7 @@ namespace Domain.Mock
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _resultValue = JsonSerializer.Deserialize<PredictionResultMock>(Resources.OnlyInprintWarnerBrothers);
+            _resultValue = JsonSerializer.Deserialize<PredictionResultMock>(Resources.WarnerBrothers);
             return Task.CompletedTask;
         }
 

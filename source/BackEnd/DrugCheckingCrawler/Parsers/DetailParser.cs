@@ -46,7 +46,7 @@ namespace DrugCheckingCrawler.Parsers
         private void PrepareMiscellaneous()
         {
             Tested = DateTime.Parse(_sectionParser.Date, CultureInfo.GetCultureInfo("de-CH"));
-            Header = _sectionParser.Header.Replace("Warnung: ", string.Empty);
+            Header = _sectionParser.Header;
 
             GeneralInfo = GeneralInfoParser
                 .Parse(_sectionParser.GeneralInfo)

@@ -20,7 +20,7 @@
                     {
                         <div>
                             <div class="pill-image">
-                                <Image Content="warning.Image" OnClickCallback="@(e => SetWarningUrl(@warning))"></Image>
+                                <Image Content="warning.Image" OnClickCallback="@(e => selectedWarning = warning)"></Image>
                             </div>
                         </div>
                     }
@@ -32,10 +32,10 @@
             }
         }
     </div>
-    @if (!string.IsNullOrEmpty(warningUrl))
+    @if (selectedWarning != null)
     {
         <div class="col">
-            <iframe src="@warningUrl" style="width:100%; max-height:85vh;"></iframe>
+            <PillWarningDisplay PillWarning="selectedWarning"></PillWarningDisplay>
         </div>
     }
 </div>
@@ -46,7 +46,7 @@
     ElementReference fileUpload;
     bool hasFirstInput;
     PredictionResult result;
-    string warningUrl;
+    PillWarning selectedWarning;
 
     async Task UploadFile(ChangeEventArgs e)
     {
@@ -55,10 +55,5 @@
 
         hasFirstInput = true;
         result = await pillWarningService.GetPillWarnings(content);
-    }
-
-    void SetWarningUrl(PillWarning warning)
-    {
-        warningUrl = warning.PdfLocation;
     }
 }

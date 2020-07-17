@@ -8,6 +8,7 @@ namespace DatabaseInteraction.Interface
 {
     public class DrugCheckingSource : Entity
     {
+        public string Header { get; set; }
         public string Name { get; set; }
 
         [JsonConverter(typeof(ColorSerializer))]
@@ -15,11 +16,12 @@ namespace DatabaseInteraction.Interface
 
         public DateTime Creation { get; set; }
 
+        public Dictionary<string, string> GeneralInfos { get; set; }
+
         public string RiskEstimationTitle { get; set; }
         public string RiskEstimation { get; set; }
 
-        //TODO: One should not use tuples in interface assemblies
-        public List<(string title, string content)> Infos { get; set; }
+        public List<DrugCheckingInfo> Infos { get; set; }
 
         public string SaferUseRulesTitle { get; set; }
         public List<string> SaferUseRules { get; set; }

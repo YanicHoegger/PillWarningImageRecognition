@@ -85,17 +85,22 @@ namespace Domain
 
             var color = await _colorAnalyzer.GetColor(item.Image);
 
+            entity.Header = item.Header;
             entity.Name = item.Name;
             entity.Color = color;
             entity.Creation = item.Tested;
             entity.PdfLocation = item.Url;
             entity.Image = item.Image;
             entity.DocumentHash = item.DocumentHash;
+            entity.GeneralInfos = item.GeneralInfos;
 
             entity.RiskEstimationTitle = item.RiskEstimation.Title;
             entity.RiskEstimation = item.RiskEstimation.RiskEstimation;
 
-            entity.Infos = item.Infos.Select(x => (x.Title, x.Info)).ToList();
+            entity.Infos = item
+                .Infos
+                .Select(x => new DrugCheckingInfo { Title = x.Title, Info = x.Info })
+                .ToList();
 
             entity.SaferUseRulesTitle = item.SaferUserRules.Title;
             entity.SaferUseRules = item.SaferUserRules.Rules.ToList();

@@ -61,11 +61,12 @@ namespace Domain.Mock {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;TagFindings&quot;:[{&quot;Name&quot;:&quot;Warner Brothers&quot;,&quot;Color&quot;:-256,&quot;Creation&quot;:&quot;2017-10-01T00:00:00&quot;,&quot;PdfLocation&quot;:&quot;https://de.drugchecking.ch/pdf.php?p=956&quot;,&quot;Image&quot;:&quot;/9j/4AAQSkZJRgABAQEAYABgAAD/4RD+RXhpZgAATU0AKgAAAAgABAE7AAIAAAARAAAISodpAAQAAAABAAAIXJydAAEAAAAiAAAQ1OocAAcAAAgMAAAAPgAAAAAc6gAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static string OnlyInprintWarnerBrothers {
+        internal static byte[] WarnerBrothers {
             get {
-                return ResourceManager.GetString("OnlyInprintWarnerBrothers", resourceCulture);
+                object obj = ResourceManager.GetObject("WarnerBrothers", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
