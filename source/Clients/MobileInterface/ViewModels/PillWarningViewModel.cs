@@ -1,14 +1,14 @@
-﻿using System.IO;
+﻿using Clients.Shared;
 
 namespace MobileInterface.ViewModels
 {
     public class PillWarningViewModel
     {
-        public PillWarningViewModel(Stream contentStream)
+        public PillWarningViewModel(PillWarning pillWarning)
         {
-            ContentStream = contentStream;
+            PillWarning = pillWarning;
         }
 
-        public Stream ContentStream { get; }
+        public PillWarning PillWarning { get; }
     }
 }

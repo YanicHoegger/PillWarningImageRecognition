@@ -1,5 +1,4 @@
-﻿
-using MobileInterface.ViewModels;
+﻿using MobileInterface.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,8 +9,8 @@ namespace MobileInterface.Views
     {
         public PillWarning(PillWarningViewModel viewModel)
         {
-            InitializeComponent();
             BindingContext = viewModel;
+            InitializeComponent();
         }
     }
 }

@@ -5,7 +5,7 @@
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        mc:Ignorable="d"
        xmlns:local="clr-namespace:MobileInterface.Views"
-       Title="MobileInterface"
+       Title="Eve&amp;Rave Pillenwarnungen"
        x:Class="MobileInterface.AppShell">
 
     <Shell.Resources>

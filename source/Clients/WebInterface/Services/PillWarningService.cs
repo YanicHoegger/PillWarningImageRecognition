@@ -66,10 +66,11 @@ namespace WebInterface.Services
         /// Use this method for generating the text that would be used in a mock
         /// </summary>
 #pragma warning disable IDE0051 // Remove unused private members
-        private static string GetText(IPredictionResult toConvert)
+        private static string GetTextFromPredictionResult(IPredictionResult predictionResult)
 #pragma warning restore IDE0051 // Remove unused private members
         {
-            return JsonSerializer.Serialize(toConvert);
+            //return JsonSerializer.Serialize(predictionResult);
+            return JsonSerializer.Serialize(Convert(predictionResult));
         }
     }
 }
