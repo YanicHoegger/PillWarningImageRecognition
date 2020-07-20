@@ -10,7 +10,7 @@ namespace CustomVisionInteraction.ColorAnalyzer
     {
         private readonly IPredictionContext _predictionContext;
 
-        public PillDetectionCommunication(IPillDetectionContext predictionContext)
+        public PillDetectionCommunication(IPredictionContext predictionContext)
         {
             _predictionContext = predictionContext;
         }

@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CustomVisionInteraction.Interface;
+using Microsoft.Extensions.Configuration;
 using System;
 using Utilities;
 
 namespace CustomVisionInteraction.Prediction
 {
-    public class PillClassificationContext : IPillClassificationContext
+    public class PillClassificationContext : IPredictionContext
     {
         private const string KeyConfigurationKey = "CLASSIFICATION_KEY";
         private const string EndPointConfigurationKey = "CLASSIFICATION_ENDPOINT";

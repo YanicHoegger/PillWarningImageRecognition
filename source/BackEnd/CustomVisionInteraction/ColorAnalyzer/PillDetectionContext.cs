@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CustomVisionInteraction.Interface;
+using Microsoft.Extensions.Configuration;
 using System;
 using Utilities;
 
 namespace CustomVisionInteraction.ColorAnalyzer
 {
-    public class PillDetectionContext : IPillDetectionContext
+    public class PillDetectionContext : IPredictionContext
     {
         private const string _keyConfigurationKey = "DETECTION_KEY";
         private const string _endPointConfigurationKey = "DETECTION_ENDPOINT";

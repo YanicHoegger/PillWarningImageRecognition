@@ -10,9 +10,9 @@ namespace CustomVisionInteraction.Prediction
     {
         private readonly IPredictionContext _predictionContext;
 
-        public PillClassificationCommunication(IPillClassificationContext classificationContext)
+        public PillClassificationCommunication(IPredictionContext predictionContext)
         {
-            _predictionContext = classificationContext;
+            _predictionContext = predictionContext;
         }
 
         public async Task<ImagePrediction> ClassifyImage(Stream image)

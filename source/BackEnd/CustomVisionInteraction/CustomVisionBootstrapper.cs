@@ -18,17 +18,17 @@ namespace CustomVisionInteraction
             services.AddScoped<IPillRecognitionTrainer, PillRecognitionTrainer>();
 
             services.AddSingleton<IVisionContext, VisionContext>();
-            services.AddScoped<IComputerVisionCommunication, ComputerVisionCommunication>();
-            services.AddSingleton<IPillDetectionContext, PillDetectionContext>();
-            services.AddScoped<IPillDetectionCommunication, PillDetectionCommunication>();
-            services.AddScoped<IPillDetection, PillDetection>();
+            services.AddSingleton<IComputerVisionCommunication, ComputerVisionCommunication>();
+            services.AddSingleton<PillDetectionContext>();
+            services.AddSingleton<IPillDetectionCommunication, PillDetectionCommunication>(sp => new PillDetectionCommunication(sp.GetRequiredService<PillDetectionContext>()));
+            services.AddSingleton<IPillDetection, PillDetection>();
             services.AddTransient<ICroppingService, CroppingService>();
-            services.AddScoped<IColorAnalyzer, ColorAnalyzer.ColorAnalyzer>();
+            services.AddSingleton<IColorAnalyzer, ColorAnalyzer.ColorAnalyzer>();
 
-            services.AddSingleton<IPillClassificationContext, PillClassificationContext>();
-            services.AddScoped<IPillClassificationCommunication, PillClassificationCommunication>();
-            services.AddScoped<IPillClassification, PillClassification>();
-            services.AddScoped<IPrediction, PredictionFacade>();
+            services.AddSingleton<PillClassificationContext>();
+            services.AddSingleton<IPillClassificationCommunication, PillClassificationCommunication>(sp => new PillClassificationCommunication(sp.GetRequiredService<PillClassificationContext>()));
+            services.AddSingleton<IPillClassification, PillClassification>();
+            services.AddSingleton<IPrediction, PredictionFacade>();
         }
     }
 }
