@@ -13,8 +13,8 @@ namespace DatabaseInteraction
         {
             services.AddSingleton<IContext, ConfiguratedContext>();
 
-            var couldParse = bool.TryParse(configuration[_cachedConfiguration], out var isCached);
-            if (couldParse && isCached)
+            var isCached = configuration.ReadBool(_cachedConfiguration);
+            if (isCached)
             {
                 services.AddHostedSingletonService<IRepositoryFactory, CachedRepositoryFactory>();
             }
@@ -24,6 +24,7 @@ namespace DatabaseInteraction
             }
 
             services.AddSingleton<IEntityFactory, EntityFactory>();
+            services.AddSingleton<IDataBaseUpdater, DataBaseUpdater>();
         }
     }
 }

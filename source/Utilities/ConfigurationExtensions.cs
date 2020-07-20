@@ -14,5 +14,12 @@ namespace Utilities
 
             return value;
         }
+
+        public static bool ReadBool(this IConfiguration configuration, string key)
+        {
+            var couldParse = bool.TryParse(configuration[key], out var readValue);
+
+            return couldParse && readValue;
+        }
     }
 }

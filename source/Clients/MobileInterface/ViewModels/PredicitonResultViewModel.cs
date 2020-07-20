@@ -8,9 +8,9 @@ namespace MobileInterface.ViewModels
     {
         public PredicitonResultViewModel(PredictionResult predictionResult)
         {
-            Items = predictionResult.SameInprint.Select(x => new PredictionResultItemViewModel(x));
+            Items = predictionResult.SameInprint.Select(x => new PillWarningViewModel(x));
         }
 
-        public IEnumerable<PredictionResultItemViewModel> Items { get; }
+        public IEnumerable<PillWarningViewModel> Items { get; }
     }
 }

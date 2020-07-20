@@ -1,5 +1,6 @@
 ﻿using DatabaseInteraction.Interface;
 using Microsoft.Azure.Cosmos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace DatabaseInteraction
 
         public async Task Insert(T entity)
         {
-            await Container.CreateItemAsync(entity);
+            await InsertInternal(entity);
             OnInsert();
         }
 
@@ -25,8 +26,15 @@ namespace DatabaseInteraction
         {
             foreach (var entity in entities)
             {
-                await Insert(entity);
+                await InsertInternal(entity);
             }
+            OnInsert();
+        }
+
+        public async Task Update(T toUpdate, Guid id)
+        {
+            toUpdate.Id = id;
+            await Container.ReplaceItemAsync(toUpdate, id.ToString());
         }
 
         protected Container Container { get; }
@@ -52,6 +60,24 @@ namespace DatabaseInteraction
             return resultList;
         }
 
+        protected async Task<List<TT>> RetrieveListTemp<TT>(FeedIterator<TT> feedIterator)
+        {
+            var resultList = new List<TT>();
+
+            while (feedIterator.HasMoreResults)
+            {
+                var response = await feedIterator.ReadNextAsync();
+                resultList.AddRange(response.ToList());
+            }
+
+            return resultList;
+        }
+
         protected virtual void OnInsert() { }
+
+        private async Task InsertInternal(T entity)
+        {
+            await Container.CreateItemAsync(entity);
+        }
     }
 }

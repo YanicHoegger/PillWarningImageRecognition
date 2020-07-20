@@ -5,17 +5,17 @@ namespace DatabaseInteraction
 {
     public class ConfiguratedContext : IContext
     {
-        private const string KeyConfigKey = "DATABASE_KEY";
-        private const string EndPointConfigKey = "DATABASE_END_POINT";
-        private const string DatabaseNameConfigKey = "DATABASE_NAME";
-        private const string ContainerIdConfigKey = "DATABASE_CONTAINER_ID";
+        private const string _keyConfigKey = "DATABASE_KEY";
+        private const string _endPointConfigKey = "DATABASE_END_POINT";
+        private const string _databaseNameConfigKey = "DATABASE_NAME";
+        private const string _containerIdConfigKey = "DATABASE_CONTAINER_ID";
 
         public ConfiguratedContext(IConfiguration configuration)
         {
-            Key = configuration.GetNotEmptyValue(KeyConfigKey);
-            EndPoint = configuration.GetNotEmptyValue(EndPointConfigKey);
-            DatabaseName = configuration.GetNotEmptyValue(DatabaseNameConfigKey);
-            ContainerId = configuration.GetNotEmptyValue(ContainerIdConfigKey);
+            Key = configuration.GetNotEmptyValue(_keyConfigKey);
+            EndPoint = configuration.GetNotEmptyValue(_endPointConfigKey);
+            DatabaseName = configuration.GetNotEmptyValue(_databaseNameConfigKey);
+            ContainerId = configuration.GetNotEmptyValue(_containerIdConfigKey);
         }
 
         public string Key { get; }

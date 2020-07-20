@@ -11,9 +11,9 @@ namespace CustomVisionInteraction
     {
         private readonly IPillClassificationCommunication _pillClassificationCommunication;
 
-        private const double MinimumPropabilityForPill = 0.9;
-        private const double MinimumTagProbabilit = 0.2;
-        private const string PillTag = "Pill";
+        private const double _minimumPropabilityForPill = 0.9;
+        private const double _minimumTagProbabilit = 0.2;
+        private const string _pillTag = "Pill";
 
         public PillClassification(IPillClassificationCommunication pillClassificationCommunication)
         {
@@ -24,13 +24,13 @@ namespace CustomVisionInteraction
         {
             var result = await _pillClassificationCommunication.ClassifyImage(new MemoryStream(image));
 
-            var pillPrediction = result.Predictions.SingleOrDefault(x => x.TagName.Equals(PillTag));
-            if (pillPrediction == null || pillPrediction.Probability < MinimumPropabilityForPill)
+            var pillPrediction = result.Predictions.SingleOrDefault(x => x.TagName.Equals(_pillTag));
+            if (pillPrediction == null || pillPrediction.Probability < _minimumPropabilityForPill)
                 return (false, Enumerable.Empty<string>());
 
             var tags = result
                 .Predictions
-                .Where(x => !x.TagName.Equals(PillTag) && x.Probability > MinimumTagProbabilit)
+                .Where(x => !x.TagName.Equals(_pillTag) && x.Probability > _minimumTagProbabilit)
                 .Select(x => x.TagName);
 
             return (true, tags);

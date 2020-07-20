@@ -16,9 +16,9 @@ namespace MobileInterface.Views
 
         async void OnImageTapped(object sender, EventArgs args)
         {
-            if ((sender as BindableObject)?.BindingContext is PredictionResultItemViewModel item)
+            if ((sender as BindableObject)?.BindingContext is PillWarningViewModel item)
             {
-                await Navigation.PushAsync(new PillWarning(await PillWarningViewModelFactory.Create(item.PdfUrl)));
+                await Navigation.PushAsync(new PillWarning(item));
             }
         }
     }

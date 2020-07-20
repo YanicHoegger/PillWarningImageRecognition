@@ -1,4 +1,5 @@
 ﻿using DrugCheckingCrawler.Interface;
+using DrugCheckingCrawler.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -25,6 +26,8 @@ namespace DrugCheckingCrawler
         {
             foreach (var (downloadTask, address, index) in _resourceDownloader.GetPdfs(startIndex))
             {
+                //TODO: Log
+                Console.WriteLine($"Try download Nr.: {index}");
                 var downloadedContent = await downloadTask;
 
                 var parsed = _parser.ParseFile(downloadedContent);

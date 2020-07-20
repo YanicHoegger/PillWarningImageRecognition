@@ -13,8 +13,8 @@ namespace Domain
         private readonly IRepository<DrugCheckingSource> _drugCheckingRepository;
         private readonly IEntityFactory _entityFactory;
 
-        private const string Number = nameof(Number);
-        private static readonly string NumberRegex = @$"https:\/\/de\.drugchecking\.ch\/pdf\.php\?p=(?<{Number}>[0-9]+)";
+        private const string _number = nameof(_number);
+        private static readonly string _numberRegex = @$"https:\/\/de\.drugchecking\.ch\/pdf\.php\?p=(?<{_number}>[0-9]+)";
 
         public CrawlerInformationHandler(IRepositoryFactory repositoryFactory, IEntityFactory entityFactory)
         {
@@ -45,8 +45,8 @@ namespace Domain
 
         private static int GetIndex(DrugCheckingSource drugCheckingSource)
         {
-            var numberMatch = Regex.Match(drugCheckingSource.PdfLocation, NumberRegex);
-            var numberString = numberMatch.Groups[Number].Value;
+            var numberMatch = Regex.Match(drugCheckingSource.PdfLocation, _numberRegex);
+            var numberString = numberMatch.Groups[_number].Value;
             return int.Parse(numberString);
         }
     }

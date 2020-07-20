@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using DatabaseInteraction.Interface;
+using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Reflection;
@@ -11,6 +12,7 @@ namespace DatabaseInteraction
         {
             var propertyNames = typeof(T)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Where(IsMigrated)
                 .Select(GetPropertyNameOnDb);
 
             var query = $"SELECT * FROM c WHERE {string.Join(" AND ", propertyNames.Select(x => $"c.{x} <> null"))}";
@@ -40,6 +42,13 @@ namespace DatabaseInteraction
             }
 
             return propertyInfo.Name;
+        }
+
+        private static bool IsMigrated(PropertyInfo propertyInfo)
+        {
+            var attributes = propertyInfo.GetCustomAttributes<NotMigratedAttribute>(true);
+
+            return !attributes.Any();
         }
     }
 }

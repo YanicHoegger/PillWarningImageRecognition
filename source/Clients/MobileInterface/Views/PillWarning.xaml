@@ -2,11 +2,64 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:syncfusion="clr-namespace:Syncfusion.SfPdfViewer.XForms;assembly=Syncfusion.SfPdfViewer.XForms"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:views="clr-namespace:MobileInterface.Views"
              mc:Ignorable="d"
-             x:Class="MobileInterface.Views.PillWarning">
+             x:Class="MobileInterface.Views.PillWarning"
+             Title="Pillenwarnung">
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="PillWarningHeaderStyle">
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Subtitle"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <syncfusion:SfPdfViewer InputFileStream="{Binding ContentStream}"/>
+        <ScrollView>
+            <StackLayout Padding="10">
+                <Label Text="{Binding PillWarning.Header}" HorizontalTextAlignment="Center" FontSize="Large"/>
+                <StackLayout BindableLayout.ItemsSource="{Binding PillWarning.GeneralInfos}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Key}"/>
+                                <Label Grid.Column="1"  Text="{Binding Value}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                <Label Text="{Binding PillWarning.RiskEstimationTitle}" Style="{StaticResource PillWarningHeaderStyle}"/>
+                <Label Text="{Binding PillWarning.RiskEstimation}"/>
+                <StackLayout BindableLayout.ItemsSource="{Binding PillWarning.Infos}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" Style="{StaticResource PillWarningHeaderStyle}"/>
+                                <Label Text="{Binding Info}"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                <Label Text="{Binding PillWarning.SaferUseRulesTitle}" Style="{StaticResource PillWarningHeaderStyle}"/>
+                <StackLayout BindableLayout.ItemsSource="{Binding PillWarning.SaferUseRules}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="&#x2022;" Margin="10,0" FontAttributes="Bold"/>
+                                <Label Grid.Column="1"  Text="{Binding}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

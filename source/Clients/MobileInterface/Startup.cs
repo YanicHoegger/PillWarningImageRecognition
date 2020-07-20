@@ -35,6 +35,7 @@ namespace MobileInterface
                         {
                             ConfigureServices(hostBuilderContext, serviceCollection);
                         })
+                        //TODO: Use different logging
                         .ConfigureLogging(loggingBuilder => loggingBuilder.AddConsole(options =>
                         {
                             options.DisableColors = true;

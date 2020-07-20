@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ManipulationClient": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Update": "True",
+        "Crawl": "False",
+        "CACHED_DATABASE": "True"
+      }
+    }
+  }
+}

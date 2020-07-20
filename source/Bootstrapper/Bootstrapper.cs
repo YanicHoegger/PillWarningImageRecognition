@@ -3,6 +3,7 @@ using CustomVisionInteraction;
 using DatabaseInteraction;
 using Domain;
 using DrugCheckingCrawler;
+using Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -23,8 +24,7 @@ namespace Bootstrapper
         {
 #if DEBUG
 
-            var couldParse = bool.TryParse(configuration["MOCK"], out var isMock);
-            if (couldParse && isMock)
+            if (configuration.ReadBool("MOCK"))
             {
                 new Domain.Mock.DomainMockBootstrapper().ConfigureServices(services, configuration);
                 return;

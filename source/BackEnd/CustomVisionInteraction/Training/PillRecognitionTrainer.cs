@@ -12,8 +12,9 @@ namespace CustomVisionInteraction.Training
     public class PillRecognitionTrainer : IPillRecognitionTrainer
     {
         private readonly ITrainerCommunicator _trainerCommunicator;
-        private const string PillTag = "Pill";
-        private const int MinimumTagCount = 5;
+
+        private const string _pillTag = "Pill";
+        private const int _minimumTagCount = 5;
 
         public PillRecognitionTrainer(ITrainerCommunicator trainerCommunicator)
         {
@@ -31,7 +32,7 @@ namespace CustomVisionInteraction.Training
             {
                 var existingTagCount = _trainerCommunicator.GetTag(group.Key)?.ImageCount ?? 0;
 
-                if (existingTagCount + group.Count() < MinimumTagCount)
+                if (existingTagCount + group.Count() < _minimumTagCount)
                     continue;
 
                 foreach (var (image, tag) in group)
@@ -43,7 +44,7 @@ namespace CustomVisionInteraction.Training
 
         private async Task AddImageToTrain(Stream imageStream, string tag)
         {
-            var pillTag = _trainerCommunicator.GetTag(PillTag);
+            var pillTag = _trainerCommunicator.GetTag(_pillTag);
             var specificTag = await GetOrCreateTag(tag);
 
             await _trainerCommunicator.AddImage(imageStream, new[] { pillTag, specificTag });

@@ -1,10 +1,10 @@
 ﻿using Clients.Shared;
-using DatabaseInteraction.Interface;
 using Domain.Interface;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace WebInterface.Services
@@ -57,22 +57,20 @@ namespace WebInterface.Services
         {
             return new PredictionResult
             {
-                SameInprint = toConvert.TagFindings.Select(Convert),
-                SameColor = toConvert.ColorFindings.Select(Convert)
+                SameInprint = toConvert.TagFindings.Select(Converter.ToPillWarning),
+                SameColor = toConvert.ColorFindings.Select(Converter.ToPillWarning)
             };
         }
 
-        private static PillWarning Convert(DrugCheckingSource toConvert)
+        /// <summary>
+        /// Use this method for generating the text that would be used in a mock
+        /// </summary>
+#pragma warning disable IDE0051 // Remove unused private members
+        private static string GetTextFromPredictionResult(IPredictionResult predictionResult)
+#pragma warning restore IDE0051 // Remove unused private members
         {
-            //TODO: Use AutoMapper or similar
-            return new PillWarning
-            {
-                Name = toConvert.Name,
-                Color = toConvert.Color,
-                Creation = toConvert.Creation,
-                Image = toConvert.Image,
-                PdfLocation = toConvert.PdfLocation
-            };
+            //return JsonSerializer.Serialize(predictionResult);
+            return JsonSerializer.Serialize(Convert(predictionResult));
         }
     }
 }
