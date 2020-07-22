@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
+﻿using CustomVisionInteraction.Interface;
 using System;
 using System.Drawing;
 using System.IO;
@@ -8,7 +8,7 @@ namespace CustomVisionInteraction.ColorAnalyzer
 {
     public class CroppingService : ICroppingService
     {
-        public byte[] CropImage(byte[] image, BoundingBox boundingBox)
+        public byte[] CropImage(byte[] image, IBoundingBox boundingBox)
         {
             using var streamOriginal = new MemoryStream(image);
             using var originalImage = Image.FromStream(streamOriginal) as Bitmap;
@@ -26,7 +26,7 @@ namespace CustomVisionInteraction.ColorAnalyzer
             return target.ToArray();
         }
 
-        private static Rectangle CreateCroppingRectangle(BoundingBox boundingBox, Image originalImage)
+        private static Rectangle CreateCroppingRectangle(IBoundingBox boundingBox, Image originalImage)
         {
             var width = ToPixel(originalImage.Width * boundingBox.Width);
             var height = ToPixel(originalImage.Height * boundingBox.Height);

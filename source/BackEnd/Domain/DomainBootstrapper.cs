@@ -9,7 +9,8 @@ namespace Domain
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IPredicition, Predicition>();
+            services.AddSingleton<IPredicition, Predicition>();
+            services.AddSingleton<IPillColorAnalyzer, PillColorAnalyzer>();
         }
     }
 }

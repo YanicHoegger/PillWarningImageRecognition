@@ -10,8 +10,6 @@ namespace CustomVisionInteraction.ColorAnalyzer
     public class ColorAnalyzer : IColorAnalyzer
     {
         private readonly IComputerVisionCommunication _computerVisionCommunication;
-        private readonly IPillDetection _pillDetection;
-        private readonly ICroppingService _croppingService;
 
         private readonly Dictionary<string, Color> _colorMapping = new Dictionary<string, Color>
         {
@@ -31,34 +29,16 @@ namespace CustomVisionInteraction.ColorAnalyzer
             { "Yellow", Color.Yellow }
         };
 
-        public ColorAnalyzer(IComputerVisionCommunication computerVisionCommunication, IPillDetection pillDetection, ICroppingService croppingService)
+        public ColorAnalyzer(IComputerVisionCommunication computerVisionCommunication)
         {
             _computerVisionCommunication = computerVisionCommunication;
-            _pillDetection = pillDetection;
-            _croppingService = croppingService;
         }
 
         public async Task<Color> GetColor(byte[] image)
         {
-            var croppedImage = await CropImage(image);
-
-            var result = await _computerVisionCommunication.GetComputerVision(new MemoryStream(croppedImage), new[] { VisualFeatureTypes.Color });
+            var result = await _computerVisionCommunication.GetComputerVision(new MemoryStream(image), new[] { VisualFeatureTypes.Color });
 
             return _colorMapping[result.Color.DominantColorForeground];
-        }
-
-        private async Task<byte[]> CropImage(byte[] image)
-        {
-            var (hasDetection, boundingBox) = await _pillDetection.GetBestDetection(image);
-
-            if (hasDetection)
-            {
-                return _croppingService.CropImage(image, boundingBox);
-            }
-            else
-            {
-                return image;
-            }
         }
     }
 }

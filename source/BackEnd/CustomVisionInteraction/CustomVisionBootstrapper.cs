@@ -21,14 +21,13 @@ namespace CustomVisionInteraction
             services.AddSingleton<IComputerVisionCommunication, ComputerVisionCommunication>();
             services.AddSingleton<PillDetectionContext>();
             services.AddSingleton<IPillDetectionCommunication, PillDetectionCommunication>(sp => new PillDetectionCommunication(sp.GetRequiredService<PillDetectionContext>()));
-            services.AddSingleton<IPillDetection, PillDetection>();
+            services.AddSingleton<IDetector, PillDetection>();
             services.AddTransient<ICroppingService, CroppingService>();
             services.AddSingleton<IColorAnalyzer, ColorAnalyzer.ColorAnalyzer>();
 
             services.AddSingleton<PillClassificationContext>();
             services.AddSingleton<IPillClassificationCommunication, PillClassificationCommunication>(sp => new PillClassificationCommunication(sp.GetRequiredService<PillClassificationContext>()));
-            services.AddSingleton<IPillClassification, PillClassification>();
-            services.AddSingleton<IPrediction, PredictionFacade>();
+            services.AddSingleton<IClassifier, PillClassification>();
         }
     }
 }
