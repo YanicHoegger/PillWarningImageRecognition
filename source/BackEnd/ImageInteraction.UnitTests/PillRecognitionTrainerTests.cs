@@ -71,36 +71,36 @@ namespace ImageInteraction.UnitTests
 
         private void GivenTwoSameImageToAdd()
         {
-            const string TagName = "Skull";
+            const string tagName = "Skull";
 
             _trainerCommunicatorMock = new TrainerCommunicatorMock
             {
                 Tags = new List<Tag>
                 {
-                   new Tag(TagName, string.Empty, string.Empty, default, 5)
+                   new Tag(tagName, string.Empty, string.Empty, default, 5)
                 }
             };
 
             _inputData = new List<(byte[] image, string tag)>
             {
-                (TestHelper.ReadImage("Skulls1.jpg"), TagName),
-                (TestHelper.ReadImage("Skulls1.jpg"), TagName)
+                (TestHelper.ReadImage("Skulls1.jpg"), tagName),
+                (TestHelper.ReadImage("Skulls1.jpg"), tagName)
             };
         }
 
         private void GivenExistingAndToAddTags(int existingImageCount, int addingImageCount)
         {
-            const string TagName = "Tag";
+            const string tagName = "Tag";
 
             _trainerCommunicatorMock = new TrainerCommunicatorMock
             {
                 Tags = new List<Tag>
                 {
-                   new Tag(TagName, string.Empty, string.Empty, default, existingImageCount)
+                   new Tag(tagName, string.Empty, string.Empty, default, existingImageCount)
                 }
             };
             _inputData = Enumerable.Range(0, addingImageCount)
-                .Select(x => (new byte[0], TagName))
+                .Select(x => (new byte[0], tagName))
                 .ToList();
         }
 
@@ -130,12 +130,12 @@ namespace ImageInteraction.UnitTests
 
         private void ThenOneImageImported()
         {
-            _trainerCommunicatorMock.AddedImage.Count().Should().Be(1);
+            _trainerCommunicatorMock.AddedImage.Count.Should().Be(1);
         }
 
         private void ThenFiveImagesImported()
         {
-            _trainerCommunicatorMock.AddedImage.Count().Should().Be(5);
+            _trainerCommunicatorMock.AddedImage.Count.Should().Be(5);
         }
     }
 }
