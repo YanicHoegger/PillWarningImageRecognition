@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BackEnd\ImageInteraction\ImageInteraction.csproj" />
     <ProjectReference Include="..\Bootstrapper.Interface\Bootstrapper.Interface.csproj" />
-    <ProjectReference Include="..\BackEnd\CustomVisionInteraction\CustomVisionInteraction.csproj" />
     <ProjectReference Include="..\BackEnd\DatabaseInteraction\DatabaseInteraction.csproj" />
-    <ProjectReference Include="..\BackEnd\Domain.Mock\Domain.Mock.csproj" Condition="'$(Configuration)'=='Debug'"/>
+    <ProjectReference Include="..\BackEnd\Domain.Mock\Domain.Mock.csproj" Condition="'$(Configuration)'=='Debug'" />
     <ProjectReference Include="..\BackEnd\Domain\Domain.csproj" />
     <ProjectReference Include="..\BackEnd\DrugCheckingCrawler\DrugCheckingCrawler.csproj" />
   </ItemGroup>

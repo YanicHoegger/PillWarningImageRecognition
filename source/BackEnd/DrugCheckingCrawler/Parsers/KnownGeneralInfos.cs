@@ -13,7 +13,7 @@ namespace DrugCheckingCrawler.Parsers
             "Inhaltsstoff",
         };
 
-        private static readonly List<string> ShortContents = new List<string>
+        private static readonly List<string> _shortContents = new List<string>
         {
             "Name",
             "Gewicht",
@@ -27,7 +27,7 @@ namespace DrugCheckingCrawler.Parsers
 
         static KnownGeneralInfos()
         {
-            List = ShortContents
+            List = _shortContents
             .Concat(PossibleLongContents)
             .ToList();
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DatabaseInteraction.Interface;
 
 namespace DatabaseInteraction
 {

@@ -11,9 +11,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bootstrapper.Interface\Bootstrapper.Interface.csproj" />
-    <ProjectReference Include="..\CustomVisionInteraction.Interface\CustomVisionInteraction.Interface.csproj" />
     <ProjectReference Include="..\Domain.Interface\Domain.Interface.csproj" />
     <ProjectReference Include="..\DrugCheckingCrawler.Interface\DrugCheckingCrawler.Interface.csproj" />
+    <ProjectReference Include="..\ImageInteraction.Interface\ImageInteraction.Interface.csproj" />
   </ItemGroup>
 
 </Project>

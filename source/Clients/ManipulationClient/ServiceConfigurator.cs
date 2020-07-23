@@ -1,7 +1,7 @@
-﻿using CustomVisionInteraction;
-using DatabaseInteraction;
+﻿using DatabaseInteraction;
 using Domain;
 using DrugCheckingCrawler;
+using ImageInteraction;
 using Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

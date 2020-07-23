@@ -26,7 +26,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Key}"/>
+                                <Label Text="{Binding Key}" />
                                 <Label Grid.Column="1"  Text="{Binding Value}"/>
                             </Grid>
                         </DataTemplate>

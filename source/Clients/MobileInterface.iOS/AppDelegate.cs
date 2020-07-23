@@ -22,9 +22,6 @@ namespace MobileInterface.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
-            Syncfusion.SfPdfViewer.XForms.iOS.SfPdfDocumentViewRenderer.Init();
-            Syncfusion.SfRangeSlider.XForms.iOS.SfRangeSliderRenderer.Init();
-
             return base.FinishedLaunching(app, options);
         }
     }

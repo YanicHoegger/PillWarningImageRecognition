@@ -10,9 +10,9 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BackEnd\CustomVisionInteraction\CustomVisionInteraction.csproj" />
     <ProjectReference Include="..\..\BackEnd\DatabaseInteraction\DatabaseInteraction.csproj" />
     <ProjectReference Include="..\..\BackEnd\Domain\Domain.csproj" />
     <ProjectReference Include="..\..\BackEnd\DrugCheckingCrawler\DrugCheckingCrawler.csproj" />
+    <ProjectReference Include="..\..\BackEnd\ImageInteraction\ImageInteraction.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DatabaseInteraction
+namespace DatabaseInteraction.Interface
 {
     public class CrawlerAction : Entity
     {

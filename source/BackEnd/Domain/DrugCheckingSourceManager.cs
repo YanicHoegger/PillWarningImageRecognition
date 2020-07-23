@@ -1,9 +1,9 @@
-﻿using CustomVisionInteraction.Interface;
-using DatabaseInteraction.Interface;
+﻿using DatabaseInteraction.Interface;
 using DrugCheckingCrawler.Interface;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using ImageInteraction.Interface;
 
 namespace Domain
 {
@@ -12,14 +12,14 @@ namespace Domain
         private readonly CrawlerInformationHandler _crawlerInformationHandler;
         private readonly IColorAnalyzer _colorAnalyzer;
         private readonly DrugCheckingSourceHandler _drugCheckingSourceHandler;
-        private readonly IPillRecognitionTrainer _trainer;
+        private readonly IClassificationTrainer _trainer;
         private readonly IResourceCrawler _resourceCrawler;
         private readonly IEntityFactory _entityFactory;
 
         public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler, 
             DrugCheckingSourceHandler drugCheckingSourceHandler, 
             IColorAnalyzer colorAnalyzer, 
-            IPillRecognitionTrainer trainer, 
+            IClassificationTrainer trainer, 
             IResourceCrawler resourceCrawler, 
             IEntityFactory entityFactory)
         {
