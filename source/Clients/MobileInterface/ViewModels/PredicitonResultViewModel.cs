@@ -8,7 +8,9 @@ namespace MobileInterface.ViewModels
     {
         public PredicitonResultViewModel(PredictionResult predictionResult)
         {
-            Items = predictionResult.SameInprint.Select(x => new PillWarningViewModel(x));
+            //TODO: 
+            //Items = predictionResult.SameInprint.Select(x => new PillWarningViewModel(x));
+            Items = Enumerable.Empty<PillWarningViewModel>();
         }
 
         public IEnumerable<PillWarningViewModel> Items { get; }

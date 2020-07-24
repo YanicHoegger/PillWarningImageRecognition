@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.Prediction
 {
     public interface IPillColorAnalyzer
     {

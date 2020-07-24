@@ -24,7 +24,7 @@ namespace WebInterface
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddScoped<IPillWarningService, PillWarningService>();
+            services.AddSingleton<IPillWarningService, PillWarningService>();
             services.AddFileReaderService();
             services.AddDomain(Configuration);
         }

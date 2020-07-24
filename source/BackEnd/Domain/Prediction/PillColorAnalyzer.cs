@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ImageInteraction.Interface;
 
-namespace Domain
+namespace Domain.Prediction
 {
     public class PillColorAnalyzer : IPillColorAnalyzer
     {
