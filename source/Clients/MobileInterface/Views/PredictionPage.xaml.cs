@@ -1,13 +1,12 @@
 ﻿using MobileInterface.ViewModels;
 using System;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MobileInterface.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PredictionPage : ContentPage
+    public partial class PredictionPage
     {
         readonly PreditionViewModel _viewModel;
 
@@ -19,14 +18,14 @@ namespace MobileInterface.Views
 
         async void OnTakePhoto(object sender, EventArgs args)
         {
-            var prediciton = await _viewModel.PredictFromTakePhoto();
-            await Navigate(prediciton);
+            var predictionResult = await _viewModel.PredictFromTakePhoto();
+            await Navigate(predictionResult);
         }
 
         async void OnPickPhoto(object sender, EventArgs args)
         {
-            var prediciton = await _viewModel.PredictFromPickPhoto();
-            await Navigate(prediciton);
+            var predictionResult = await _viewModel.PredictFromPickPhoto();
+            await Navigate(predictionResult);
         }
 
         async Task Navigate(Clients.Shared.PredictionResult predictionResult)
@@ -34,7 +33,7 @@ namespace MobileInterface.Views
             if (predictionResult == null)
                 return;
 
-            await Navigation.PushAsync(new PredictionResult(new PredicitonResultViewModel(predictionResult)));
+            await Navigation.PushAsync(new PredictionResult(new PredictionResultViewModel(predictionResult)));
         }
     }
 }

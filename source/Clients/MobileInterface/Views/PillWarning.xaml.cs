@@ -5,7 +5,7 @@ using Xamarin.Forms.Xaml;
 namespace MobileInterface.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PillWarning : ContentPage
+    public partial class PillWarning
     {
         public PillWarning(PillWarningViewModel viewModel)
         {

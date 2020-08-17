@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using Utilities;
@@ -14,8 +13,6 @@ namespace Clients.Shared
         [JsonConverter(typeof(ColorSerializer))]
         public Color Color { get; set; }
 
-        public DateTime Creation { get; set; }
-
         public Dictionary<string, string> GeneralInfos { get; set; }
 
         public string RiskEstimationTitle { get; set; }
@@ -25,8 +22,6 @@ namespace Clients.Shared
 
         public string SaferUseRulesTitle { get; set; }
         public List<string> SaferUseRules { get; set; }
-
-        public string PdfLocation { get; set; }
 
         public byte[] Image { get; set; }
     }

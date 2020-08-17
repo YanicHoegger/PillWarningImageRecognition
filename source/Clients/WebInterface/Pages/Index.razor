@@ -12,15 +12,15 @@
     <div class="col">
         @if (_hasFirstInput && _result != null)
         {
-            if (_result.IsPill < Likeliness.Very)
+            if (!_predictionResultHelper.IsPill(_result))
             {
-                <div style="word-wrap: break-word">Ooops hier hat wohl was nicht geklappt. Wir glauben nicht dass hochgeladene Bild eine Pille ist</div>
+                <div style="word-wrap: break-word">@_predictionResultHelper.NoPillResponse</div>
             }
             else
             {
                 foreach (var resultTagFinding in _result.TagFindings)
                 {
-                    <h3>@ConvertLikeliness(resultTagFinding.Likeliness)</h3>
+                    <h3>@_predictionResultHelper.ConvertLikeliness(resultTagFinding.Likeliness)</h3>
                     <p>Name: @resultTagFinding.TagName</p>
                     <div class="d-flex flex-wrap">
                         @foreach (var warning in resultTagFinding.PillWarnings)
@@ -66,6 +66,8 @@
     PredictionResult _result;
     PillWarning _selectedWarning;
 
+    readonly PredictionResultHelper _predictionResultHelper = new PredictionResultHelper();
+
     async Task UploadFile(ChangeEventArgs e)
     {
         var file = (await FileReaderService.CreateReference(_fileUpload).EnumerateFilesAsync()).First();
@@ -73,20 +75,5 @@
 
         _hasFirstInput = true;
         _result = await PillWarningService.GetPillWarnings(content);
-    }
-
-    private string ConvertLikeliness(Likeliness likeliness)
-    {
-        switch (likeliness)
-        {
-            case Likeliness.Maybe:
-                return "Eher unwahrscheinlich aber könnte sein das es diese Pillen sind";
-            case Likeliness.Very:
-                return "Gut möglich dass es diese Pillen sind";
-            case Likeliness.Sure:
-                return "Sehr gut möglich dass es diese Pillen sind";
-            default:
-                throw new ArgumentOutOfRangeException(nameof(likeliness), likeliness, null);
-        }
     }
 }

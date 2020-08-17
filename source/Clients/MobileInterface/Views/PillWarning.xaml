@@ -2,10 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:views="clr-namespace:MobileInterface.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MobileInterface.ViewModels;assembly=MobileInterface"
+             xmlns:shared="clr-namespace:Clients.Shared;assembly=Clients.Shared"
              mc:Ignorable="d"
              x:Class="MobileInterface.Views.PillWarning"
-             Title="Pillenwarnung">
+             Title="Pillenwarnung" 
+             x:DataType="viewModels:PillWarningViewModel">
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="PillWarningHeaderStyle">
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
@@ -36,7 +39,7 @@
                 <Label Text="{Binding PillWarning.RiskEstimation}"/>
                 <StackLayout BindableLayout.ItemsSource="{Binding PillWarning.Infos}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="shared:PillWarningInfo">
                             <StackLayout>
                                 <Label Text="{Binding Title}" Style="{StaticResource PillWarningHeaderStyle}"/>
                                 <Label Text="{Binding Info}"/>
