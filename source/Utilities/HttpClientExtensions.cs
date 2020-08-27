@@ -1,12 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Utilities;
 
-namespace WebInterface.Shared
+namespace Utilities
 {
     public static class HttpClientExtensions
     {
@@ -33,6 +33,16 @@ namespace WebInterface.Shared
             };
 
             var response = await httpClient.PostAsync(uri, formData);
+
+            return await response.Content.ReadFromJsonAsync<T>();
+        }
+
+        public static async Task<T> GetAsync<T>([NotNull] this HttpClient httpClient, [NotNull] string uri)
+        {
+            httpClient.CheckNotNull(nameof(httpClient));
+            uri.CheckNotNullOrEmpty(nameof(uri));
+
+            var response = await httpClient.GetAsync(uri);
 
             return await response.Content.ReadFromJsonAsync<T>();
         }

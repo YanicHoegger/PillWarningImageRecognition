@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WebInterface.Shared;
+using Utilities;
 
 namespace MobileInterface.Services
 {

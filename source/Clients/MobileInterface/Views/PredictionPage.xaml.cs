@@ -8,12 +8,18 @@ namespace MobileInterface.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PredictionPage
     {
-        readonly PreditionViewModel _viewModel;
+        readonly PredictionViewModel _viewModel;
 
         public PredictionPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = Startup.ServiceProvider.GetService<PreditionViewModel>();
+            BindingContext = _viewModel = Startup.ServiceProvider.GetService<PredictionViewModel>();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            (BindingContext as PredictionViewModel)?.Init();
         }
 
         async void OnTakePhoto(object sender, EventArgs args)

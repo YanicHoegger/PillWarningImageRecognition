@@ -29,6 +29,7 @@ namespace MobileInterface
                         .ConfigureHostConfiguration(configurationBuilder =>
                         {
                             configurationBuilder.AddCommandLine(new[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
+                            // ReSharper disable once AccessToDisposedClosure : Is ok since we use it before leaving the scope
                             configurationBuilder.AddJsonStream(stream);
                         })
                         .ConfigureServices(ConfigureServices)
@@ -89,7 +90,8 @@ namespace MobileInterface
             services.AddSingleton<IPredictionService, PredictionService>();
 #endif
 
-            services.AddTransient<PreditionViewModel>();
+            services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
+            services.AddTransient<PredictionViewModel>();
             services.AddHostedService<MediaPluginInitService>();
 
             services.AddHttpClient();

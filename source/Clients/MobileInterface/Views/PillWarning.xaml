@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:MobileInterface.ViewModels;assembly=MobileInterface"
              xmlns:shared="clr-namespace:Clients.Shared;assembly=Clients.Shared"
              mc:Ignorable="d"
              x:Class="MobileInterface.Views.PillWarning"
-             Title="Pillenwarnung" 
-             x:DataType="viewModels:PillWarningViewModel">
+             Title="Pillenwarnung" >
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="PillWarningHeaderStyle">
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
@@ -29,7 +27,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Key}" />
+                                <Label Text="{Binding Key}"/>
                                 <Label Grid.Column="1"  Text="{Binding Value}"/>
                             </Grid>
                         </DataTemplate>

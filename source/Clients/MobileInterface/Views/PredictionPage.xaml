@@ -2,10 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:MobileInterface.Views;assembly=MobileInterface"
+             xmlns:viewModels="clr-namespace:MobileInterface.ViewModels;assembly=MobileInterface"
              mc:Ignorable="d"
              x:Class="MobileInterface.Views.PredictionPage"
-             Title="Finde Pillenwarnungen">
+             Title="Finde Pillenwarnungen" x:DataType="viewModels:PredictionViewModel">
     <ContentPage.Content>
         <Grid>
             <StackLayout>
@@ -21,6 +23,8 @@
                     HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
             <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" />
+            <views:NoInternetIndicator IsVisible="{Binding IsNotConnected}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <Label VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding NotRightVersion}">Du verwendest eine alte Version, bitte benutze eine aktuelle Version</Label>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
