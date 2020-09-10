@@ -4,7 +4,8 @@ namespace Clients.Shared
 {
     public class PredictionResult
     {
-        public IEnumerable<PillWarning> SameInprint { get; set; } = new List<PillWarning>();
-        public IEnumerable<PillWarning> SameColor { get; set; } = new List<PillWarning>();
+        public Likeliness IsPill { get; set; }
+        public List<Finding> TagFindings { get; set; }
+        public List<PillWarning> ColorFindings { get; set; }
     }
 }

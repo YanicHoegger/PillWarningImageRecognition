@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
-namespace DatabaseInteraction
+namespace DatabaseInteraction.Interface
 {
     public class Entity
     {

@@ -23,11 +23,10 @@ COPY ["Bootstrapper.Interface/Bootstrapper.Interface.csproj", "Bootstrapper.Inte
 COPY ["BackEnd/DatabaseInteraction.Interface/DatabaseInteraction.Interface.csproj", "BackEnd/DatabaseInteraction.Interface/"]
 COPY ["BackEnd/Domain/Domain.csproj", "BackEnd/Domain/"]
 COPY ["BackEnd/DrugCheckingCrawler.Interface/DrugCheckingCrawler.Interface.csproj", "BackEnd/DrugCheckingCrawler.Interface/"]
-COPY ["BackEnd/CustomVisionInteraction.Interface/CustomVisionInteraction.Interface.csproj", "BackEnd/CustomVisionInteraction.Interface/"]
+COPY ["BackEnd/ImageInteraction.Interface/ImageInteraction.Interface.csproj", "BackEnd/ImageInteraction.Interface/"]
 COPY ["BackEnd/Domain.Interface/Domain.Interface.csproj", "BackEnd/Domain.Interface/"]
 COPY ["BackEnd/DrugCheckingCrawler/DrugCheckingCrawler.csproj", "BackEnd/DrugCheckingCrawler/"]
-COPY ["BackEnd/CustomVisionInteraction/CustomVisionInteraction.csproj", "BackEnd/CustomVisionInteraction/"]
-COPY ["BackEnd/Domain.Mock/Domain.Mock.csproj", "BackEnd/Domain.Mock/"]
+COPY ["BackEnd/ImageInteraction/ImageInteraction.csproj", "BackEnd/ImageInteraction/"]
 RUN dotnet restore "Clients/WebInterface/WebInterface.csproj"
 COPY . .
 WORKDIR "/src/Clients/WebInterface"

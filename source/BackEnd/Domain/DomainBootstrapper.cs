@@ -1,5 +1,6 @@
 ﻿using Bootstrapper.Interface;
 using Domain.Interface;
+using Domain.Prediction;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +10,9 @@ namespace Domain
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IPredicition, Predicition>();
+            services.AddSingleton<IPredicition, Prediction.Prediction>();
+            services.AddSingleton<IPillColorAnalyzer, PillColorAnalyzer>();
+            services.AddSingleton<IProbabilityToLikelinessConverter, ProbabilityToLikelinessConverter>();
         }
     }
 }

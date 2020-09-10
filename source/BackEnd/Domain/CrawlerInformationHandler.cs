@@ -1,5 +1,4 @@
-﻿using DatabaseInteraction;
-using DatabaseInteraction.Interface;
+﻿using DatabaseInteraction.Interface;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;

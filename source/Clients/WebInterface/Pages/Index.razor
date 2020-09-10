@@ -2,40 +2,55 @@
 @using Clients.Shared
 @using WebInterface.Services
 @page "/"
-@inject IFileReaderService fileReaderService
-@inject IPillWarningService pillWarningService
+@inject IFileReaderService FileReaderService
+@inject IPillWarningService PillWarningService
 
 <div class="row">
-    <input type="file" accept="image/*" id="fileUpload" @ref="fileUpload" @oninput="UploadFile" />
+    <input type="file" accept="image/*" id="fileUpload" @ref="_fileUpload" @oninput="UploadFile" />
 </div>
 <div class="row">
     <div class="col">
-        @if (hasFirstInput && result != null)
+        @if (_hasFirstInput && _result != null)
         {
-            if (result.SameInprint?.Any() ?? false)
+            if (!_predictionResultHelper.IsPill(_result))
             {
-                <h3>Same Logo</h3>
+                <div style="word-wrap: break-word">@_predictionResultHelper.NoPillResponse</div>
+            }
+            else
+            {
+                foreach (var resultTagFinding in _result.TagFindings)
+                {
+                    <h3>@_predictionResultHelper.ConvertLikeliness(resultTagFinding.Likeliness)</h3>
+                    <p>Name: @resultTagFinding.TagName</p>
+                    <div class="d-flex flex-wrap">
+                        @foreach (var warning in resultTagFinding.PillWarnings)
+                        {
+                            <div>
+                                <div class="pill-image">
+                                    <Image Content="warning.Image" OnClickCallback="@(e => _selectedWarning = warning)"></Image>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                <h3>Pillen mit gleicher Farbe</h3>
                 <div class="d-flex flex-wrap">
-                    @foreach (var warning in result.SameInprint)
+                    @foreach (var warning in _result.ColorFindings)
                     {
                         <div>
                             <div class="pill-image">
-                                <Image Content="warning.Image" OnClickCallback="@(e => selectedWarning = warning)"></Image>
+                                <Image Content="warning.Image" OnClickCallback="@(e => _selectedWarning = warning)"></Image>
                             </div>
                         </div>
                     }
                 </div>
             }
-            else
-            {
-                <p>We couldn't find anything in our database</p>
-            }
         }
     </div>
-    @if (selectedWarning != null)
+    @if (_selectedWarning != null)
     {
         <div class="col">
-            <PillWarningDisplay PillWarning="selectedWarning"></PillWarningDisplay>
+            <PillWarningDisplay PillWarning="_selectedWarning"></PillWarningDisplay>
         </div>
     }
 </div>
@@ -43,17 +58,22 @@
 
 @code{
 
-    ElementReference fileUpload;
-    bool hasFirstInput;
-    PredictionResult result;
-    PillWarning selectedWarning;
+#pragma warning disable 649 //This field is used as ref
+    ElementReference _fileUpload;
+#pragma warning restore 649
+
+    bool _hasFirstInput;
+    PredictionResult _result;
+    PillWarning _selectedWarning;
+
+    readonly PredictionResultHelper _predictionResultHelper = new PredictionResultHelper();
 
     async Task UploadFile(ChangeEventArgs e)
     {
-        var file = (await fileReaderService.CreateReference(fileUpload).EnumerateFilesAsync()).First();
+        var file = (await FileReaderService.CreateReference(_fileUpload).EnumerateFilesAsync()).First();
         var content = await file.CreateMemoryStreamAsync(4096);
 
-        hasFirstInput = true;
-        result = await pillWarningService.GetPillWarnings(content);
+        _hasFirstInput = true;
+        _result = await PillWarningService.GetPillWarnings(content);
     }
 }

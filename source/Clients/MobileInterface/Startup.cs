@@ -6,7 +6,7 @@ using MobileInterface.Services;
 using MobileInterface.Services.Mock;
 using MobileInterface.ViewModels;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,13 +28,11 @@ namespace MobileInterface
             var host = new HostBuilder()
                         .ConfigureHostConfiguration(configurationBuilder =>
                         {
-                            configurationBuilder.AddCommandLine(new string[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
+                            configurationBuilder.AddCommandLine(new[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
+                            // ReSharper disable once AccessToDisposedClosure : Is ok since we use it before leaving the scope
                             configurationBuilder.AddJsonStream(stream);
                         })
-                        .ConfigureServices((hostBuilderContext, serviceCollection) =>
-                        {
-                            ConfigureServices(hostBuilderContext, serviceCollection);
-                        })
+                        .ConfigureServices(ConfigureServices)
                         //TODO: Use different logging
                         .ConfigureLogging(loggingBuilder => loggingBuilder.AddConsole(options =>
                         {
@@ -52,11 +50,11 @@ namespace MobileInterface
 
         public static void Stop()
         {
-            var tasks = new List<Task>();
-            foreach (var service in ServiceProvider.GetServices<IHostedService>())
-            {
-                tasks.Add(service.StopAsync(_cancellationTokenSource.Token));
-            }
+            var tasks = ServiceProvider
+                .GetServices<IHostedService>()
+                .Select(service => service.StopAsync(_cancellationTokenSource.Token))
+                .ToList();
+
             Task.WhenAny(Task.WhenAll(tasks), Task.Delay(1000));
             _cancellationTokenSource?.Cancel();
         }
@@ -92,7 +90,8 @@ namespace MobileInterface
             services.AddSingleton<IPredictionService, PredictionService>();
 #endif
 
-            services.AddTransient<PreditionViewModel>();
+            services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
+            services.AddTransient<PredictionViewModel>();
             services.AddHostedService<MediaPluginInitService>();
 
             services.AddHttpClient();
