@@ -24,7 +24,15 @@
             </StackLayout>
             <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" />
             <views:NoInternetIndicator IsVisible="{Binding IsNotConnected}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-            <Label VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding NotRightVersion}">Du verwendest eine alte Version, bitte benutze eine aktuelle Version</Label>
+            <Label VerticalOptions="FillAndExpand" 
+                   HorizontalOptions="FillAndExpand" 
+                   IsVisible="{Binding NotRightVersion}" 
+                   BackgroundColor="White"
+                   VerticalTextAlignment="Center"
+                   LineBreakMode="WordWrap"
+                   Margin="10">
+                Du verwendest eine alte Version, bitte benutze eine aktuelle Version
+            </Label>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -32,9 +32,9 @@ namespace Utilities
                 fileStreamContent
             };
 
-            var response = await httpClient.PostAsync(uri, formData);
+            var response = await httpClient.PostAsync(uri, formData).ConfigureAwait(false);
 
-            return await response.Content.ReadFromJsonAsync<T>();
+            return await response.Content.ReadFromJsonAsync<T>().ConfigureAwait(false);
         }
 
         public static async Task<T> GetAsync<T>([NotNull] this HttpClient httpClient, [NotNull] string uri)
@@ -42,9 +42,9 @@ namespace Utilities
             httpClient.CheckNotNull(nameof(httpClient));
             uri.CheckNotNullOrEmpty(nameof(uri));
 
-            var response = await httpClient.GetAsync(uri);
+            var response = await httpClient.GetAsync(uri).ConfigureAwait(false);
 
-            return await response.Content.ReadFromJsonAsync<T>();
+            return await response.Content.ReadFromJsonAsync<T>().ConfigureAwait(false);
         }
     }
 }

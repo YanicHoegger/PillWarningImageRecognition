@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Clients.Shared;
 using Microsoft.Extensions.Configuration;
-using Utilities;
 
 namespace MobileInterface.Services
 {
@@ -13,6 +12,10 @@ namespace MobileInterface.Services
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
 
+        //The version would not change unless recompiled, so check it once is good enough
+        private bool _hasAlreadyChecked;
+        private bool _previewousResult;
+
         public VersionCheckerService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
@@ -21,13 +24,18 @@ namespace MobileInterface.Services
 
         public async Task<bool> GetIsCorrectServerVersion()
         {
-            var client = _httpClientFactory.CreateClient();
+            if (!_hasAlreadyChecked)
+            {
+                using var client = _httpClientFactory.CreateClient();
 
-            var temp = await client.GetAsync(_configuration[_uriConfiguration]);
+                var versionResponse = await client.GetAsync(_configuration[_uriConfiguration]).ConfigureAwait(false);
+                var version = await versionResponse.Content.ReadAsStringAsync();
 
-            var version = await client.GetAsync<string>(_configuration[_uriConfiguration]);
+                _previewousResult = version.Equals(VersionConstant.Current);
+                _hasAlreadyChecked = true;
+            }
 
-            return version.Equals(VersionConstant.Current);
+            return _previewousResult;
         }
     }
 }

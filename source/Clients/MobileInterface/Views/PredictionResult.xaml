@@ -10,8 +10,11 @@
              x:Class="MobileInterface.Views.PredictionResult"
              Title="Resultat" 
              x:DataType="viewModels:PredictionResultViewModel">
+    <ContentPage.Resources>
+        <mobileInterface:InverseBoolConverter x:Key="InverseBoolConverter"/>
+    </ContentPage.Resources>
     <StackLayout>
-        <Label Text="{Binding NoPillResponse}" IsVisible="{Binding IsPill, Converter={mobileInterface:InverseBoolConverter}}"/>
+        <Label Text="{Binding NoPillResponse}" IsVisible="{Binding IsPill, Converter={StaticResource InverseBoolConverter}}"/>
         <CollectionView x:Name="ItemsCollectionView" ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

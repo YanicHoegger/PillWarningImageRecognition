@@ -12,12 +12,19 @@ namespace MobileInterface.ViewModels
         {
             IsPill = _predictionResultHelper.IsPill(predictionResult);
 
-            Items = predictionResult
-                .TagFindings
-                .Select(Convert)
-                .Append(new PredictionItemViewModel("Pillen mit gleicher Farbe", predictionResult
-                    .ColorFindings
-                    .Select(x => new PillWarningViewModel(x))));
+            if(IsPill)
+            {
+                Items = predictionResult
+                    .TagFindings
+                    .Select(Convert)
+                    .Append(new PredictionItemViewModel("Pillen mit gleicher Farbe", predictionResult
+                        .ColorFindings
+                        .Select(x => new PillWarningViewModel(x))));
+            }
+            else
+            {
+                Items = Enumerable.Empty<PredictionItemViewModel>();
+            }
         }
 
         public bool IsPill { get; }
