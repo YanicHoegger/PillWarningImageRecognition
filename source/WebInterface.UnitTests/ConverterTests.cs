@@ -1,44 +1,69 @@
-﻿using AutoFixture.NUnit3;
-using Clients.Shared;
-using DatabaseInteraction.Interface;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using AutoFixture;
+using Domain.Interface;
+using Domain.Prediction;
 using WebInterface.Services;
+using PredictionResult = Clients.Shared.PredictionResult;
 
 namespace WebInterface.UnitTests
 {
     [TestFixture]
     public class ConverterTests
     {
-        [Test, AutoData]
-        public void ConvertCorrectTest(DrugCheckingSource drugCheckingSource)
+        [Test]
+        public void ConvertCorrectTest()
         {
-            GivenDrugCheckingSource(drugCheckingSource);
+            GivenDrugCheckingSource();
             WhenConvert();
             ThenCorrectConverted();
         }
 
-        private DrugCheckingSource _drugCheckingSource;
-        private PillWarning _pillWarning;
+        private IPredictionResult _predictionResult;
+        private PredictionResult _pillWarning;
 
-        private void GivenDrugCheckingSource(DrugCheckingSource drugCheckingSource)
+        private void GivenDrugCheckingSource()
         {
-            _drugCheckingSource = drugCheckingSource;
+            var fixture = new Fixture();
+
+            var tagFindings = new List<Finding>
+            {
+                new Finding("TagName", Likeliness.Very, new List<PillWarning>
+                {
+                    fixture.Create<PillWarning>(),
+                    fixture.Create<PillWarning>(),
+                    fixture.Create<PillWarning>()
+                })
+            };
+
+            var colorFindings = new List<PillWarning>
+            {
+                fixture.Create<PillWarning>(),
+                fixture.Create<PillWarning>()
+            };
+
+            _predictionResult = new Domain.Prediction.PredictionResult(Likeliness.Sure, tagFindings, colorFindings);
         }
 
         private void WhenConvert()
         {
-            _pillWarning = Converter.ToPillWarning(_drugCheckingSource);
+            _pillWarning = Converter.ToPredictionResult(_predictionResult);
         }
 
         private void ThenCorrectConverted()
         {
-            AssertProperties(_drugCheckingSource, _pillWarning);
+            CheckProperties(_predictionResult, _pillWarning);
         }
 
-        private static void AssertProperties(object source, object destination)
+        private static void CheckProperties(object source, object destination)
         {
+            if (source.GetType() == destination.GetType())
+            {
+                Assert.AreEqual(source, destination);
+                return;
+            }
+
             var sourceProperties = source.GetType().GetProperties();
             var destinationProperties = destination.GetType().GetProperties();
 
@@ -49,22 +74,30 @@ namespace WebInterface.UnitTests
                     .Single(x => x.Name.Equals(destinationProperty.Name))
                     .GetValue(source);
 
-                if(destinationProperty.PropertyType.IsAssignableFrom(typeof(List<PillWarningInfo>)))
+                // ReSharper disable PossibleNullReferenceException : We checked for type before
+                // ReSharper disable AssignNullToNotNullAttribute
+                if (typeof(IEnumerable<object>).IsAssignableFrom(destinationProperty.PropertyType))
                 {
-                    var sourceList = (List<DrugCheckingInfo>)sourceValue;
-                    var destinationList = (List<PillWarningInfo>)destinationValue;
+                    var sourceListValue = ((IEnumerable<object>)sourceValue).ToList();
+                    var destinationListValue = ((IEnumerable<object>)destinationValue).ToList();
 
-                    Assert.AreEqual(sourceList.Count, destinationList.Count);
+                    Assert.AreEqual(sourceListValue.Count, destinationListValue.Count);
 
-                    for(var i = 0; i < sourceList.Count; i++)
+                    for (int i = 0; i < sourceListValue.Count; i++)
                     {
-                        AssertProperties(sourceList[i], destinationList[i]);
+                        CheckProperties(sourceListValue[i], destinationListValue[i]);
                     }
+                }
+                else if (destinationProperty.PropertyType.IsEnum)
+                {
+                    Assert.AreEqual((int)sourceValue, (int)destinationValue, $"Property '{destinationProperty.Name}' is incorrect");
                 }
                 else
                 {
                     Assert.AreEqual(sourceValue, destinationValue, $"Property '{destinationProperty.Name}' is incorrect");
                 }
+                // ReSharper restore PossibleNullReferenceException
+                // ReSharper restore AssignNullToNotNullAttribute
             }
         }
     }

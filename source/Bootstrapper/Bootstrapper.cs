@@ -1,5 +1,4 @@
 ﻿using Bootstrapper.Interface;
-using CustomVisionInteraction;
 using DatabaseInteraction;
 using Domain;
 using DrugCheckingCrawler;
@@ -7,6 +6,7 @@ using Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
+using ImageInteraction;
 
 namespace Bootstrapper
 {

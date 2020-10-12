@@ -3,7 +3,6 @@ using Domain.Interface;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -12,12 +11,12 @@ namespace WebInterface.Services
     public class PillWarningService : IPillWarningService
     {
         private readonly ILogger<PillWarningService> _logger;
-        private readonly IPredicition _predicition;
+        private readonly IPredicition _prediction;
 
-        public PillWarningService(ILogger<PillWarningService> logger, IPredicition predicition)
+        public PillWarningService(ILogger<PillWarningService> logger, IPredicition prediction)
         {
             _logger = logger;
-            _predicition = predicition;
+            _prediction = prediction;
         }
 
         public async Task<PredictionResult> GetPillWarnings(Stream image)
@@ -28,17 +27,11 @@ namespace WebInterface.Services
             try
             {
                 var imageByteArray = await ReadImage(image);
-                prediction = await _predicition.Predict(imageByteArray);
+                prediction = await _prediction.Predict(imageByteArray);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Could not make prediction");
-                return new PredictionResult();
-            }
-
-            if (prediction == null)
-            {
-                _logger.LogInformation("No result out of prediction");
                 return new PredictionResult();
             }
 
@@ -55,11 +48,7 @@ namespace WebInterface.Services
 
         private static PredictionResult Convert(IPredictionResult toConvert)
         {
-            return new PredictionResult
-            {
-                SameInprint = toConvert.TagFindings.Select(Converter.ToPillWarning),
-                SameColor = toConvert.ColorFindings.Select(Converter.ToPillWarning)
-            };
+            return Converter.ToPredictionResult(toConvert);
         }
 
         /// <summary>

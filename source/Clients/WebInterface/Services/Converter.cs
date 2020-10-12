@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Clients.Shared;
-using DatabaseInteraction.Interface;
+using Domain.Interface;
 
 namespace WebInterface.Services
 {
@@ -8,13 +8,15 @@ namespace WebInterface.Services
     {
         private static readonly Mapper _mapper = new Mapper(new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<DrugCheckingSource, PillWarning>();
-            cfg.CreateMap<DrugCheckingInfo, PillWarningInfo>();
+            cfg.CreateMap<IPredictionResult, PredictionResult>();
+            cfg.CreateMap<IFinding, Finding>();
+            cfg.CreateMap<IPillWarning, PillWarning>();
+            cfg.CreateMap<IPillWarningInfo, PillWarningInfo>();
         }));
 
-        public static PillWarning ToPillWarning(DrugCheckingSource drugCheckingSource)
+        public static PredictionResult ToPredictionResult(IPredictionResult pillWarning)
         {
-            return _mapper.Map<PillWarning>(drugCheckingSource);
+            return _mapper.Map<PredictionResult>(pillWarning);
         }
     }
 }
