@@ -14,9 +14,8 @@
     
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
-            <Color x:Key="Accent">#96d1ff</Color>
-            <Color x:Key="LightTextColor">#999999</Color>
+            <Color x:Key="Primary">#7db5c7</Color>
+            <Color x:Key="Accent">#487e8f</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -27,51 +26,21 @@
         </Grid.RowDefinitions>
         <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
-                    <Image Source="xamarin_logo.png" VerticalOptions="Center" HeightRequest="64" />
+                <ContentView Padding="0,10,0,10" VerticalOptions="FillAndExpand">
+                    <Image Source="eve_and_rave_logo.png" VerticalOptions="Center" HeightRequest="64" />
                 </ContentView>
             </StackLayout>
         </StackLayout>
         <ScrollView Grid.Row="1">
-            <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
-                <Label FontSize="22">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="AppName" FontAttributes="Bold" FontSize="22" />
-                                <Span Text=" " />
-                                <Span Text="1.0" ForegroundColor="{StaticResource LightTextColor}" />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="This app is written in C# and native APIs using the" />
-                                <Span Text=" " />
-                                <Span Text="Xamarin Platform" FontAttributes="Bold" />
-                                <Span Text="." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="It shares code with its" />
-                                <Span Text=" " />
-                                <Span Text="iOS, Android, and Windows" FontAttributes="Bold" />
-                                <Span Text=" " />
-                                <Span Text="versions." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Button Margin="0,10,0,0" Text="Learn more"
+            <StackLayout Orientation="Vertical" Padding="16,20,16,40" Spacing="10">
+                <Label FontSize="Large" Text="eve&amp;rave ist eine unabhängige, szenennahe Organisation und setzt sich für einen risikobewussten und selbstverantwortlichen Umgang mit Drogen ein."/>
+                <Button Margin="0,10,0,0" Text="Mehr über uns"
                         Command="{Binding OpenWebCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                <Label Margin="0,40,0,0"  Text="Diese App ist noch in der Testphase. Falls du eine Störung hast, teile bitte den log, damit wir dem nachgehen können"/>
+                <Button Margin="0,10,0,0" Text="Log teilen"
+                        Command="{Binding ShareLogFileCommand}"
                         BackgroundColor="{StaticResource Primary}"
                         TextColor="White" />
             </StackLayout>

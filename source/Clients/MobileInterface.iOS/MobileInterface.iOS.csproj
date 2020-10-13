@@ -132,7 +132,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1142" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1534" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -141,5 +141,8 @@
       <Project>{FE1B68B3-B171-4F4D-9202-9242052853AE}</Project>
       <Name>MobileInterface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\eve_and_rave_logo.png" />
   </ItemGroup>
 </Project>
