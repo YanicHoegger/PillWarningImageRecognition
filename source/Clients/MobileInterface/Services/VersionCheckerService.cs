@@ -1,20 +1,20 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Clients.Shared;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Xamarin.Essentials;
 
 namespace MobileInterface.Services
 {
-    public class VersionCheckerService : IVersionCheckerService
+    public class VersionCheckerService : IVersionCheckerService, IHostedService
     {
         private const string _uriConfiguration = "VersionUri";
 
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
-
-        //The version would not change unless recompiled, so check it once is good enough
-        private bool _hasAlreadyChecked;
-        private bool _previewousResult;
 
         public VersionCheckerService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
@@ -22,20 +22,52 @@ namespace MobileInterface.Services
             _configuration = configuration;
         }
 
-        public async Task<bool> GetIsCorrectServerVersion()
+        public bool IsVersionChecked { get; private set; }
+        public bool IsVersionCorrect { get; private set; }
+
+        public event Action VersionChecked;
+
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            if (!_hasAlreadyChecked)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
-                using var client = _httpClientFactory.CreateClient();
+                Connectivity.ConnectivityChanged += CheckVersion;
+            }
+            else
+            {
+                await CheckVersion(cancellationToken);
+            }
+        }
 
-                var versionResponse = await client.GetAsync(_configuration[_uriConfiguration]).ConfigureAwait(false);
-                var version = await versionResponse.Content.ReadAsStringAsync();
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            Connectivity.ConnectivityChanged -= CheckVersion;
 
-                _previewousResult = version.Equals(VersionConstant.Current);
-                _hasAlreadyChecked = true;
+            return Task.CompletedTask;
+        }
+
+        private async Task CheckVersion(CancellationToken cancellationToken)
+        {
+            using var client = _httpClientFactory.CreateClient();
+
+            var versionResponse = await client.GetAsync(_configuration[_uriConfiguration], cancellationToken).ConfigureAwait(false);
+            var version = await versionResponse.Content.ReadAsStringAsync();
+
+            IsVersionCorrect = version.Equals(VersionConstant.Current);
+            IsVersionChecked = true;
+
+            VersionChecked?.Invoke();
+        }
+
+        private void CheckVersion(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                return;
             }
 
-            return _previewousResult;
+            _ = CheckVersion(CancellationToken.None);
+            Connectivity.ConnectivityChanged -= CheckVersion;
         }
     }
 }

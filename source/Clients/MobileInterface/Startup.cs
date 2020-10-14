@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging;
+using Utilities;
 using Xamarin.Essentials;
 
 namespace MobileInterface
@@ -74,7 +75,6 @@ namespace MobileInterface
             }
         }
 
-
         static void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
         {
 #if DEBUG
@@ -90,7 +90,7 @@ namespace MobileInterface
             services.AddSingleton<IPredictionService, PredictionService>();
 #endif
 
-            services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
+            services.AddHostedSingletonService<IVersionCheckerService, VersionCheckerService>();
             services.AddTransient<PredictionViewModel>();
             services.AddHostedService<MediaPluginInitService>();
 
