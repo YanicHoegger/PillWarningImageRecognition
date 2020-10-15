@@ -4,14 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:views="clr-namespace:MobileInterface.Views"
-             xmlns:mobileInterface="clr-namespace:MobileInterface;assembly=MobileInterface"
              xmlns:viewModels="clr-namespace:MobileInterface.ViewModels;assembly=MobileInterface"
              mc:Ignorable="d"
              x:Class="MobileInterface.Views.PredictionResult"
              Title="Resultat" 
              x:DataType="viewModels:PredictionResultViewModel">
     <ContentPage.Resources>
-        <mobileInterface:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <views:InverseBoolConverter x:Key="InverseBoolConverter"/>
     </ContentPage.Resources>
     <StackLayout>
         <Label Text="{Binding NoPillResponse}" IsVisible="{Binding IsPill, Converter={StaticResource InverseBoolConverter}}"/>

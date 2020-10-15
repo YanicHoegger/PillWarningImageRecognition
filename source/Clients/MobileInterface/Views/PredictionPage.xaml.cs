@@ -16,12 +16,6 @@ namespace MobileInterface.Views
             BindingContext = _viewModel = Startup.ServiceProvider.GetService<PredictionViewModel>();
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            (BindingContext as PredictionViewModel)?.Init();
-        }
-
         async void OnTakePhoto(object sender, EventArgs args)
         {
             var predictionResult = await _viewModel.PredictFromTakePhoto();

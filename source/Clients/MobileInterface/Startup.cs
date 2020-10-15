@@ -1,15 +1,21 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using MobileInterface.Services;
+#if DEBUG
 using MobileInterface.Services.Mock;
+#endif
 using MobileInterface.ViewModels;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Serilog.Extensions.Logging;
+using Utilities;
 using Xamarin.Essentials;
 
 namespace MobileInterface
@@ -33,11 +39,6 @@ namespace MobileInterface
                             configurationBuilder.AddJsonStream(stream);
                         })
                         .ConfigureServices(ConfigureServices)
-                        //TODO: Use different logging
-                        .ConfigureLogging(loggingBuilder => loggingBuilder.AddConsole(options =>
-                        {
-                            options.DisableColors = true;
-                        }))
                         .Build();
 
             ServiceProvider = host.Services;
@@ -74,7 +75,6 @@ namespace MobileInterface
             }
         }
 
-
         static void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
         {
 #if DEBUG
@@ -90,11 +90,26 @@ namespace MobileInterface
             services.AddSingleton<IPredictionService, PredictionService>();
 #endif
 
-            services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
+            services.AddHostedSingletonService<IVersionCheckerService, VersionCheckerService>();
             services.AddTransient<PredictionViewModel>();
             services.AddHostedService<MediaPluginInitService>();
 
             services.AddHttpClient();
+
+            ConfigureLogging(services);
+        }
+
+        private static void ConfigureLogging(IServiceCollection services)
+        {
+            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var path = Path.Combine(basePath, "log.txt");
+
+            var logger = new LoggerConfiguration()
+                .WriteTo.File(path, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 1,
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}")
+                .CreateLogger();
+
+            services.AddSingleton<ILoggerFactory>(_ => new SerilogLoggerFactory(logger));
         }
     }
 }

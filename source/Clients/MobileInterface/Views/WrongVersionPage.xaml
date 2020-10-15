@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MobileInterface.ViewModels;assembly=MobileInterface"
+             x:Class="MobileInterface.Views.WrongVersionPage"
+             IsVisible="{Binding IsWrongVersion}">
+    <ContentPage.BindingContext>
+        <viewModels:VersionViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Du verwendest eine alte Version, bitte benutze eine aktuelle Version"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
