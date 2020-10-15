@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 
 namespace MobileInterface.Services
 {
     public interface IVersionCheckerService
     {
-        Task<bool> GetIsCorrectServerVersion();
+        bool IsVersionChecked { get; }
+        bool IsVersionCorrect { get; }
+
+        event Action VersionChecked;
     }
 }

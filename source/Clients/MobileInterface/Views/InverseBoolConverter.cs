@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace MobileInterface
+namespace MobileInterface.Views
 {
     public class InverseBoolConverter : IValueConverter
     {

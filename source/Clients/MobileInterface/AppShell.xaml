@@ -26,8 +26,11 @@
         </ResourceDictionary>
     </Shell.Resources>
 
+    <ShellContent ContentTemplate="{DataTemplate views:WrongVersionPage}"/>
+
     <TabBar >
         <ShellContent Title="Pill Warning" Icon="tab_feed.png" ContentTemplate="{DataTemplate views:PredictionPage}" />
         <ShellContent Title="Info" Icon="tab_about.png" ContentTemplate="{DataTemplate views:AboutPage}" />
     </TabBar>
+
 </Shell>
