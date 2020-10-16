@@ -5,6 +5,6 @@ namespace DrugCheckingCrawler.Interface
     public interface ICrawlerResult
     {
         IEnumerable<ICrawlerResultItem> Items { get; }
-        int LastSuccessfullIndex { get; }
+        int LastSuccessfulIndex { get; }
     }
 }

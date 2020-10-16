@@ -7,7 +7,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="appsettings.json" />
+	  <Compile Remove="Services\Mock\**" Condition="'$(Configuration)'=='Release'" />
+	  <EmbeddedResource Remove="Services\Mock\**" Condition="'$(Configuration)'=='Release'" />
+	  <None Remove="Services\Mock\**" Condition="'$(Configuration)'=='Release'" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,27 +28,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Remove="Services\Mock\MockResources.resx" Condition="'$(Configuration)'=='Release'" />
-		<None Remove="Services\Mock\MockData.json" Condition="'$(Configuration)'=='Release'" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\Clients.Shared\Clients.Shared.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Compile Update="Services\Mock\MockResources.Designer.cs" Condition="'$(Configuration)'=='Debug'">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>MockResources.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Update="Services\Mock\MockResources.Designer.cs" Condition="'$(Configuration)'=='Debug'">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Update="Services\Mock\MockResources.resx" Condition="'$(Configuration)'=='Debug'">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>MockResources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
+    <EmbeddedResource Update="Services\Mock\MockResources.resx" Condition="'$(Configuration)'=='Debug'">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MockResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
 		<EmbeddedResource Update="Views\NoInternetIndicator.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>

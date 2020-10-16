@@ -2,6 +2,6 @@
 {
     public class VersionConstant
     {
-        public const string Current = "V0.1.0";
+        public const string Current = "V0.1.2";
     }
 }

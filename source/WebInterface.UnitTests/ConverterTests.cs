@@ -43,7 +43,7 @@ namespace WebInterface.UnitTests
                 fixture.Create<PillWarning>()
             };
 
-            _predictionResult = new Domain.Prediction.PredictionResult(Likeliness.Sure, tagFindings, colorFindings);
+            _predictionResult = Domain.Prediction.PredictionResult.FromSuccess(tagFindings, colorFindings);
         }
 
         private void WhenConvert()

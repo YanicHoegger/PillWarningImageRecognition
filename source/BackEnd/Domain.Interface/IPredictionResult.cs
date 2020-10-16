@@ -4,7 +4,7 @@ namespace Domain.Interface
 {
     public interface IPredictionResult
     {
-        Likeliness IsPill { get; }
+        bool IsPill { get; }
         IEnumerable<IFinding> TagFindings { get; }
         IEnumerable<IPillWarning> ColorFindings { get; }
     }

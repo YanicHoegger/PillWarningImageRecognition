@@ -17,6 +17,7 @@ namespace ManipulationClient
             new CustomVisionBootstrapper().ConfigureServices(services, configuration);
             new DrugCheckingSourceBootstrapper().ConfigureServices(services, configuration);
             new ResourceCrawlerBootstrapper().ConfigureServices(services, configuration);
+            new DomainBootstrapper().ConfigureServices(services, configuration);
 
             if (configuration.ReadBool("Update"))
             {

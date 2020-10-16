@@ -12,8 +12,6 @@ namespace Clients.Shared
             { Likeliness.Sure, "Sehr gut möglich dass es diese Pillen sind" },
         };
 
-        public bool IsPill(PredictionResult predictionResult) => predictionResult.IsPill > Likeliness.Very;
-
         public string NoPillResponse
         {
             get => "Ooops das war wohl nicht das beste Bild. Wir glauben nicht dass das hochgeladene Bild eine Pille ist";

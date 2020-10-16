@@ -10,38 +10,35 @@ namespace Domain.Prediction
 {
     public class Prediction : IPredicition
     {
-        private const string _pillTag = "Pill";
-
         private readonly IRepository<DrugCheckingSource> _repository;
         private readonly IClassifier _classifier;
         private readonly IPillColorAnalyzer _pillColorAnalyzer;
         private readonly IProbabilityToLikelinessConverter _converter;
+        private readonly IPillRecognizer _pillRecognizer;
 
-        public Prediction(IRepositoryFactory repositoryFactory, IClassifier classifier, IPillColorAnalyzer pillColorAnalyzer, IProbabilityToLikelinessConverter converter)
+        public Prediction(IRepositoryFactory repositoryFactory, IClassifier classifier, IPillColorAnalyzer pillColorAnalyzer, IProbabilityToLikelinessConverter converter, IPillRecognizer pillRecognizer)
         {
             //TODO: Move factory call to DI
             _repository = repositoryFactory.Create<DrugCheckingSource>();
             _classifier = classifier;
             _pillColorAnalyzer = pillColorAnalyzer;
             _converter = converter;
+            _pillRecognizer = pillRecognizer;
         }
 
         public async Task<IPredictionResult> Predict(byte[] image)
         {
             var classificationResult = (await _classifier.GetImageClassification(image)).ToList();
 
-            var pillLikeliness = GetPillLikeliness(classificationResult);
-
-            //The likeliness the image is a pill is to small
-            if (pillLikeliness < Likeliness.Maybe)
-                return new PredictionResult(pillLikeliness, Enumerable.Empty<IFinding>(), Enumerable.Empty<IPillWarning>());
+            if (!_pillRecognizer.IsPill(classificationResult))
+                return PredictionResult.NoPillResult();
 
             var color = await GetColor(image);
 
             var tagFindings = await GetTagFindings(RemovePillTagClassification(classificationResult), color);
             var colorFindings = await ColorFindings(color);
 
-            return new PredictionResult(pillLikeliness, tagFindings, colorFindings);
+            return PredictionResult.FromSuccess(tagFindings, colorFindings);
         }
 
         private async Task<IEnumerable<IPillWarning>> ColorFindings(Color color)
@@ -53,18 +50,9 @@ namespace Domain.Prediction
                 .Select(Convert);
         }
 
-        private Likeliness GetPillLikeliness(IEnumerable<IClassificationResult> classificationResult)
-        {
-            var pillClassification = classificationResult.SingleOrDefault(x => x.TagName.Equals(_pillTag));
-
-            return pillClassification == null 
-                ? Likeliness.NotAtAll 
-                : _converter.Convert(pillClassification.Probability);
-        }
-
         private static IEnumerable<IClassificationResult> RemovePillTagClassification(IEnumerable<IClassificationResult> toFilter)
         {
-            return toFilter.Where(x => !x.TagName.Equals(_pillTag));
+            return toFilter.Where(x => !x.TagName.Equals(Constants.PillTag));
         }
 
         private async Task<Color> GetColor(byte[] image)

@@ -10,9 +10,9 @@ namespace MobileInterface.ViewModels
 
         public PredictionResultViewModel(PredictionResult predictionResult)
         {
-            IsPill = _predictionResultHelper.IsPill(predictionResult);
+            IsPill = predictionResult.IsPill;
 
-            if(IsPill)
+            if (IsPill)
             {
                 Items = predictionResult
                     .TagFindings

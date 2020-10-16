@@ -25,7 +25,7 @@ namespace Domain
         public async Task<int> GetLastIndex()
         {
             //var entries = await _crawlerRepository.Get();
-            //return entries.Any() ? entries.Max(x => x.LastSuccessfullIndex) : 0;
+            //return entries.Any() ? entries.Max(x => x.LastSuccessfulIndex) : 0;
 
             var entries = await _drugCheckingRepository.Get();
             return entries.Any() ? entries.Max(GetIndex) : 0;

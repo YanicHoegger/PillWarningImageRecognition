@@ -1,8 +1,8 @@
-﻿using DatabaseInteraction.Interface;
+﻿using System.Collections.Generic;
 using DrugCheckingCrawler.Interface;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Prediction;
 using ImageInteraction.Interface;
 
 namespace Domain
@@ -10,25 +10,25 @@ namespace Domain
     public class DrugCheckingSourceManager
     {
         private readonly CrawlerInformationHandler _crawlerInformationHandler;
-        private readonly IColorAnalyzer _colorAnalyzer;
         private readonly DrugCheckingSourceHandler _drugCheckingSourceHandler;
         private readonly IClassificationTrainer _trainer;
         private readonly IResourceCrawler _resourceCrawler;
-        private readonly IEntityFactory _entityFactory;
+        private readonly IPillRecognizer _pillRecognizer;
+        private readonly IDrugCheckingSourceFactory _drugCheckingSourceFactory;
 
         public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler, 
             DrugCheckingSourceHandler drugCheckingSourceHandler, 
-            IColorAnalyzer colorAnalyzer, 
             IClassificationTrainer trainer, 
             IResourceCrawler resourceCrawler, 
-            IEntityFactory entityFactory)
+            IPillRecognizer pillRecognizer, 
+            IDrugCheckingSourceFactory drugCheckingSourceFactory)
         {
             _crawlerInformationHandler = crawlerInformationHandler;
             _drugCheckingSourceHandler = drugCheckingSourceHandler;
             _trainer = trainer;
-            _colorAnalyzer = colorAnalyzer;
             _resourceCrawler = resourceCrawler;
-            _entityFactory = entityFactory;
+            _pillRecognizer = pillRecognizer;
+            _drugCheckingSourceFactory = drugCheckingSourceFactory;
         }
 
         public async Task SetUpResources()
@@ -38,8 +38,10 @@ namespace Domain
             if (!crawlingResult.Items.Any())
                 return;
 
-            var storeResources = StoreResources(crawlingResult);
-            var train = TrainCustomVision(crawlingResult);
+            var filtered = await FilterNoPills(crawlingResult.Items);
+
+            var storeResources = StoreResources(filtered, crawlingResult.LastSuccessfulIndex);
+            var train = TrainCustomVision(filtered);
 
             await storeResources;
             await train;
@@ -51,7 +53,7 @@ namespace Domain
 
             foreach(var item in crawlingResult.Items)
             {
-                var entity = await CreateEntity(item);
+                var entity = await _drugCheckingSourceFactory.Create(item);
                 await _drugCheckingSourceHandler.UpdateResources(entity);
             }
         }
@@ -64,59 +66,42 @@ namespace Domain
             return crawlingResult;
         }
 
-        private async Task StoreResources(ICrawlerResult crawlerResult)
+        private async Task<IList<ICrawlerResultItem>> FilterNoPills(IEnumerable<ICrawlerResultItem> toFilter)
         {
-            await StoreItems(crawlerResult);
-            await StoreCrawlingResult(crawlerResult);
+            var resultList = new List<ICrawlerResultItem>();
+
+            foreach (var crawlerResultItem in toFilter)
+            {
+                if (await _pillRecognizer.IsPill(crawlerResultItem.Image))
+                    resultList.Add(crawlerResultItem);
+            }
+
+            return resultList;
         }
 
-        private async Task StoreItems(ICrawlerResult crawlerResult)
+        private async Task StoreResources(IList<ICrawlerResultItem> items, int index)
         {
-            foreach (var item in crawlerResult.Items)
+            await StoreItems(items);
+            await StoreCrawlingResult(index, items.Count());
+        }
+
+        private async Task StoreItems(IEnumerable<ICrawlerResultItem> items)
+        {
+            foreach (var item in items)
             {
-                var entity = await CreateEntity(item);
+                var entity = await _drugCheckingSourceFactory.Create(item);
                 await _drugCheckingSourceHandler.StoreSources(entity);
             }
         }
 
-        private async Task<DrugCheckingSource> CreateEntity(ICrawlerResultItem item)
+        private async Task StoreCrawlingResult(int index, int count)
         {
-            var entity = _entityFactory.Create<DrugCheckingSource>();
-
-            var color = await _colorAnalyzer.GetColor(item.Image);
-
-            entity.Header = item.Header;
-            entity.Name = item.Name;
-            entity.Color = color;
-            entity.Creation = item.Tested;
-            entity.PdfLocation = item.Url;
-            entity.Image = item.Image;
-            entity.DocumentHash = item.DocumentHash;
-            entity.GeneralInfos = item.GeneralInfos;
-
-            entity.RiskEstimationTitle = item.RiskEstimation.Title;
-            entity.RiskEstimation = item.RiskEstimation.RiskEstimation;
-
-            entity.Infos = item
-                .Infos
-                .Select(x => new DrugCheckingInfo { Title = x.Title, Info = x.Info })
-                .ToList();
-
-            entity.SaferUseRulesTitle = item.SaferUserRules.Title;
-            entity.SaferUseRules = item.SaferUserRules.Rules.ToList();
-
-            return entity;
+            await _crawlerInformationHandler.Insert(index, count);
         }
 
-        private async Task StoreCrawlingResult(ICrawlerResult crawlerResult)
+        private async Task TrainCustomVision(IEnumerable<ICrawlerResultItem> items)
         {
-            await _crawlerInformationHandler.Insert(crawlerResult.LastSuccessfullIndex, crawlerResult.Items.Count());
-        }
-
-        private async Task TrainCustomVision(ICrawlerResult crawlerResult)
-        {
-            //TODO: Check if images are pill
-            await _trainer.Train(crawlerResult.Items.Select(x => (x.Image, x.Name)));
+            await _trainer.Train(items.Select(x => (x.Image, x.Name)));
         }
     }
 }

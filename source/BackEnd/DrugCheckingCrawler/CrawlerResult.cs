@@ -5,13 +5,13 @@ namespace DrugCheckingCrawler
 {
     public class CrawlerResult : ICrawlerResult
     {
-        public CrawlerResult(IList<CrawlerResultItem> items, int lastSuccessfullIndex)
+        public CrawlerResult(IEnumerable<CrawlerResultItem> items, int lastSuccessfulIndex)
         {
             Items = items;
-            LastSuccessfullIndex = lastSuccessfullIndex;
+            LastSuccessfulIndex = lastSuccessfulIndex;
         }
 
         public IEnumerable<ICrawlerResultItem> Items { get; }
-        public int LastSuccessfullIndex { get; }
+        public int LastSuccessfulIndex { get; }
     }
 }

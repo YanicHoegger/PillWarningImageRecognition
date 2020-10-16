@@ -30,10 +30,10 @@ namespace DatabaseInteraction
 
         protected override void OnInsert()
         {
-            UpdateCach();
+            UpdateCache();
         }
 
-        private void UpdateCach()
+        private void UpdateCache()
         {
             Task.Run(async () =>
             {
