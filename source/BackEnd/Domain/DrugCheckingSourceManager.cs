@@ -16,11 +16,11 @@ namespace Domain
         private readonly IPillRecognizer _pillRecognizer;
         private readonly IDrugCheckingSourceFactory _drugCheckingSourceFactory;
 
-        public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler, 
-            DrugCheckingSourceHandler drugCheckingSourceHandler, 
-            IClassificationTrainer trainer, 
-            IResourceCrawler resourceCrawler, 
-            IPillRecognizer pillRecognizer, 
+        public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler,
+            DrugCheckingSourceHandler drugCheckingSourceHandler,
+            IClassificationTrainer trainer,
+            IResourceCrawler resourceCrawler,
+            IPillRecognizer pillRecognizer,
             IDrugCheckingSourceFactory drugCheckingSourceFactory)
         {
             _crawlerInformationHandler = crawlerInformationHandler;
@@ -35,23 +35,18 @@ namespace Domain
         {
             var crawlingResult = await CrawlResources();
 
-            if (!crawlingResult.Items.Any())
-                return;
+            var filtered = FilterNoPills(crawlingResult.Items);
 
-            var filtered = await FilterNoPills(crawlingResult.Items);
+            var storeResources = await StoreAndReturnResources(filtered, crawlingResult);
 
-            var storeResources = StoreResources(filtered, crawlingResult.LastSuccessfulIndex);
-            var train = TrainCustomVision(filtered);
-
-            await storeResources;
-            await train;
+            await TrainCustomVision(storeResources);
         }
 
         public async Task UpdateResources()
         {
-            var crawlingResult = await _resourceCrawler.Crawl(1);
+            var crawlingResult = _resourceCrawler.Crawl(1);
 
-            foreach(var item in crawlingResult.Items)
+            await foreach (var item in crawlingResult.Items)
             {
                 var entity = await _drugCheckingSourceFactory.Create(item);
                 await _drugCheckingSourceHandler.UpdateResources(entity);
@@ -61,37 +56,39 @@ namespace Domain
         private async Task<ICrawlerResult> CrawlResources()
         {
             var lastIndex = await _crawlerInformationHandler.GetLastIndex();
-            var crawlingResult = await _resourceCrawler.Crawl(lastIndex + 1);
+            var crawlingResult = _resourceCrawler.Crawl(lastIndex + 1);
 
             return crawlingResult;
         }
 
-        private async Task<IList<ICrawlerResultItem>> FilterNoPills(IEnumerable<ICrawlerResultItem> toFilter)
+        private async IAsyncEnumerable<ICrawlerResultItem> FilterNoPills(IAsyncEnumerable<ICrawlerResultItem> toFilter)
+        {
+            await foreach (var crawlerResultItem in toFilter)
+            {
+                if (await _pillRecognizer.IsPill(crawlerResultItem.Image))
+                    yield return crawlerResultItem;
+            }
+        }
+
+        private async Task<IList<ICrawlerResultItem>> StoreAndReturnResources(IAsyncEnumerable<ICrawlerResultItem> items, ICrawlerResult crawlerResult)
         {
             var resultList = new List<ICrawlerResultItem>();
 
-            foreach (var crawlerResultItem in toFilter)
+            await foreach (var crawlerResultItem in items)
             {
-                if (await _pillRecognizer.IsPill(crawlerResultItem.Image))
-                    resultList.Add(crawlerResultItem);
+                resultList.Add(crawlerResultItem);
+                await StoreItem(crawlerResultItem);
             }
+
+            await StoreCrawlingResult(await crawlerResult.LastSuccessfulIndex, resultList.Count);
 
             return resultList;
         }
 
-        private async Task StoreResources(IList<ICrawlerResultItem> items, int index)
+        private async Task StoreItem(ICrawlerResultItem item)
         {
-            await StoreItems(items);
-            await StoreCrawlingResult(index, items.Count());
-        }
-
-        private async Task StoreItems(IEnumerable<ICrawlerResultItem> items)
-        {
-            foreach (var item in items)
-            {
-                var entity = await _drugCheckingSourceFactory.Create(item);
-                await _drugCheckingSourceHandler.StoreSources(entity);
-            }
+            var entity = await _drugCheckingSourceFactory.Create(item);
+            await _drugCheckingSourceHandler.StoreSources(entity);
         }
 
         private async Task StoreCrawlingResult(int index, int count)

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DrugCheckingCrawler.Interface
 {
     public interface ICrawlerResult
     {
-        IEnumerable<ICrawlerResultItem> Items { get; }
-        int LastSuccessfulIndex { get; }
+        IAsyncEnumerable<ICrawlerResultItem> Items { get; }
+        Task<int> LastSuccessfulIndex { get; }
     }
 }

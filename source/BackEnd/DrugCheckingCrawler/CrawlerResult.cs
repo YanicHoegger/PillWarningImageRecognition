@@ -1,17 +1,18 @@
 ﻿using DrugCheckingCrawler.Interface;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DrugCheckingCrawler
 {
     public class CrawlerResult : ICrawlerResult
     {
-        public CrawlerResult(IEnumerable<CrawlerResultItem> items, int lastSuccessfulIndex)
+        public CrawlerResult(IAsyncEnumerable<ICrawlerResultItem> items, Task<int> lastSuccessfulIndex)
         {
             Items = items;
             LastSuccessfulIndex = lastSuccessfulIndex;
         }
 
-        public IEnumerable<ICrawlerResultItem> Items { get; }
-        public int LastSuccessfulIndex { get; }
+        public IAsyncEnumerable<ICrawlerResultItem> Items { get; }
+        public Task<int> LastSuccessfulIndex { get; }
     }
 }

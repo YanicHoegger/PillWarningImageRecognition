@@ -3,9 +3,9 @@
     "ManipulationClient": {
       "commandName": "Project",
       "environmentVariables": {
-        "Update": "True",
-        "Crawl": "False",
-        "CACHED_DATABASE": "True"
+        "Update": "False",
+        "Crawl": "True",
+        "CACHED_DATABASE": "False"
       }
     }
   }

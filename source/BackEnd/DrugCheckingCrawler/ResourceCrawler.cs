@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace DrugCheckingCrawler
 {
@@ -11,43 +12,52 @@ namespace DrugCheckingCrawler
     {
         private const int _maxNoResult = 100;
 
-        private readonly List<CrawlerResultItem> _resultItemList = new List<CrawlerResultItem>();
         private readonly ResourceDownloader _resourceDownloader = new ResourceDownloader();
         private readonly Parser _parser;
-        private int _noResultCount = 0;
-        private int _lastSuccessfullIndex = 0;
+        private readonly ILogger<ResourceCrawler> _resourceLogger;
 
-        public ResourceCrawler(Parser parser)
+        public ResourceCrawler(Parser parser, ILogger<ResourceCrawler> resourceLogger)
         {
             _parser = parser;
+            _resourceLogger = resourceLogger;
         }
 
-        public async Task<ICrawlerResult> Crawl(int startIndex)
+        public ICrawlerResult Crawl(int startIndex)
         {
-            foreach (var (downloadTask, address, index) in _resourceDownloader.GetPdfs(startIndex))
+            var lastSuccessfulIndexTask = new TaskCompletionSource<int>();
+            return new CrawlerResult(CrawlAsync(startIndex, lastSuccessfulIndexTask), lastSuccessfulIndexTask.Task);
+        }
+
+        private async IAsyncEnumerable<ICrawlerResultItem> CrawlAsync(int startIndex, TaskCompletionSource<int> lastSuccessfulIndexTask)
+        {
+            int noResultCount = 0;
+            int lastSuccessfulIndex = 0;
+
+            foreach ((Task<byte[]> downloadTask, string address, int index) in _resourceDownloader.GetPdfs(startIndex))
             {
-                //TODO: Log
-                Console.WriteLine($"Try download Nr.: {index}");
+                _resourceLogger.LogInformation($"Try download Nr.: {index}");
                 var downloadedContent = await downloadTask;
 
                 var parsed = _parser.ParseFile(downloadedContent);
 
                 if (parsed == null)
                 {
-                    _noResultCount++;
-                    if (_noResultCount > _maxNoResult)
+                    noResultCount++;
+                    if (noResultCount > _maxNoResult)
                     {
-                        return new CrawlerResult(_resultItemList, _lastSuccessfullIndex);
+                        lastSuccessfulIndexTask.SetResult(lastSuccessfulIndex);
+                        yield break;
                     }
                     continue;
                 }
 
-                _lastSuccessfullIndex = index;
-                _noResultCount = 0;
-                _resultItemList.Add(new CrawlerResultItem(parsed, address, CreateHash(downloadedContent)));
+                lastSuccessfulIndex = index;
+                noResultCount = 0;
+
+                yield return new CrawlerResultItem(parsed, address, CreateHash(downloadedContent));
             }
 
-            throw new Exception("Program flow must have gone wrong");
+            throw new InvalidOperationException("Program flow must have gone wrong");
         }
 
         private static string CreateHash(byte[] downloadedContent)
