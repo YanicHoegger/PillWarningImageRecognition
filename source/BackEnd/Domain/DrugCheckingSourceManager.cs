@@ -98,7 +98,7 @@ namespace Domain
 
         private async Task TrainCustomVision(IEnumerable<ICrawlerResultItem> items)
         {
-            await _trainer.Train(items.Select(x => (x.Image, x.Name)));
+            await _trainer.Train(items.Select(x => new TrainingImage(x.Image, new[] { x.Name, Constants.PillTag })));
         }
     }
 }

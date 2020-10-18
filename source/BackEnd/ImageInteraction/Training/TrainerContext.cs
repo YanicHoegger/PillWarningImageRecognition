@@ -4,7 +4,7 @@ using Utilities;
 
 namespace ImageInteraction.Training
 {
-    public class TrainerContext : ITrainerContext
+    public class TrainerContext : IContext
     {
         private const string _keyConfigurationKey = "TRAINER_KEY";
         private const string _endPointConfigurationKey = "TRAINER_END_POINT";

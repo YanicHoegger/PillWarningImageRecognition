@@ -20,9 +20,16 @@ namespace ManipulationClient
 
                 executer.Execute(config, Startup.ServiceProvider).Wait();
             }
+            catch (AggregateException aggregateException)
+            {
+                foreach (var innerException in aggregateException.InnerExceptions)
+                {
+                    Console.WriteLine($"Exception occurred: {innerException.Message}");
+                }
+            }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception occoured: {ex.Message}");
+                Console.WriteLine($"Exception occurred: {ex.Message}");
             }
         }
     }
