@@ -3,7 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ManipulationClient
 {
@@ -32,11 +34,10 @@ namespace ManipulationClient
 
             ServiceProvider = host.Services;
 
-            var cancellationTokenSource = new CancellationTokenSource();
-            foreach (var service in ServiceProvider.GetServices<IHostedService>())
-            {
-                service.StartAsync(cancellationTokenSource.Token).Wait(cancellationTokenSource.Token);
-            }
+            Task.WaitAll(ServiceProvider
+                .GetServices<IHostedService>()
+                .Select(service => service.StartAsync(CancellationToken.None))
+                .ToArray());
         }
     }
 }

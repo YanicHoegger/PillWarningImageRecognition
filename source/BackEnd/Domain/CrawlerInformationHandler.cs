@@ -15,10 +15,10 @@ namespace Domain
         private const string _number = nameof(_number);
         private static readonly string _numberRegex = @$"https:\/\/de\.drugchecking\.ch\/pdf\.php\?p=(?<{_number}>[0-9]+)";
 
-        public CrawlerInformationHandler(IRepositoryFactory repositoryFactory, IEntityFactory entityFactory)
+        public CrawlerInformationHandler(IRepository<CrawlerAction> crawlerRepository, IRepository<DrugCheckingSource> drugCheckingRepository, IEntityFactory entityFactory)
         {
-            _crawlerRepository = repositoryFactory.Create<CrawlerAction>();
-            _drugCheckingRepository = repositoryFactory.Create<DrugCheckingSource>();
+            _crawlerRepository = crawlerRepository;
+            _drugCheckingRepository = drugCheckingRepository;
             _entityFactory = entityFactory;
         }
 

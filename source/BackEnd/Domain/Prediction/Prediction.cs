@@ -16,10 +16,9 @@ namespace Domain.Prediction
         private readonly IProbabilityToLikelinessConverter _converter;
         private readonly IPillRecognizer _pillRecognizer;
 
-        public Prediction(IRepositoryFactory repositoryFactory, IClassifier classifier, IPillColorAnalyzer pillColorAnalyzer, IProbabilityToLikelinessConverter converter, IPillRecognizer pillRecognizer)
+        public Prediction(IRepository<DrugCheckingSource> repository, IClassifier classifier, IPillColorAnalyzer pillColorAnalyzer, IProbabilityToLikelinessConverter converter, IPillRecognizer pillRecognizer)
         {
-            //TODO: Move factory call to DI
-            _repository = repositoryFactory.Create<DrugCheckingSource>();
+            _repository = repository;
             _classifier = classifier;
             _pillColorAnalyzer = pillColorAnalyzer;
             _converter = converter;

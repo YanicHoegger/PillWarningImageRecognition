@@ -10,9 +10,9 @@ namespace Domain
         private readonly IRepository<DrugCheckingSource> _repository;
         private readonly IDataBaseUpdater _dataBaseUpdater;
 
-        public DrugCheckingSourceHandler(IRepositoryFactory factory, IDataBaseUpdater dataBaseUpdater)
+        public DrugCheckingSourceHandler(IRepository<DrugCheckingSource> repository, IDataBaseUpdater dataBaseUpdater)
         {
-            _repository = factory.Create<DrugCheckingSource>();
+            _repository = repository;
             _dataBaseUpdater = dataBaseUpdater;
         }
 
@@ -42,7 +42,7 @@ namespace Domain
             await _dataBaseUpdater.Update(_repository, toUpdate, x => CompareFunction(x, toUpdate));
         }
 
-        private bool CheckIfPresent(IEnumerable<DrugCheckingSource> alreadyPresent, DrugCheckingSource toCheck)
+        private static bool CheckIfPresent(IEnumerable<DrugCheckingSource> alreadyPresent, DrugCheckingSource toCheck)
         {
             return alreadyPresent.Any(y => CompareFunction(y, toCheck));
         }

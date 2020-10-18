@@ -33,11 +33,15 @@ namespace DatabaseInteraction
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            var client = ClientFactory.Create(_context);
-            var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(_context.DatabaseName, _maxThroughput);
+            _logger.LogInformation($"Starting {nameof(RepositoryFactory)}");
 
-            var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(_context.ContainerId, $"/{nameof(Entity.Id)}");
+            var client = ClientFactory.Create(_context);
+            var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(_context.DatabaseName, _maxThroughput, cancellationToken: cancellationToken);
+
+            var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(_context.ContainerId, $"/{nameof(Entity.Id)}", cancellationToken: cancellationToken);
             Container = containerResponse.Container;
+
+            _logger.LogInformation($"{nameof(RepositoryFactory)} started");
 
             _isStarted = true;
         }

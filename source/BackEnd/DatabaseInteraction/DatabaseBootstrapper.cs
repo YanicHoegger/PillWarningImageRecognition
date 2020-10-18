@@ -23,6 +23,9 @@ namespace DatabaseInteraction
                 services.AddHostedSingletonService<IRepositoryFactory, RepositoryFactory>();
             }
 
+            services.AddSingleton(x => x.GetService<IRepositoryFactory>().Create<CrawlerAction>());
+            services.AddSingleton(x => x.GetService<IRepositoryFactory>().Create<DrugCheckingSource>());
+
             services.AddSingleton<IEntityFactory, EntityFactory>();
             services.AddSingleton<IDataBaseUpdater, DataBaseUpdater>();
         }

@@ -12,10 +12,17 @@ namespace Utilities
         {
             services.AddSingleton<TImplementation>();
 
-            static TImplementation implementationFactory(IServiceProvider x) => x.GetRequiredService<TImplementation>();
+            static TImplementation ImplementationFactory(IServiceProvider x) => x.GetRequiredService<TImplementation>();
 
-            services.AddSingleton<TInterface, TImplementation>(implementationFactory);
-            services.AddHostedService(implementationFactory);
+            services.AddHostedSingletonService<TInterface, TImplementation>(ImplementationFactory);
+        }
+
+        public static void AddHostedSingletonService<TInterface, TImplementation>(this IServiceCollection serviceCollection, Func<IServiceProvider, TImplementation> implementationFactory)
+            where TInterface : class
+            where TImplementation : class, TInterface, IHostedService
+        {
+            serviceCollection.AddSingleton<TInterface, TImplementation>(implementationFactory);
+            serviceCollection.AddHostedService(implementationFactory);
         }
     }
 }
