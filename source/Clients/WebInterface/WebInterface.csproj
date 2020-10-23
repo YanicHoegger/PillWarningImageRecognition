@@ -15,7 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Bootstrapper\Bootstrapper.csproj" />
+    <ProjectReference Include="..\..\BackEnd\DatabaseInteraction\DatabaseInteraction.csproj" />
+    <ProjectReference Include="..\..\BackEnd\Domain.Mock\Domain.Mock.csproj" Condition="'$(Configuration)'=='Debug'" />
+    <ProjectReference Include="..\..\BackEnd\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\BackEnd\ImageInteraction\ImageInteraction.csproj" />
     <ProjectReference Include="..\Clients.Shared\Clients.Shared.csproj" />
   </ItemGroup>
 

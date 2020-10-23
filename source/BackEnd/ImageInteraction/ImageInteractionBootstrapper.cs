@@ -9,7 +9,7 @@ using Utilities;
 
 namespace ImageInteraction
 {
-    public static class CustomVisionBootstrapper
+    public static class ImageInteractionBootstrapper
     {
         public static void ConfigureServicesForPillRecognition(IServiceCollection services)
         {
