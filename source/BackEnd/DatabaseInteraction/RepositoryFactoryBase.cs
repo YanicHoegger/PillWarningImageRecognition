@@ -10,8 +10,6 @@ namespace DatabaseInteraction
 {
     public abstract class RepositoryFactoryBase : IHostedService, IRepositoryFactory
     {
-        private const int _maxThroughput = 400;
-
         private readonly IContext _context;
         private readonly ILogger<RepositoryFactoryBase> _logger;
 
@@ -36,7 +34,7 @@ namespace DatabaseInteraction
             _logger.LogInformation($"Starting {nameof(RepositoryFactory)}");
 
             var client = ClientFactory.Create(_context);
-            var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(_context.DatabaseName, _maxThroughput, cancellationToken: cancellationToken);
+            var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(_context.DatabaseName, _context.Throughput, cancellationToken: cancellationToken);
 
             var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(_context.ContainerId, $"/{nameof(Entity.Id)}", cancellationToken: cancellationToken);
             Container = containerResponse.Container;

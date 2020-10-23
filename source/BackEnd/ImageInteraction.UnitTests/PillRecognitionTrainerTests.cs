@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using ImageInteraction.Interface;
 using ImageInteraction.Training;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
 using NUnit.Framework;
+using Telerik.JustMock;
 
 namespace ImageInteraction.UnitTests
 {
@@ -47,7 +49,7 @@ namespace ImageInteraction.UnitTests
         }
 
         private TrainerCommunicatorMock _trainerCommunicatorMock;
-        private List<(byte[] image, string tag)> _inputData;
+        private List<ITrainingImage> _inputData;
 
         private void GivenExistingImagesAndSameImageToAdd()
         {
@@ -63,9 +65,9 @@ namespace ImageInteraction.UnitTests
                 }
             };
 
-            _inputData = new List<(byte[] image, string tag)>
+            _inputData = new List<ITrainingImage>
             {
-                (TestHelper.ReadImage("Skulls1.jpg"), "Skull")
+                CreateTrainingImage("Skulls1.jpg", "Skull")
             };
         }
 
@@ -81,10 +83,10 @@ namespace ImageInteraction.UnitTests
                 }
             };
 
-            _inputData = new List<(byte[] image, string tag)>
+            _inputData = new List<ITrainingImage>
             {
-                (TestHelper.ReadImage("Skulls1.jpg"), tagName),
-                (TestHelper.ReadImage("Skulls1.jpg"), tagName)
+                CreateTrainingImage("Skulls1.jpg", tagName),
+                CreateTrainingImage("Skulls1.jpg", tagName)
             };
         }
 
@@ -100,7 +102,7 @@ namespace ImageInteraction.UnitTests
                 }
             };
             _inputData = Enumerable.Range(0, addingImageCount)
-                .Select(x => (new byte[0], tagName))
+                .Select(x => CreateTrainingImage(new byte[0], tagName))
                 .ToList();
         }
 
@@ -108,13 +110,13 @@ namespace ImageInteraction.UnitTests
         {
             _trainerCommunicatorMock = new TrainerCommunicatorMock();
 
-            _inputData = new List<(byte[] image, string tag)>
+            _inputData = new List<ITrainingImage>
             {
-                (TestHelper.ReadImage("Skulls1.jpg"), "Skull"),
-                (TestHelper.ReadImage("Skulls2.jpg"), "Skull"),
-                (TestHelper.ReadImage("Skulls3.jpg"), "Skull"),
-                (TestHelper.ReadImage("Skulls4.jpg"), "Skull"),
-                (TestHelper.ReadImage("Skulls5.jpg"), "Skull"),
+                CreateTrainingImage("Skulls1.jpg", "Skull"),
+                CreateTrainingImage("Skulls2.jpg", "Skull"),
+                CreateTrainingImage("Skulls3.jpg", "Skull"),
+                CreateTrainingImage("Skulls4.jpg", "Skull"),
+                CreateTrainingImage("Skulls5.jpg", "Skull")
             };
         }
 
@@ -136,6 +138,21 @@ namespace ImageInteraction.UnitTests
         private void ThenFiveImagesImported()
         {
             _trainerCommunicatorMock.AddedImage.Count.Should().Be(5);
+        }
+
+        private static ITrainingImage CreateTrainingImage(string imageName, string tag)
+        {
+            return CreateTrainingImage(TestHelper.ReadImage(imageName), tag);
+        }
+
+        private static ITrainingImage CreateTrainingImage(byte[] image, string tag)
+        {
+            var trainingImage = Mock.Create<ITrainingImage>();
+
+            Mock.Arrange(() => trainingImage.Image).Returns(image);
+            Mock.Arrange(() => trainingImage.Tags).Returns(new[] { tag });
+
+            return trainingImage;
         }
     }
 }

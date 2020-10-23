@@ -13,8 +13,6 @@ namespace ImageInteraction.Training
     {
         private readonly ITrainerCommunicator _trainerCommunicator;
 
-        //TODO: _pillTag should be added in domain
-        private const string _pillTag = "Pill";
         private const int _minimumTagCount = 5;
 
         public ClassificationTrainer(ITrainerCommunicator trainerCommunicator)
@@ -25,30 +23,35 @@ namespace ImageInteraction.Training
             _trainerCommunicator = trainerCommunicator;
         }
 
-        public async Task Train(IEnumerable<(byte[] image, string tag)> inputData)
+        public async Task Train(IEnumerable<ITrainingImage> trainingImages)
         {
-            var filtered = await FilterInput(inputData);
+            var filtered = (await FilterInput(trainingImages)).ToList();
 
-            foreach (var group in filtered.GroupBy(x => x.tag))
+            var tags = filtered
+                .SelectMany(x => x.Tags)
+                .GroupBy(x => x)
+                .ToDictionary(x => x.Key, x => x.Count());
+
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var trainingImage in filtered)
             {
-                var existingTagCount = _trainerCommunicator.GetTag(group.Key)?.ImageCount ?? 0;
-
-                if (existingTagCount + group.Count() < _minimumTagCount)
-                    continue;
-
-                foreach (var (image, tag) in group)
+                if (trainingImage.Tags.All(x =>
                 {
-                    await AddImageToTrain(new MemoryStream(image), tag);
+                    var existingTagCount = _trainerCommunicator.GetTag(x)?.ImageCount ?? 0;
+
+                    return existingTagCount + tags[x] >= _minimumTagCount;
+                }))
+                {
+                    await AddImageToTrain(new MemoryStream(trainingImage.Image), trainingImage.Tags);
                 }
             }
         }
 
-        private async Task AddImageToTrain(Stream imageStream, string tag)
+        private async Task AddImageToTrain(Stream imageStream, IEnumerable<string> tag)
         {
-            var pillTag = _trainerCommunicator.GetTag(_pillTag);
-            var specificTag = await GetOrCreateTag(tag);
+            var tags = await Task.WhenAll(tag.Select(GetOrCreateTag));
 
-            await _trainerCommunicator.AddImage(imageStream, new[] { pillTag, specificTag });
+            await _trainerCommunicator.AddImage(imageStream, tags);
         }
 
         private async Task<Tag> GetOrCreateTag(string tagName)
@@ -64,7 +67,7 @@ namespace ImageInteraction.Training
         /// <summary>
         /// To filter images that already are present in training
         /// </summary>
-        private async Task<IEnumerable<(byte[] image, string tag)>> FilterInput(IEnumerable<(byte[] image, string tag)> inputData)
+        private async Task<IEnumerable<ITrainingImage>> FilterInput(IEnumerable<ITrainingImage> trainingImages)
         {
             //Make hash set for quicker comparision
             var hashTable = new HashSet<byte[]>(new ByteArrayComparer());
@@ -73,12 +76,12 @@ namespace ImageInteraction.Training
                 hashTable.Add(await task);
             }
 
-            return inputData.Where(x =>
+            return trainingImages.Where(x =>
             {
-                if (hashTable.Contains(x.image))
+                if (hashTable.Contains(x.Image))
                     return false;
 
-                hashTable.Add(x.image);
+                hashTable.Add(x.Image);
                 return true;
             });
         }

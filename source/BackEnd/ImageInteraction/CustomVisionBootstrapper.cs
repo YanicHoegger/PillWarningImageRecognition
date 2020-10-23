@@ -15,14 +15,14 @@ namespace ImageInteraction
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<ITrainerContext, TrainerContext>();
-            services.AddHostedSingletonService<ITrainerCommunicator, TrainerCommunicator>();
-            services.AddScoped<IClassificationTrainer, ClassificationTrainer>();
+            services.AddSingleton<TrainerContext>();
+            services.AddHostedSingletonService<ITrainerCommunicator, TrainerCommunicator>(serviceProvider => new TrainerCommunicator(serviceProvider.GetService<TrainerContext>()));
+            services.AddSingleton<IClassificationTrainer, ClassificationTrainer>();
 
             services.AddSingleton<IVisionContext, VisionContext>();
             services.AddSingleton<IComputerVisionCommunication, ComputerVisionCommunication>();
             services.AddSingleton<DetectionContext>();
-            services.AddSingleton<IDetectionCommunication, DetectionCommunication>(sp => new DetectionCommunication(sp.GetRequiredService<DetectionContext>()));
+            services.AddSingleton<IDetectionCommunication, DetectionCommunication>(serviceProvider => new DetectionCommunication(serviceProvider.GetRequiredService<DetectionContext>()));
             services.AddSingleton<IDetector, Detector>();
             services.AddTransient<ICroppingService, CroppingService>();
             services.AddSingleton<IColorAnalyzer, ColorAnalyzer.ColorAnalyzer>();

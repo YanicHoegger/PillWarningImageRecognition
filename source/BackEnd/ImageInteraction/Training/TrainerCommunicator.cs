@@ -19,7 +19,7 @@ namespace ImageInteraction.Training
         private IList<Tag> _tags;
         private IList<Image> _images;
 
-        public TrainerCommunicator(ITrainerContext context)
+        public TrainerCommunicator(IContext context)
         {
             _context = context;
             _customVisionTrainingClient = new CustomVisionTrainingClient
