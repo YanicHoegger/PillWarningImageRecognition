@@ -16,7 +16,7 @@ namespace ImageInteraction.Classification
 
         public async Task<ImagePrediction> ClassifyImage(Stream image)
         {
-            using var endpoint = new CustomVisionPredictionClient()
+            using var endpoint = new CustomVisionPredictionClient
             {
                 ApiKey = _classificationContext.Key,
                 Endpoint = _classificationContext.EndPoint,

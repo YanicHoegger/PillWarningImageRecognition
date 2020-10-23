@@ -2,9 +2,9 @@
 
 namespace ImageInteraction.Classification
 {
-    public class ClassificationResult : IClassificationResult
+    public class TagClassificationResult : ITagClassificationResult
     {
-        public ClassificationResult(string tagName, double probability)
+        public TagClassificationResult(string tagName, double probability)
         {
             TagName = tagName;
             Probability = probability;

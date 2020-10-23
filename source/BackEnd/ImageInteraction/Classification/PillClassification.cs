@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ImageInteraction.Interface;
@@ -15,11 +14,13 @@ namespace ImageInteraction.Classification
             _pillClassificationCommunication = pillClassificationCommunication;
         }
 
-        public async Task<IEnumerable<IClassificationResult>> GetImageClassification(byte[] image)
+        public async Task<IImageClassificationResult> GetImageClassification(byte[] image)
         {
             var result = await _pillClassificationCommunication.ClassifyImage(new MemoryStream(image));
 
-            return result.Predictions.Select(x => new ClassificationResult(x.TagName, x.Probability));
+            return new ImageClassificationResult(result
+                .Predictions
+                .Select(x => new TagClassificationResult(x.TagName, x.Probability)));
         }
     }
 }

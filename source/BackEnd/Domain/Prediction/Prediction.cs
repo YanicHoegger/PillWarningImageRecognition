@@ -27,14 +27,14 @@ namespace Domain.Prediction
 
         public async Task<IPredictionResult> Predict(byte[] image)
         {
-            var classificationResult = (await _classifier.GetImageClassification(image)).ToList();
+            var classificationResult = await _classifier.GetImageClassification(image);
 
-            if (!_pillRecognizer.IsPill(classificationResult))
+            if (!_pillRecognizer.IsPill(classificationResult.TagClassifications))
                 return PredictionResult.NoPillResult();
 
             var color = await GetColor(image);
 
-            var tagFindings = await GetTagFindings(RemovePillTagClassification(classificationResult), color);
+            var tagFindings = await GetTagFindings(RemovePillTagClassification(classificationResult.TagClassifications), color);
             var colorFindings = await ColorFindings(color);
 
             return PredictionResult.FromSuccess(tagFindings, colorFindings);
@@ -49,7 +49,7 @@ namespace Domain.Prediction
                 .Select(Convert);
         }
 
-        private static IEnumerable<IClassificationResult> RemovePillTagClassification(IEnumerable<IClassificationResult> toFilter)
+        private static IEnumerable<ITagClassificationResult> RemovePillTagClassification(IEnumerable<ITagClassificationResult> toFilter)
         {
             return toFilter.Where(x => !x.TagName.Equals(Constants.PillTag));
         }
@@ -59,7 +59,7 @@ namespace Domain.Prediction
             return await _pillColorAnalyzer.GetColor(image);
         }
 
-        private async Task<List<Finding>> GetTagFindings(IEnumerable<IClassificationResult> classificationResults, Color color)
+        private async Task<List<Finding>> GetTagFindings(IEnumerable<ITagClassificationResult> classificationResults, Color color)
         {
             var findings = new List<Finding>();
             var resources = await _repository.Get();

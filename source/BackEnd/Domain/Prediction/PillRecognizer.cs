@@ -19,19 +19,19 @@ namespace Domain.Prediction
 
         public async Task<bool> IsPill(byte[] image)
         {
-            var classificationResult = (await _classifier.GetImageClassification(image)).ToList();
+            var classificationResult = await _classifier.GetImageClassification(image);
 
-            return IsPill(classificationResult);
+            return IsPill(classificationResult.TagClassifications);
         }
 
-        public bool IsPill(IEnumerable<IClassificationResult> classificationResult)
+        public bool IsPill(IEnumerable<ITagClassificationResult> classificationResult)
         {
             var pillLikeliness = GetPillLikeliness(classificationResult);
 
             return pillLikeliness >= Likeliness.Maybe;
         }
 
-        private Likeliness GetPillLikeliness(IEnumerable<IClassificationResult> classificationResult)
+        private Likeliness GetPillLikeliness(IEnumerable<ITagClassificationResult> classificationResult)
         {
             var pillClassification = classificationResult.SingleOrDefault(x => x.TagName.Equals(Constants.PillTag));
 

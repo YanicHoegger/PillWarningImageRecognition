@@ -1,6 +1,6 @@
 ﻿namespace ImageInteraction.Interface
 {
-    public interface IClassificationResult
+    public interface ITagClassificationResult
     {
         string TagName { get; }
         double Probability { get; }
