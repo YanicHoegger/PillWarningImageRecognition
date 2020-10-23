@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BackEnd\DatabaseInteraction.Interface\DatabaseInteraction.Interface.csproj" />
-    <ProjectReference Include="..\Clients\Clients.Shared\Clients.Shared.csproj" />
-    <ProjectReference Include="..\Clients\WebInterface\WebInterface.csproj" />
+    <ProjectReference Include="..\..\BackEnd\DatabaseInteraction.Interface\DatabaseInteraction.Interface.csproj" />
+    <ProjectReference Include="..\Clients.Shared\Clients.Shared.csproj" />
+    <ProjectReference Include="..\WebInterface\WebInterface.csproj" />
   </ItemGroup>
 
 </Project>
