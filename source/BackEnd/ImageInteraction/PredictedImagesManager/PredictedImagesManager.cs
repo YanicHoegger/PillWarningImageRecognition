@@ -27,8 +27,7 @@ namespace ImageInteraction.PredictedImagesManager
             _context = context;
 
             _client = new HttpClient();
-            _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _client.DefaultRequestHeaders.Add("Training-Key", new[] { _context.Key });
         }
 
