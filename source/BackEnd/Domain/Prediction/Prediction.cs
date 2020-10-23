@@ -14,15 +14,15 @@ namespace Domain.Prediction
         private readonly IClassifier _classifier;
         private readonly IPillColorAnalyzer _pillColorAnalyzer;
         private readonly IProbabilityToLikelinessConverter _converter;
-        private readonly IPillRecognizer _pillRecognizer;
+        private readonly IClassificationPillRecognizer _pillRecognizer;
 
-        public Prediction(IRepository<DrugCheckingSource> repository, IClassifier classifier, IPillColorAnalyzer pillColorAnalyzer, IProbabilityToLikelinessConverter converter, IPillRecognizer pillRecognizer)
+        public Prediction(IRepository<DrugCheckingSource> repository, IClassifier classifier, IPillColorAnalyzer pillColorAnalyzer, IProbabilityToLikelinessConverter converter, IClassificationPillRecognizer classificationPillRecognizer)
         {
             _repository = repository;
             _classifier = classifier;
             _pillColorAnalyzer = pillColorAnalyzer;
             _converter = converter;
-            _pillRecognizer = pillRecognizer;
+            _pillRecognizer = classificationPillRecognizer;
         }
 
         public async Task<IPredictionResult> Predict(byte[] image)

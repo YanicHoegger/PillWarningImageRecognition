@@ -1,14 +1,12 @@
-﻿using Bootstrapper.Interface;
-using DrugCheckingCrawler.Interface;
+﻿using DrugCheckingCrawler.Interface;
 using DrugCheckingCrawler.Parsers;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DrugCheckingCrawler
 {
-    public class ResourceCrawlerBootstrapper : IBootstrapper
+    public static class ResourceCrawlerBootstrapper
     {
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IResourceCrawler, ResourceCrawler>();
             services.AddSingleton<Parser>();

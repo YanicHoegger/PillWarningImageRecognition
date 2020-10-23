@@ -13,21 +13,21 @@ namespace Domain
         private readonly DrugCheckingSourceHandler _drugCheckingSourceHandler;
         private readonly IClassificationTrainer _trainer;
         private readonly IResourceCrawler _resourceCrawler;
-        private readonly IPillRecognizer _pillRecognizer;
+        private readonly IImagePillRecognizer _imagePillRecognizer;
         private readonly IDrugCheckingSourceFactory _drugCheckingSourceFactory;
 
         public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler,
             DrugCheckingSourceHandler drugCheckingSourceHandler,
             IClassificationTrainer trainer,
             IResourceCrawler resourceCrawler,
-            IPillRecognizer pillRecognizer,
+            IImagePillRecognizer imagePillRecognizer,
             IDrugCheckingSourceFactory drugCheckingSourceFactory)
         {
             _crawlerInformationHandler = crawlerInformationHandler;
             _drugCheckingSourceHandler = drugCheckingSourceHandler;
             _trainer = trainer;
             _resourceCrawler = resourceCrawler;
-            _pillRecognizer = pillRecognizer;
+            _imagePillRecognizer = imagePillRecognizer;
             _drugCheckingSourceFactory = drugCheckingSourceFactory;
         }
 
@@ -65,7 +65,7 @@ namespace Domain
         {
             await foreach (var crawlerResultItem in toFilter)
             {
-                if (await _pillRecognizer.IsPill(crawlerResultItem.Image))
+                if (await _imagePillRecognizer.IsPill(crawlerResultItem.Image))
                     yield return crawlerResultItem;
             }
         }

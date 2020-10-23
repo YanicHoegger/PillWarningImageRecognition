@@ -24,12 +24,12 @@ namespace ManipulationClient
             {
                 foreach (var innerException in aggregateException.InnerExceptions)
                 {
-                    Console.WriteLine($"Exception occurred: {innerException.Message}");
+                    Console.WriteLine(@$"Exception occurred: {innerException.Message}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception occurred: {ex.Message}");
+                Console.WriteLine(@$"Exception occurred: {ex.Message}");
             }
         }
     }

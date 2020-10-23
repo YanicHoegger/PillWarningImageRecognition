@@ -14,7 +14,6 @@ using Microsoft.Extensions.Hosting;
 
 namespace ImageInteraction.PredictedImagesManager
 {
-    //TODO only configure when used in client, but then use IHostedService to fetch data and cache them
     public class PredictedImagesManager : IPredictedImagesManager, IHostedService
     {
         private readonly IContext _context;
@@ -31,7 +30,7 @@ namespace ImageInteraction.PredictedImagesManager
             _client.DefaultRequestHeaders.Add("Training-Key", new[] { _context.Key });
         }
 
-        public async Task DeletePredictedImage(IEnumerable<byte[]> images)
+        public async Task DeletePredictedImages(IEnumerable<byte[]> images)
         {
             var sameImages = _predictedImages.Where(x => images.Contains(x.Image));
 
@@ -105,7 +104,8 @@ namespace ImageInteraction.PredictedImagesManager
 
         private static HttpContent GetHttpContent()
         {
-            return new StringContent("{ \"orderBy\": \"Newest\", \"maxCount\": \"1000\" }", Encoding.UTF8, "application/json");
+            //TODO: Max number of images that can get retrieved is 128, maybe this is enough, but maybe one should think of a solution to get them all
+            return new StringContent("{ \"orderBy\": \"Newest\", \"maxCount\": \"128\" }", Encoding.UTF8, "application/json");
         }
 
         private async IAsyncEnumerable<PredictedImage> Convert(PredictedImagesDto predictedImagesDto, [EnumeratorCancellation] CancellationToken cancellationToken)

@@ -10,9 +10,6 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.6" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BackEnd\DatabaseInteraction\DatabaseInteraction.csproj" />
-    <ProjectReference Include="..\..\BackEnd\Domain\Domain.csproj" />
-    <ProjectReference Include="..\..\BackEnd\DrugCheckingCrawler\DrugCheckingCrawler.csproj" />
-    <ProjectReference Include="..\..\BackEnd\ImageInteraction\ImageInteraction.csproj" />
+    <ProjectReference Include="..\..\Bootstrapper\Bootstrapper.csproj" />
   </ItemGroup>
 </Project>

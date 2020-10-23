@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Bootstrapper.Interface\Bootstrapper.Interface.csproj" />
     <ProjectReference Include="..\..\Utilities\Utilities.csproj" />
     <ProjectReference Include="..\Domain.Interface\Domain.Interface.csproj" />
   </ItemGroup>

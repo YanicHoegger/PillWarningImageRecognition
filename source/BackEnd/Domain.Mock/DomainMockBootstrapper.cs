@@ -1,14 +1,12 @@
-﻿using Bootstrapper.Interface;
-using Domain.Interface;
-using Microsoft.Extensions.Configuration;
+﻿using Domain.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Utilities;
 
 namespace Domain.Mock
 {
-    public class DomainMockBootstrapper : IBootstrapper
+    public class DomainMockBootstrapper
     {
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureServices(IServiceCollection services)
         {
             services.AddHostedSingletonService<IPredicition, PredictionMock>();
         }

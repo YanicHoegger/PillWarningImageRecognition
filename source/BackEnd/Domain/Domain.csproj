@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Bootstrapper.Interface\Bootstrapper.Interface.csproj" />
     <ProjectReference Include="..\DatabaseInteraction.Interface\DatabaseInteraction.Interface.csproj" />
     <ProjectReference Include="..\Domain.Interface\Domain.Interface.csproj" />
     <ProjectReference Include="..\DrugCheckingCrawler.Interface\DrugCheckingCrawler.Interface.csproj" />

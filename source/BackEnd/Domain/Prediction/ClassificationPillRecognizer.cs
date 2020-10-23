@@ -1,27 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Domain.Interface;
 using ImageInteraction.Interface;
 
 namespace Domain.Prediction
 {
-    public class PillRecognizer : IPillRecognizer
+    public class ClassificationPillRecognizer : IClassificationPillRecognizer
     {
-        private readonly IClassifier _classifier;
         private readonly IProbabilityToLikelinessConverter _converter;
 
-        public PillRecognizer(IClassifier classifier, IProbabilityToLikelinessConverter converter)
+        public ClassificationPillRecognizer(IProbabilityToLikelinessConverter converter)
         {
-            _classifier = classifier;
             _converter = converter;
-        }
-
-        public async Task<bool> IsPill(byte[] image)
-        {
-            var classificationResult = await _classifier.GetImageClassification(image);
-
-            return IsPill(classificationResult.TagClassifications);
         }
 
         public bool IsPill(IEnumerable<ITagClassificationResult> classificationResult)

@@ -1,41 +1,37 @@
-﻿using Bootstrapper.Interface;
-using DatabaseInteraction;
+﻿using DatabaseInteraction;
 using Domain;
 using DrugCheckingCrawler;
 using Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 using ImageInteraction;
 
 namespace Bootstrapper
 {
-    public class Bootstrapper : IBootstrapper
+    public class Bootstrapper
     {
-        private readonly IList<IBootstrapper> _compositeBootstrappers = new List<IBootstrapper>()
-        {
-            new DomainBootstrapper(),
-            new DatabaseBootstrapper(),
-            new ResourceCrawlerBootstrapper(),
-            new CustomVisionBootstrapper()
-        };
-
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureServicesForPillPrediction(IServiceCollection services, IConfiguration configuration)
         {
 #if DEBUG
 
             if (configuration.ReadBool("MOCK"))
             {
-                new Domain.Mock.DomainMockBootstrapper().ConfigureServices(services, configuration);
+                Domain.Mock.DomainMockBootstrapper.ConfigureServices(services);
                 return;
             }
 
 #endif
+            DomainBootstrapper.ConfigureServicesForPrediction(services);
+            DatabaseBootstrapper.ConfigureServices(services, configuration);
+            CustomVisionBootstrapper.ConfigureServicesForPillRecognition(services);
+        }
 
-            foreach (var composite in _compositeBootstrappers)
-            {
-                composite.ConfigureServices(services, configuration);
-            }
+        public static void ConfigureServicesForManipulation(IServiceCollection services, IConfiguration configuration)
+        {
+            DomainBootstrapper.ConfigureServiceForManipulation(services);
+            DatabaseBootstrapper.ConfigureServices(services, configuration);
+            CustomVisionBootstrapper.ConfigureServicesForManipulation(services);
+            ResourceCrawlerBootstrapper.ConfigureServices(services);
         }
     }
 }

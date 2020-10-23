@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using ImageInteraction.Interface;
 
 namespace Domain.Prediction
 {
-    public interface IPillRecognizer
+    public interface IClassificationPillRecognizer
     {
-        Task<bool> IsPill(byte[] image);
         bool IsPill(IEnumerable<ITagClassificationResult> classificationResult);
     }
 }
