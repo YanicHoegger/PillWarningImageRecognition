@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BackEnd\DatabaseInteraction.Interface\DatabaseInteraction.Interface.csproj" />
     <ProjectReference Include="..\Clients.Shared\Clients.Shared.csproj" />
     <ProjectReference Include="..\WebInterface\WebInterface.csproj" />
   </ItemGroup>

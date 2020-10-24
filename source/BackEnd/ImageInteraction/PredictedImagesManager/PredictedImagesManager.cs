@@ -10,12 +10,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using ImageInteraction.Classification;
 using ImageInteraction.Interface;
+using ImageInteraction.PredictedImagesManager.Dtos;
 using Microsoft.Extensions.Hosting;
 
 namespace ImageInteraction.PredictedImagesManager
 {
     public class PredictedImagesManager : IPredictedImagesManager, IHostedService
     {
+        private const int _maxCount = 128;
+
         private readonly IContext _context;
         private readonly HttpClient _client;
 
@@ -71,23 +74,44 @@ namespace ImageInteraction.PredictedImagesManager
             return $"{_context.EndPoint}/customvision/v3.0/training/projects/{_context.ProjectId}/predictions?{concatenatedIds}";
         }
 
-        private async IAsyncEnumerable<PredictedImage> GetPredictedImagesInternal([EnumeratorCancellation] CancellationToken cancellationToken)
+        private IAsyncEnumerable<PredictedImage> GetPredictedImagesInternal(CancellationToken cancellationToken)
         {
-            var serialized = await ReadPredictedImages(cancellationToken);
-
-            await foreach (var converted in Convert(serialized, cancellationToken))
-            {
-                yield return converted;
-            }
+            return ReadPredictedImages(cancellationToken)
+                .SelectAwait(async predictedImages => await Convert(predictedImages, cancellationToken));
         }
 
-        private async Task<PredictedImagesDto> ReadPredictedImages(CancellationToken cancellationToken)
+        private async IAsyncEnumerable<PredictedImageDto> ReadPredictedImages([EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            var response = await _client.PostAsync(GetPostUrl(), GetHttpContent(), cancellationToken);
+            PredictedImagesDto result = null;
+            do
+            {
+                result = await ReadPredictedImages(result, cancellationToken);
+
+                foreach (var predictedImageDto in result.Results)
+                {
+                    yield return predictedImageDto;
+                }
+            } while (result.Results.Count >= _maxCount);
+        }
+
+        private async Task<PredictedImagesDto> ReadPredictedImages(PredictedImagesDto predictedImagesDto, CancellationToken cancellationToken)
+        {
+            var token = predictedImagesDto?.Token ?? new TokenDto
+            {
+                MaxCount = _maxCount,
+                OrderBy = "Newest"
+            };
+
+            var response = await _client.PostAsync(GetPostUrl(), GetHttpContent(token), cancellationToken);
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStreamAsync();
 
+            return await Deserialize(cancellationToken, content);
+        }
+
+        private static async Task<PredictedImagesDto> Deserialize(CancellationToken cancellationToken, Stream content)
+        {
             var serializeOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -102,21 +126,17 @@ namespace ImageInteraction.PredictedImagesManager
             return $"{_context.EndPoint}/customvision/v3.0/training/projects/{_context.ProjectId}/predictions/query";
         }
 
-        private static HttpContent GetHttpContent()
+        private static HttpContent GetHttpContent(TokenDto dto)
         {
-            //TODO: Max number of images that can get retrieved is 128, maybe this is enough, but maybe one should think of a solution to get them all
-            return new StringContent("{ \"orderBy\": \"Newest\", \"maxCount\": \"128\" }", Encoding.UTF8, "application/json");
+            return new StringContent(JsonSerializer.Serialize(dto), Encoding.UTF8, "application/json");
         }
 
-        private async IAsyncEnumerable<PredictedImage> Convert(PredictedImagesDto predictedImagesDto, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async Task<PredictedImage> Convert(PredictedImageDto predictedImageDto, CancellationToken cancellationToken)
         {
-            foreach (var predictedImageDto in predictedImagesDto.Results)
-            {
-                var image = await ReadImage(predictedImageDto.OriginalImageUri, cancellationToken);
-                var tagClassificationResults = predictedImageDto.Predictions.Select(Convert).ToList();
+            var image = await ReadImage(predictedImageDto.OriginalImageUri, cancellationToken);
+            var tagClassificationResults = predictedImageDto.Predictions.Select(Convert).ToList();
 
-                yield return new PredictedImage(tagClassificationResults, image, predictedImageDto.Id);
-            }
+            return new PredictedImage(tagClassificationResults, image, predictedImageDto.Id);
         }
 
         private async Task<byte[]> ReadImage(string url, CancellationToken cancellationToken)

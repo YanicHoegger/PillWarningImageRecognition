@@ -1,4 +1,4 @@
-﻿namespace ImageInteraction.PredictedImagesManager
+﻿namespace ImageInteraction.PredictedImagesManager.Dtos
 {
     public class PredictionResultDto
     {
