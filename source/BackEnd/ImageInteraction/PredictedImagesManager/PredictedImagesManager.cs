@@ -12,6 +12,7 @@ using ImageInteraction.Classification;
 using ImageInteraction.Interface;
 using ImageInteraction.PredictedImagesManager.Dtos;
 using Microsoft.Extensions.Hosting;
+using Utilities;
 
 namespace ImageInteraction.PredictedImagesManager
 {
@@ -33,9 +34,9 @@ namespace ImageInteraction.PredictedImagesManager
             _client.DefaultRequestHeaders.Add("Training-Key", new[] { _context.Key });
         }
 
-        public async Task DeletePredictedImages(IEnumerable<byte[]> images)
+        public async Task DeletePredictedImages(byte[] image)
         {
-            var sameImages = _predictedImages.Where(x => images.Contains(x.Image));
+            var sameImages = _predictedImages.Where(x => ImageHelper.Compare(x.Image, image));
 
             await DeleteImages(sameImages);
         }

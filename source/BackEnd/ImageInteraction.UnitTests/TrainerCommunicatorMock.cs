@@ -32,9 +32,12 @@ namespace ImageInteraction.UnitTests
             return Task.FromResult(new Tag { Name = name });
         }
 
-        public IEnumerable<Task<byte[]>> DownloadImages()
+        public async IAsyncEnumerable<byte[]> DownloadImages()
         {
-            return DownloadingImages.Select(Task.FromResult);
+            foreach (var downloadingImage in DownloadingImages)
+            {
+                yield return await Task.FromResult(downloadingImage);
+            }
         }
 
         public Tag GetTag(string tagName)

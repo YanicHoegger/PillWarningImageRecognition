@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ManipulationClient
 {
@@ -16,9 +18,9 @@ namespace ManipulationClient
                 Startup.Init(args);
 
                 var config = Startup.ServiceProvider.GetService<IConfiguration>();
-                var executer = Startup.ServiceProvider.GetService<IExecuter>();
+                var executer = Startup.ServiceProvider.GetServices<IExecuter>();
 
-                executer.Execute(config, Startup.ServiceProvider).Wait();
+                Task.WhenAll(executer.Select(x => x.Execute(config, Startup.ServiceProvider))).Wait();
             }
             catch (AggregateException aggregateException)
             {

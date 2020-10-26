@@ -29,6 +29,7 @@ namespace ImageInteraction
             ConfigureForClassification(services);
 
             services.AddHostedSingletonService<IPredictedImagesManager, PredictedImagesManager.PredictedImagesManager>(serviceProvider => new PredictedImagesManager.PredictedImagesManager(serviceProvider.GetService<TrainerContext>()));
+            services.AddSingleton<ITrainedImagesManager, TrainedImagesManager>();
 
             services.AddSingleton<TrainerContext>();
             services.AddHostedSingletonService<ITrainerCommunicator, TrainerCommunicator>(serviceProvider => new TrainerCommunicator(serviceProvider.GetService<TrainerContext>()));

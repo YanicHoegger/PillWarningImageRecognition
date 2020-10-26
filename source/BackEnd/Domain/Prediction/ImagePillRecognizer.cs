@@ -18,7 +18,7 @@ namespace Domain.Prediction
         public async Task<bool> IsPill(byte[] image)
         {
             var classificationResult = await _classifier.GetImageClassification(image);
-            await _predictedImagesManager.DeletePredictedImages(new []{image});
+            await _predictedImagesManager.DeletePredictedImages(image);
 
             return IsPill(classificationResult.TagClassifications);
         }

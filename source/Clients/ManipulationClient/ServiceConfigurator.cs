@@ -17,13 +17,18 @@ namespace ManipulationClient
             ImageInteractionBootstrapper.ConfigureServicesForManipulation(services);
             ResourceCrawlerBootstrapper.ConfigureServices(services);
 
+            //TODO: Make Dictionary out of this (or mapping or something)
             if (configuration.ReadBool("Update"))
             {
-                services.AddScoped<IExecuter, DrugCheckingUpdater>();
+                services.AddSingleton<IExecuter, DrugCheckingUpdater>();
             }
             if (configuration.ReadBool("Crawl"))
             {
-                services.AddScoped<IExecuter, DrugCheckingCrawler>();
+                services.AddSingleton<IExecuter, DrugCheckingCrawler>();
+            }
+            if (configuration.ReadBool("CleanPrediction"))
+            {
+                services.AddSingleton<IExecuter, PredictedImagesCleaner>();
             }
         }
     }

@@ -64,6 +64,7 @@ namespace ImageInteraction.Training
             return await _trainerCommunicator.CreateTag(tagName);
         }
 
+        //TODO: Check if this is not already managed by custom vision
         /// <summary>
         /// To filter images that already are present in training
         /// </summary>
@@ -71,9 +72,9 @@ namespace ImageInteraction.Training
         {
             //Make hash set for quicker comparision
             var hashTable = new HashSet<byte[]>(new ByteArrayComparer());
-            foreach (var task in _trainerCommunicator.DownloadImages())
+            await foreach (var task in _trainerCommunicator.DownloadImages())
             {
-                hashTable.Add(await task);
+                hashTable.Add(task);
             }
 
             return trainingImages.Where(x =>

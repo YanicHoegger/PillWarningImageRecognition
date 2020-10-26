@@ -5,32 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TestFiles\Skulls1.jpg" />
-    <None Remove="TestFiles\Skulls2.jpg" />
-    <None Remove="TestFiles\Skulls3.jpg" />
-    <None Remove="TestFiles\Skulls4.jpg" />
-    <None Remove="TestFiles\Skulls5.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="TestFiles\Skulls1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\Skulls2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\Skulls3.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\Skulls4.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestFiles\Skulls5.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="JustMock" Version="2020.2.513.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
@@ -46,5 +20,12 @@
     <ProjectReference Include="..\ImageInteraction.Interface\ImageInteraction.Interface.csproj" />
     <ProjectReference Include="..\ImageInteraction\ImageInteraction.csproj" />
   </ItemGroup>
+
+  <Target Name="CopyTestFiles" AfterTargets="Build">
+    <ItemGroup>
+      <DataFiles Include="$(ProjectDir)TestFiles\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)TestFiles\%(RecursiveDir)" SkipUnchangedFiles="True" />
+  </Target>
 
 </Project>

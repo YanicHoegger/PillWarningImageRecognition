@@ -6,6 +6,7 @@ namespace Utilities
 {
     public static class ServiceCollectionExtensions
     {
+        //TODO: Add decorators for logging and throw if not started
         public static void AddHostedSingletonService<TInterface, TImplementation>(this IServiceCollection serviceCollection)
             where TInterface : class
             where TImplementation : class, TInterface, IHostedService

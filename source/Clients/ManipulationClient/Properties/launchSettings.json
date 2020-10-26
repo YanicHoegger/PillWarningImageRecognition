@@ -4,8 +4,9 @@
       "commandName": "Project",
       "environmentVariables": {
         "Update": "False",
-        "Crawl": "True",
-        "CACHED_DATABASE": "False"
+        "Crawl": "False",
+        "CACHED_DATABASE": "False",
+        "CleanPrediction":  "False" 
       }
     }
   }

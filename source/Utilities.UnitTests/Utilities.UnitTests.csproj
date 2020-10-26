@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
+  </ItemGroup>
+
+  <Target Name="CopyTestFiles" AfterTargets="Build">
+    <ItemGroup>
+      <DataFiles Include="$(ProjectDir)TestFiles\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)TestFiles\%(RecursiveDir)" SkipUnchangedFiles="True" />
+  </Target>
+
+</Project>

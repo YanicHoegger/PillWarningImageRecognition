@@ -13,6 +13,8 @@ namespace ImageInteraction.Training
 {
     public class TrainerCommunicator : ITrainerCommunicator, IHostedService
     {
+        private const int _maxImagesPreRequest = 256;
+
         private readonly IContext _context;
         private readonly CustomVisionTrainingClient _customVisionTrainingClient;
 
@@ -32,8 +34,8 @@ namespace ImageInteraction.Training
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             _tags = await _customVisionTrainingClient.GetTagsAsync(_context.ProjectId, cancellationToken: cancellationToken);
-            _images = (await _customVisionTrainingClient.GetTaggedImagesAsync(_context.ProjectId, cancellationToken: cancellationToken))
-                .Concat(await _customVisionTrainingClient.GetUntaggedImagesAsync(_context.ProjectId, cancellationToken: cancellationToken))
+            _images = (await GetTaggedImages(cancellationToken).ToListAsync(cancellationToken))
+                .Concat(await GetUntaggedImages(cancellationToken).ToListAsync(cancellationToken))
                 .ToList();
 
             IsInitialized = true;
@@ -76,13 +78,13 @@ namespace ImageInteraction.Training
             await _customVisionTrainingClient.CreateImagesFromDataAsync(_context.ProjectId, imageStream, tags.Select(x => x.Id).ToList());
         }
 
-        public IEnumerable<Task<byte[]>> DownloadImages()
+        public async IAsyncEnumerable<byte[]> DownloadImages()
         {
             ThrowIfNotInitialized();
 
             foreach (var image in _images)
             {
-                yield return new WebClient().DownloadDataTaskAsync(image.OriginalImageUri);
+                yield return await new WebClient().DownloadDataTaskAsync(image.OriginalImageUri);
             }
         }
 
@@ -90,6 +92,39 @@ namespace ImageInteraction.Training
         {
             if (!IsInitialized)
                 throw new InvalidOperationException("Must be initialized first");
+        }
+
+        private IAsyncEnumerable<Image> GetTaggedImages(CancellationToken cancellationToken)
+        {
+            return GetImages(skip => _customVisionTrainingClient.GetTaggedImagesAsync(_context.ProjectId, 
+                cancellationToken: cancellationToken, 
+                take: _maxImagesPreRequest, 
+                skip: skip));
+        }
+
+        private IAsyncEnumerable<Image> GetUntaggedImages(CancellationToken cancellationToken)
+        {
+            return GetImages(skip => _customVisionTrainingClient.GetUntaggedImagesAsync(_context.ProjectId,
+                cancellationToken: cancellationToken,
+                take: _maxImagesPreRequest,
+                skip: skip));
+        }
+
+        private static async IAsyncEnumerable<Image> GetImages(Func<int, Task<IList<Image>>> getterFunc)
+        {
+            IList<Image> results;
+            int skip = 0;
+            do
+            {
+                results = await getterFunc(skip);
+
+                skip += _maxImagesPreRequest;
+
+                foreach (var image in results)
+                {
+                    yield return image;
+                }
+            } while (results.Count >= _maxImagesPreRequest);
         }
     }
 }

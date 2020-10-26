@@ -23,6 +23,8 @@ namespace Domain
             services.AddSingleton<DrugCheckingSourceManager>();
             services.AddSingleton<CrawlerInformationHandler>();
             services.AddSingleton<DrugCheckingSourceHandler>();
+
+            services.AddSingleton<IPredictedImagesCleaner, PredictedImagesCleaner>();
         }
     }
 }

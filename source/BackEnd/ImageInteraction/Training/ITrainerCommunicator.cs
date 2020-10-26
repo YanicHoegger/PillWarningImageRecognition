@@ -11,7 +11,7 @@ namespace ImageInteraction.Training
 
         Task AddImage(Stream imageStream, IEnumerable<Tag> tags);
         Task<Tag> CreateTag(string name);
-        IEnumerable<Task<byte[]>> DownloadImages();
+        IAsyncEnumerable<byte[]> DownloadImages();
         Tag GetTag(string tagName);
     }
 }

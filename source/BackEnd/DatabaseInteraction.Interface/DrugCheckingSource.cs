@@ -6,6 +6,7 @@ using Utilities;
 
 namespace DatabaseInteraction.Interface
 {
+    //TODO: Move to implementation and create interface
     public class DrugCheckingSource : Entity
     {
         public string Header { get; set; }
