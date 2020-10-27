@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using DatabaseInteraction.Interface;
-using Microsoft.Azure.Cosmos;
 
 namespace DatabaseInteraction.Repository
 {
@@ -11,8 +10,8 @@ namespace DatabaseInteraction.Repository
     {
         private readonly DrugCheckingSourceQueries _queries = new DrugCheckingSourceQueries();
 
-        public DrugCheckingSourceRepository(Container container) 
-            : base(container)
+        public DrugCheckingSourceRepository(ContainerFactory<DrugCheckingSource> containerFactory) 
+            : base(containerFactory)
         {
         }
 

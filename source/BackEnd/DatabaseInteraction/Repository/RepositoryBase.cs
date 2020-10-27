@@ -9,9 +9,9 @@ namespace DatabaseInteraction.Repository
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : Entity, new()
     {
-        protected RepositoryBase(Container container)
+        protected RepositoryBase(ContainerFactory<T> containerFactory)
         {
-            Container = container;
+            Container = containerFactory.Container;
         }
 
         public abstract IAsyncEnumerable<T> Get();

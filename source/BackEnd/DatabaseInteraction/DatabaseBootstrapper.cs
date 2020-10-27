@@ -13,21 +13,28 @@ namespace DatabaseInteraction
         {
             services.AddSingleton<IContext, ConfiguratedContext>();
 
-            services.AddHostedSingletonService<ContainerFactory>();
             var isCached = configuration.ReadBool(_cachedConfiguration);
             if (isCached)
             {
-                services.AddSingleton<IRepositoryFactory, CachedRepositoryFactory>(x => new CachedRepositoryFactory(x.GetService<ContainerFactory>().Container));
+                services.AddRepository<CrawlerAction, IRepository<CrawlerAction>, CachedRepository<CrawlerAction>>();
+                services.AddRepository<DrugCheckingSource, IDrugCheckingSourceRepository, CachedDrugCheckingSourceRepository>();
             }
             else
             {
-                services.AddSingleton<IRepositoryFactory, RepositoryFactory>(x => new RepositoryFactory(x.GetService<ContainerFactory>().Container));
+                services.AddRepository<CrawlerAction, IRepository<CrawlerAction>, Repository<CrawlerAction>>();
+                services.AddRepository<DrugCheckingSource, IDrugCheckingSourceRepository, DrugCheckingSourceRepository>();
             }
 
-            services.AddSingleton(x => x.GetService<IRepositoryFactory>().Create<CrawlerAction>());
-            services.AddSingleton(x => x.GetService<IRepositoryFactory>().CreateDrugCheckingSourceRepository());
-
             services.AddSingleton<IEntityFactory, EntityFactory>();
+        }
+
+        private static void AddRepository<TEntity, TRepositoryInterface, TRepositoryImplementation>(this IServiceCollection services)
+            where TEntity : Entity, new()
+            where TRepositoryInterface : class, IRepository<TEntity>
+            where TRepositoryImplementation : class, TRepositoryInterface
+        {
+            services.AddHostedSingletonService<ContainerFactory<TEntity>>();
+            services.AddSingleton<TRepositoryInterface, TRepositoryImplementation>();
         }
     }
 }

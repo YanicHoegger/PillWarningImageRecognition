@@ -8,15 +8,15 @@ using Microsoft.Extensions.Logging;
 
 namespace DatabaseInteraction.Repository
 {
-    public class ContainerFactory : IHostedService
+    public class ContainerFactory<T> : IHostedService
     {
         private readonly IContext _context;
-        private readonly ILogger<ContainerFactory> _logger;
+        private readonly ILogger<ContainerFactory<T>> _logger;
 
         private bool _isStarted;
         private Container _container;
 
-        public ContainerFactory(IContext context, ILogger<ContainerFactory> logger)
+        public ContainerFactory(IContext context, ILogger<ContainerFactory<T>> logger)
         {
             _context = context;
             _logger = logger;
@@ -24,15 +24,15 @@ namespace DatabaseInteraction.Repository
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Starting {nameof(ContainerFactory)}");
+            _logger.LogInformation($"Starting {nameof(ContainerFactory<T>)}");
 
             var client = ClientFactory.Create(_context);
             var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(_context.DatabaseName, _context.Throughput, cancellationToken: cancellationToken);
 
-            var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(_context.ContainerId, $"/{nameof(Entity.Id)}", cancellationToken: cancellationToken);
+            var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(typeof(T).Name, $"/{nameof(Entity.Id)}", cancellationToken: cancellationToken);
             Container = containerResponse.Container;
 
-            _logger.LogInformation($"{nameof(ContainerFactory)} started");
+            _logger.LogInformation($"{nameof(ContainerFactory<T>)} started");
 
             _isStarted = true;
         }

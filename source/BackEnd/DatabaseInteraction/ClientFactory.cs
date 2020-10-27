@@ -6,7 +6,7 @@ namespace DatabaseInteraction
     {
         public static CosmosClient Create(IContext context)
         {
-            return new CosmosClient(context.EndPoint, context.Key, new CosmosClientOptions()
+            return new CosmosClient(context.EndPoint, context.Key, new CosmosClientOptions
             {
                 ConnectionMode = ConnectionMode.Gateway
             });

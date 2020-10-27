@@ -11,8 +11,8 @@ namespace DatabaseInteraction.Repository
     {
         private readonly DrugCheckingSourceQueries _queries = new DrugCheckingSourceQueries();
 
-        public CachedDrugCheckingSourceRepository(Container container) 
-            : base(container)
+        public CachedDrugCheckingSourceRepository(ContainerFactory<DrugCheckingSource> containerFactory) 
+            : base(containerFactory)
         {
         }
 

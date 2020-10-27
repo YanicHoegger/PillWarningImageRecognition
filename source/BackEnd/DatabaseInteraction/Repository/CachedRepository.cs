@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatabaseInteraction.Interface;
-using Microsoft.Azure.Cosmos;
 
 namespace DatabaseInteraction.Repository
 {
@@ -17,8 +16,8 @@ namespace DatabaseInteraction.Repository
     {
         private List<T> _cache;
 
-        public CachedRepository(Container container) 
-            : base(container)
+        public CachedRepository(ContainerFactory<T> containerFactory) 
+            : base(containerFactory)
         {
         }
 
@@ -57,17 +56,10 @@ namespace DatabaseInteraction.Repository
             return base.Update(toUpdate, id);
         }
 
-        protected IAsyncEnumerable<T> GetFromDb()
-        {
-            var queryDefinition = QueryResolver.SelectOfType<T>();
-            var feedIterator = Container.GetItemQueryIterator<T>(queryDefinition);
-
-            return RetrieveList(feedIterator);
-        }
-
+        //TODO: As IHostedService
         private async Task CheckCache()
         {
-            _cache ??= await GetFromDb().ToListAsync();
+            _cache ??= await Get().ToListAsync();
         }
     }
 }

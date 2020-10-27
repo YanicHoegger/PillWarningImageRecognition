@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using DatabaseInteraction.Interface;
-using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 
 namespace DatabaseInteraction.Repository
 {
     public class Repository<T> : RepositoryBase<T> where T : Entity, new()
     {
-        public Repository(Container container) 
-            : base(container)
+        public Repository(ContainerFactory<T> containerFactory) 
+            : base(containerFactory)
         {
         }
 
