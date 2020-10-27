@@ -15,13 +15,10 @@ namespace ImageInteraction
         {
             ConfigureForClassification(services);
 
-            services.AddSingleton<IVisionContext, VisionContext>();
-            services.AddSingleton<IComputerVisionCommunication, ComputerVisionCommunication>();
             services.AddSingleton<DetectionContext>();
             services.AddSingleton<IDetectionCommunication, DetectionCommunication>(serviceProvider => new DetectionCommunication(serviceProvider.GetRequiredService<DetectionContext>()));
             services.AddSingleton<IDetector, Detector>();
             services.AddTransient<ICroppingService, CroppingService>();
-            services.AddSingleton<IColorAnalyzer, ColorAnalyzer.ColorAnalyzer>();
         }
 
         public static void ConfigureServicesForManipulation(IServiceCollection services)
@@ -44,6 +41,10 @@ namespace ImageInteraction
                 new PillClassificationCommunication(sp.GetRequiredService<PillClassificationContext>()));
 
             services.AddSingleton<IClassifier, PillClassification>();
+
+            services.AddSingleton<IVisionContext, VisionContext>();
+            services.AddSingleton<IComputerVisionCommunication, ComputerVisionCommunication>();
+            services.AddSingleton<IColorAnalyzer, ColorAnalyzer.ColorAnalyzer>();
         }
     }
 }

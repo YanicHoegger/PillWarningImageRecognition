@@ -1,35 +1,23 @@
 ﻿using DatabaseInteraction.Interface;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Domain
 {
     public class DrugCheckingSourceHandler
     {
-        private readonly IRepository<DrugCheckingSource> _repository;
-        private readonly IDataBaseUpdater _dataBaseUpdater;
+        private readonly IDrugCheckingSourceRepository _repository;
+        private readonly ILogger<DrugCheckingSourceHandler> _logger;
 
-        public DrugCheckingSourceHandler(IRepository<DrugCheckingSource> repository, IDataBaseUpdater dataBaseUpdater)
+        public DrugCheckingSourceHandler(IDrugCheckingSourceRepository repository, ILogger<DrugCheckingSourceHandler> logger)
         {
             _repository = repository;
-            _dataBaseUpdater = dataBaseUpdater;
-        }
-
-        public async Task StoreSources(IEnumerable<DrugCheckingSource> sources)
-        {
-            var alreadyPresent = await _repository.Get();
-
-            var notPresentSources = sources.Where(x => !CheckIfPresent(alreadyPresent, x));
-
-            await _repository.Insert(notPresentSources);
+            _logger = logger;
         }
 
         public async Task StoreSources(DrugCheckingSource source)
         {
-            var alreadyPresent = await _repository.Get();
-
-            if (CheckIfPresent(alreadyPresent, source))
+            if (await _repository.Contains(source))
             {
                 return;
             }
@@ -39,17 +27,14 @@ namespace Domain
 
         public async Task UpdateResources(DrugCheckingSource toUpdate)
         {
-            await _dataBaseUpdater.Update(_repository, toUpdate, x => CompareFunction(x, toUpdate));
-        }
+            var correspondingItem = await _repository.SingleOrDefault(toUpdate);
+            if (correspondingItem == null)
+            {
+                _logger.LogWarning($"Could not find item:\r\n{toUpdate.PdfLocation}");
+                return;
+            }
 
-        private static bool CheckIfPresent(IEnumerable<DrugCheckingSource> alreadyPresent, DrugCheckingSource toCheck)
-        {
-            return alreadyPresent.Any(y => CompareFunction(y, toCheck));
-        }
-
-        private static bool CompareFunction(DrugCheckingSource x, DrugCheckingSource y)
-        {
-            return x.PdfLocation.Equals(y.PdfLocation);
+            await _repository.Update(toUpdate, correspondingItem.Id);
         }
     }
 }

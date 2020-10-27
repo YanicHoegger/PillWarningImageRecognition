@@ -1,37 +1,30 @@
-﻿using DatabaseInteraction.Interface;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using DatabaseInteraction.Interface;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace DatabaseInteraction
+namespace DatabaseInteraction.Repository
 {
-    public abstract class RepositoryFactoryBase : IHostedService, IRepositoryFactory
+    public class ContainerFactory : IHostedService
     {
         private readonly IContext _context;
-        private readonly ILogger<RepositoryFactoryBase> _logger;
+        private readonly ILogger<ContainerFactory> _logger;
 
         private bool _isStarted;
+        private Container _container;
 
-        protected RepositoryFactoryBase(IContext context, ILogger<RepositoryFactoryBase> logger)
+        public ContainerFactory(IContext context, ILogger<ContainerFactory> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        public IRepository<T> Create<T>() where T : Entity, new()
-        {
-            if (!_isStarted)
-                throw new InvalidOperationException($"{nameof(RepositoryFactory)} must be started first");
-
-            return OnCreate<T>();
-        }
-
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Starting {nameof(RepositoryFactory)}");
+            _logger.LogInformation($"Starting {nameof(ContainerFactory)}");
 
             var client = ClientFactory.Create(_context);
             var databaseResponse = await client.CreateDatabaseIfNotExistsAsync(_context.DatabaseName, _context.Throughput, cancellationToken: cancellationToken);
@@ -39,7 +32,7 @@ namespace DatabaseInteraction
             var containerResponse = await databaseResponse.Database.CreateContainerIfNotExistsAsync(_context.ContainerId, $"/{nameof(Entity.Id)}", cancellationToken: cancellationToken);
             Container = containerResponse.Container;
 
-            _logger.LogInformation($"{nameof(RepositoryFactory)} started");
+            _logger.LogInformation($"{nameof(ContainerFactory)} started");
 
             _isStarted = true;
         }
@@ -49,8 +42,16 @@ namespace DatabaseInteraction
             return Task.CompletedTask;
         }
 
-        protected abstract IRepository<T> OnCreate<T>() where T : Entity, new();
+        public Container Container
+        {
+            get
+            {
+                if(!_isStarted)
+                    throw new InvalidOperationException("Service needs to get started first");
+                return _container;
+            }
 
-        protected Container Container { get; private set; }
+            private set => _container = value;
+        }
     }
 }

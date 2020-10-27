@@ -16,6 +16,14 @@ namespace Utilities
             serviceCollection.RegisterAsInterfaceAndHostedService<TInterface, TImplementation>();
         }
 
+        public static void AddHostedSingletonService<TImplementation>(this IServiceCollection serviceCollection)
+            where TImplementation : class, IHostedService
+        {
+            serviceCollection.AddSingleton<TImplementation>();
+
+            serviceCollection.AddHostedService(GetImplementationFactory<TImplementation>());
+        }
+
         public static void AddHostedSingletonService<TInterface, TImplementation>(this IServiceCollection serviceCollection, Func<IServiceProvider, TImplementation> implementationFactory)
             where TInterface : class
             where TImplementation : class, TInterface, IHostedService
@@ -28,10 +36,13 @@ namespace Utilities
         private static void RegisterAsInterfaceAndHostedService<TInterface, TImplementation>(this IServiceCollection serviceCollection)
             where TInterface : class where TImplementation : class, TInterface, IHostedService
         {
-            static TImplementation ImplementationFactory(IServiceProvider x) => x.GetRequiredService<TImplementation>();
+            serviceCollection.AddSingleton<TInterface, TImplementation>(GetImplementationFactory<TImplementation>());
+            serviceCollection.AddHostedService(GetImplementationFactory<TImplementation>());
+        }
 
-            serviceCollection.AddSingleton<TInterface, TImplementation>(ImplementationFactory);
-            serviceCollection.AddHostedService(ImplementationFactory);
+        private static Func<IServiceProvider, T> GetImplementationFactory<T>()
+        {
+            return x => x.GetRequiredService<T>();
         }
     }
 }

@@ -9,13 +9,13 @@ namespace Domain
     public class CrawlerInformationHandler
     {
         private readonly IRepository<CrawlerAction> _crawlerRepository;
-        private readonly IRepository<DrugCheckingSource> _drugCheckingRepository;
+        private readonly IDrugCheckingSourceRepository _drugCheckingRepository;
         private readonly IEntityFactory _entityFactory;
 
         private const string _number = nameof(_number);
         private static readonly string _numberRegex = @$"https:\/\/de\.drugchecking\.ch\/pdf\.php\?p=(?<{_number}>[0-9]+)";
 
-        public CrawlerInformationHandler(IRepository<CrawlerAction> crawlerRepository, IRepository<DrugCheckingSource> drugCheckingRepository, IEntityFactory entityFactory)
+        public CrawlerInformationHandler(IRepository<CrawlerAction> crawlerRepository, IDrugCheckingSourceRepository drugCheckingRepository, IEntityFactory entityFactory)
         {
             _crawlerRepository = crawlerRepository;
             _drugCheckingRepository = drugCheckingRepository;
@@ -27,7 +27,8 @@ namespace Domain
             //var entries = await _crawlerRepository.Get();
             //return entries.Any() ? entries.Max(x => x.LastSuccessfulIndex) : 0;
 
-            var entries = await _drugCheckingRepository.Get();
+            //TODO: Refactoring Repository
+            var entries = await _drugCheckingRepository.Get().ToListAsync();
             return entries.Any() ? entries.Max(GetIndex) : 0;
         }
 

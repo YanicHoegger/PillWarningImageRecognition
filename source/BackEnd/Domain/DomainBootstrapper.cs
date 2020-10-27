@@ -19,12 +19,15 @@ namespace Domain
             services.AddSingleton<IImagePillRecognizer, ImagePillRecognizer>();
 
             services.AddSingleton<IDrugCheckingSourceFactory, DrugCheckingSourceFactory>();
+            services.AddSingleton<IPillColorAnalyzer, PillColorAnalyzer>();
 
             services.AddSingleton<DrugCheckingSourceManager>();
             services.AddSingleton<CrawlerInformationHandler>();
             services.AddSingleton<DrugCheckingSourceHandler>();
 
             services.AddSingleton<IPredictedImagesCleaner, PredictedImagesCleaner>();
+
+            services.AddSingleton<IProbabilityToLikelinessConverter, ProbabilityToLikelinessConverter>();
         }
     }
 }

@@ -28,7 +28,7 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "CACHED_DATABASE": "True",
+        "CACHED_DATABASE": "False",
         "MOCK": "False"
       },
       "publishAllPorts": true,

@@ -7,10 +7,10 @@ namespace Domain
 {
     public class PredictedImagesCleaner : IPredictedImagesCleaner
     {
-        private readonly IRepository<DrugCheckingSource> _repository;
+        private readonly IDrugCheckingSourceRepository _repository;
         private readonly IPredictedImagesManager _predictedImagesManager;
 
-        public PredictedImagesCleaner(IRepository<DrugCheckingSource> repository, IPredictedImagesManager predictedImagesManager)
+        public PredictedImagesCleaner(IDrugCheckingSourceRepository repository, IPredictedImagesManager predictedImagesManager)
         {
             _repository = repository;
             _predictedImagesManager = predictedImagesManager;
@@ -18,7 +18,7 @@ namespace Domain
 
         public async Task CleanPredictions()
         {
-            foreach (var drugCheckingSource in await _repository.Get())
+            await foreach (var drugCheckingSource in _repository.Get())
             {
                 await _predictedImagesManager.DeletePredictedImages(drugCheckingSource.Image);
             }

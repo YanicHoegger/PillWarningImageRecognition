@@ -10,13 +10,17 @@ namespace Domain.Prediction
 {
     public class Prediction : IPredicition
     {
-        private readonly IRepository<DrugCheckingSource> _repository;
+        private readonly IDrugCheckingSourceRepository _repository;
         private readonly IClassifier _classifier;
         private readonly IPillColorAnalyzer _pillColorAnalyzer;
         private readonly IProbabilityToLikelinessConverter _converter;
         private readonly IClassificationPillRecognizer _pillRecognizer;
 
-        public Prediction(IRepository<DrugCheckingSource> repository, IClassifier classifier, IPillColorAnalyzer pillColorAnalyzer, IProbabilityToLikelinessConverter converter, IClassificationPillRecognizer classificationPillRecognizer)
+        public Prediction(IDrugCheckingSourceRepository repository,
+            IClassifier classifier,
+            IPillColorAnalyzer pillColorAnalyzer,
+            IProbabilityToLikelinessConverter converter,
+            IClassificationPillRecognizer classificationPillRecognizer)
         {
             _repository = repository;
             _classifier = classifier;
@@ -34,19 +38,15 @@ namespace Domain.Prediction
 
             var color = await GetColor(image);
 
-            var tagFindings = await GetTagFindings(RemovePillTagClassification(classificationResult.TagClassifications), color);
-            var colorFindings = await ColorFindings(color);
+            var tagFindings = GetTagFindings(RemovePillTagClassification(classificationResult.TagClassifications), color);
+            var colorFindings = ColorFindings(color);
 
-            return PredictionResult.FromSuccess(tagFindings, colorFindings);
+            return PredictionResult.FromSuccess(await tagFindings.ToListAsync(), await colorFindings.ToListAsync());
         }
 
-        private async Task<IEnumerable<IPillWarning>> ColorFindings(Color color)
+        private IAsyncEnumerable<IPillWarning> ColorFindings(Color color)
         {
-            return (await _repository.Get())
-                .Where(x => x.Color.Equals(color))
-                .OrderByDescending(x => x.Creation)
-                .Take(20)
-                .Select(Convert);
+            return _repository.GetSameColor(color, 20).Select(Convert);
         }
 
         private static IEnumerable<ITagClassificationResult> RemovePillTagClassification(IEnumerable<ITagClassificationResult> toFilter)
@@ -59,30 +59,23 @@ namespace Domain.Prediction
             return await _pillColorAnalyzer.GetColor(image);
         }
 
-        private async Task<List<Finding>> GetTagFindings(IEnumerable<ITagClassificationResult> classificationResults, Color color)
+        private async IAsyncEnumerable<Finding> GetTagFindings(IEnumerable<ITagClassificationResult> classificationResults, Color color)
         {
-            var findings = new List<Finding>();
-            var resources = await _repository.Get();
-
-            // ReSharper disable once LoopCanBeConvertedToQuery : Is better readable
             foreach (var classificationResult in classificationResults)
             {
                 var likeliness = _converter.Convert(classificationResult.Probability);
 
-                if(likeliness < Likeliness.Maybe)
+                if (likeliness < Likeliness.Maybe)
                     continue;
 
-                var correlatedTagResources = resources.Where(x => x.Name.Equals(classificationResult.TagName));
+                var orderedResources = await _repository.GetSameTagName(classificationResult.TagName)
+                    .Select(Convert)
+                    .OrderByDescending(x => x.Creation)
+                    .ThenByDescending(x => x.Color.Equals(color))
+                    .ToListAsync();
 
-                var orderedResources = correlatedTagResources
-                    .OrderByDescending(x => x.Color.Equals(color) )
-                    .ThenByDescending(x => x.Creation)
-                    .Select(Convert);
-
-                findings.Add(new Finding(classificationResult.TagName, likeliness, orderedResources));
+                yield return new Finding(classificationResult.TagName, likeliness, orderedResources);
             }
-
-            return findings;
         }
 
         private static IPillWarning Convert(DrugCheckingSource drugCheckingSource)

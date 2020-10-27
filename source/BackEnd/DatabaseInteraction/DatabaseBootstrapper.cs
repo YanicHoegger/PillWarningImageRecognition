@@ -1,4 +1,5 @@
 ﻿using DatabaseInteraction.Interface;
+using DatabaseInteraction.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Utilities;
@@ -12,21 +13,21 @@ namespace DatabaseInteraction
         {
             services.AddSingleton<IContext, ConfiguratedContext>();
 
+            services.AddHostedSingletonService<ContainerFactory>();
             var isCached = configuration.ReadBool(_cachedConfiguration);
             if (isCached)
             {
-                services.AddHostedSingletonService<IRepositoryFactory, CachedRepositoryFactory>();
+                services.AddSingleton<IRepositoryFactory, CachedRepositoryFactory>(x => new CachedRepositoryFactory(x.GetService<ContainerFactory>().Container));
             }
             else
             {
-                services.AddHostedSingletonService<IRepositoryFactory, RepositoryFactory>();
+                services.AddSingleton<IRepositoryFactory, RepositoryFactory>(x => new RepositoryFactory(x.GetService<ContainerFactory>().Container));
             }
 
             services.AddSingleton(x => x.GetService<IRepositoryFactory>().Create<CrawlerAction>());
-            services.AddSingleton(x => x.GetService<IRepositoryFactory>().Create<DrugCheckingSource>());
+            services.AddSingleton(x => x.GetService<IRepositoryFactory>().CreateDrugCheckingSourceRepository());
 
             services.AddSingleton<IEntityFactory, EntityFactory>();
-            services.AddSingleton<IDataBaseUpdater, DataBaseUpdater>();
         }
     }
 }
