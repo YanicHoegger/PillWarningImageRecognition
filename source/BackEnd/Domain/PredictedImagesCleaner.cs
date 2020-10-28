@@ -20,7 +20,7 @@ namespace Domain
         {
             await foreach (var drugCheckingSource in _repository.Get())
             {
-                await _predictedImagesManager.DeletePredictedImages(drugCheckingSource.Image);
+                await _predictedImagesManager.DeletePredictedImage(drugCheckingSource.Image);
             }
         }
     }

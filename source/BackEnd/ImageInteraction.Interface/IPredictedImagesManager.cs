@@ -5,8 +5,8 @@ namespace ImageInteraction.Interface
 {
     public interface IPredictedImagesManager
     {
-        Task DeletePredictedImages(byte[] image);
+        Task DeletePredictedImage(byte[] image);
 
-        IEnumerable<IPredictedImage> GetPredictedImages();
+        IAsyncEnumerable<IPredictedImage> GetPredictedImages();
     }
 }

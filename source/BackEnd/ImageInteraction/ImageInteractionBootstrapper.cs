@@ -3,7 +3,9 @@ using ImageInteraction.ColorAnalyzer;
 using ImageInteraction.Detection;
 using ImageInteraction.ImageManipulation;
 using ImageInteraction.Interface;
+using ImageInteraction.PredictedImagesManager;
 using ImageInteraction.Training;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Utilities;
 
@@ -11,6 +13,8 @@ namespace ImageInteraction
 {
     public static class ImageInteractionBootstrapper
     {
+        private const string _cleanPrediction = "CleanPrediction";
+
         public static void ConfigureServicesForPillRecognition(IServiceCollection services)
         {
             ConfigureForClassification(services);
@@ -21,14 +25,31 @@ namespace ImageInteraction
             services.AddTransient<ICroppingService, CroppingService>();
         }
 
-        public static void ConfigureServicesForManipulation(IServiceCollection services)
+        public static void ConfigureServicesForManipulation(IServiceCollection services, IConfiguration configuration)
         {
             ConfigureForClassification(services);
 
-            services.AddHostedSingletonService<IPredictedImagesManager, PredictedImagesManager.PredictedImagesManager>(serviceProvider => new PredictedImagesManager.PredictedImagesManager(serviceProvider.GetService<TrainerContext>()));
+            services.AddSingleton<TrainerContext>();
+
+            var isCleaning = configuration.ReadBool(_cleanPrediction);
+            if (isCleaning)
+            {
+                services.AddHostedSingletonService<PredictedImagesProviderBase, CachedPredictedImagesProvider>(serviceProvider => new CachedPredictedImagesProvider(serviceProvider.GetService<TrainerContext>()));
+            }
+            else
+            {
+                services.AddSingleton<PredictedImagesProviderBase, PredictedImagesProvider>(serviceProvider => new PredictedImagesProvider(serviceProvider.GetService<TrainerContext>()));
+            }
+
+            services.AddSingleton<IPredictedImagesManager, PredictedImagesManager.PredictedImagesManager>(serviceProvider =>
+            {
+                // ReSharper disable once ConvertToLambdaExpression
+                return new PredictedImagesManager.PredictedImagesManager(serviceProvider.GetService<TrainerContext>(),
+                    serviceProvider.GetService<PredictedImagesProviderBase>());
+            });
+
             services.AddSingleton<ITrainedImagesManager, TrainedImagesManager>();
 
-            services.AddSingleton<TrainerContext>();
             services.AddHostedSingletonService<ITrainerCommunicator, TrainerCommunicator>(serviceProvider => new TrainerCommunicator(serviceProvider.GetService<TrainerContext>()));
             services.AddSingleton<IClassificationTrainer, ClassificationTrainer>();
         }
@@ -37,10 +58,7 @@ namespace ImageInteraction
         {
             services.AddSingleton<PillClassificationContext>();
 
-            services.AddSingleton<IPillClassificationCommunication, PillClassificationCommunication>(sp =>
-                new PillClassificationCommunication(sp.GetRequiredService<PillClassificationContext>()));
-
-            services.AddSingleton<IClassifier, PillClassification>();
+            services.AddSingleton<IClassifier, PillClassification>(services => new PillClassification(services.GetService<PillClassificationContext>()));
 
             services.AddSingleton<IVisionContext, VisionContext>();
             services.AddSingleton<IComputerVisionCommunication, ComputerVisionCommunication>();

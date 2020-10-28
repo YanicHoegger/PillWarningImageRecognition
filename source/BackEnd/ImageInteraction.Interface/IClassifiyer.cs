@@ -5,5 +5,6 @@ namespace ImageInteraction.Interface
     public interface IClassifier
     {
         Task<IImageClassificationResult> GetImageClassification(byte[] image);
+        Task<IImageClassificationResult> GetImageClassificationNoStore(byte[] image);
     }
 }

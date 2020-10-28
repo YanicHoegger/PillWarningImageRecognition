@@ -14,7 +14,7 @@ namespace ManipulationClient
         {
             DomainBootstrapper.ConfigureServiceForManipulation(services);
             DatabaseBootstrapper.ConfigureServices(services, configuration);
-            ImageInteractionBootstrapper.ConfigureServicesForManipulation(services);
+            ImageInteractionBootstrapper.ConfigureServicesForManipulation(services, configuration);
             ResourceCrawlerBootstrapper.ConfigureServices(services);
 
             //TODO: Make Dictionary out of this (or mapping or something)

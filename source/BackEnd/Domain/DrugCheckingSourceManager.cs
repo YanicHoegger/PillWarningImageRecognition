@@ -61,13 +61,9 @@ namespace Domain
             return crawlingResult;
         }
 
-        private async IAsyncEnumerable<ICrawlerResultItem> FilterNoPills(IAsyncEnumerable<ICrawlerResultItem> toFilter)
+        private IAsyncEnumerable<ICrawlerResultItem> FilterNoPills(IAsyncEnumerable<ICrawlerResultItem> toFilter)
         {
-            await foreach (var crawlerResultItem in toFilter)
-            {
-                if (await _imagePillRecognizer.IsPill(crawlerResultItem.Image))
-                    yield return crawlerResultItem;
-            }
+            return toFilter.WhereAwait(async crawlerResultItem => await _imagePillRecognizer.IsPill(crawlerResultItem.Image));
         }
 
         private async Task<IList<ICrawlerResultItem>> StoreAndReturnResources(IAsyncEnumerable<ICrawlerResultItem> items, ICrawlerResult crawlerResult)
