@@ -6,6 +6,6 @@ namespace Domain
 {
     public interface IDrugCheckingSourceFactory
     {
-        Task<DrugCheckingSource> Create(ICrawlerResultItem item);
+        Task<IDrugCheckingSource> Create(ICrawlerResultItem item);
     }
 }

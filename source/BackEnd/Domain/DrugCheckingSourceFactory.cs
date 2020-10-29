@@ -17,9 +17,9 @@ namespace Domain
             _entityFactory = entityFactory;
         }
 
-        public async Task<DrugCheckingSource> Create(ICrawlerResultItem item)
+        public async Task<IDrugCheckingSource> Create(ICrawlerResultItem item)
         {
-            var entity = _entityFactory.Create<DrugCheckingSource>();
+            var entity = _entityFactory.Create<IDrugCheckingSource>();
 
             var color = await _colorAnalyzer.GetColor(item.Image);
 
@@ -37,13 +37,23 @@ namespace Domain
 
             entity.Infos = item
                 .Infos
-                .Select(x => new DrugCheckingInfo { Title = x.Title, Info = x.Info })
+                .Select(x => CreateDrugCheckingInfo(x.Title, x.Info))
                 .ToList();
 
             entity.SaferUseRulesTitle = item.SaferUserRules.Title;
             entity.SaferUseRules = item.SaferUserRules.Rules.ToList();
 
             return entity;
+        }
+
+        private IDrugCheckingInfo CreateDrugCheckingInfo(string title, string info)
+        {
+            var drugCheckingInfo = _entityFactory.Create<IDrugCheckingInfo>();
+
+            drugCheckingInfo.Title = title;
+            drugCheckingInfo.Info = info;
+
+            return drugCheckingInfo;
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IEntityFactory
     {
-        T Create<T>() where T : Entity, new();
+        T Create<T>() where T : IEntity;
     }
 }

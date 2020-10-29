@@ -29,7 +29,12 @@ namespace Utilities
         public void Register<TInterface, TImplementation>()
             where TImplementation : TInterface
         {
-            _registrations[typeof(TInterface)] = typeof(TImplementation);
+            Register(typeof(TInterface), typeof(TImplementation));
+        }
+
+        public void Register(Type interfaceType, Type implementationType)
+        {
+            _registrations[interfaceType] = implementationType;
         }
     }
 }

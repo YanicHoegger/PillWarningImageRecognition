@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text.Json.Serialization;
+using DatabaseInteraction.Interface;
 using Utilities;
 
-namespace DatabaseInteraction.Interface
+namespace DatabaseInteraction
 {
-    //TODO: Move to implementation and create interface
-    public class DrugCheckingSource : Entity
+    public class DrugCheckingSource : Entity.Entity, IDrugCheckingSource
     {
         public string Header { get; set; }
         public string Name { get; set; }
@@ -22,10 +22,10 @@ namespace DatabaseInteraction.Interface
         public string RiskEstimationTitle { get; set; }
         public string RiskEstimation { get; set; }
 
-        public List<DrugCheckingInfo> Infos { get; set; }
+        public IEnumerable<IDrugCheckingInfo> Infos { get; set; }
 
         public string SaferUseRulesTitle { get; set; }
-        public List<string> SaferUseRules { get; set; }
+        public IEnumerable<string> SaferUseRules { get; set; }
 
         public string PdfLocation { get; set; }
 

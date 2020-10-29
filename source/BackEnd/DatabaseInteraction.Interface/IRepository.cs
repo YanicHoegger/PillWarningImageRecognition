@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseInteraction.Interface
 {
-    public interface IRepository<T> where T : Entity, new()
+    public interface IRepository<T> where T : IEntity
     {
         IAsyncEnumerable<T> Get();
 

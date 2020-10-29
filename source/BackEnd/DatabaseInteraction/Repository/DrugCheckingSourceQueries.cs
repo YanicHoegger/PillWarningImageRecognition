@@ -29,7 +29,7 @@ namespace DatabaseInteraction.Repository
         }
 
         public Func<IQueryable<DrugCheckingSource>, IQueryable<DrugCheckingSource>> GetSameItemQuery(
-            DrugCheckingSource toSearch)
+            IDrugCheckingSource toSearch)
         {
             IQueryable<DrugCheckingSource> Query(IQueryable<DrugCheckingSource> queryable)
             {

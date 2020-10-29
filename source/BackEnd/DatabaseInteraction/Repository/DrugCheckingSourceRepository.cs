@@ -2,39 +2,40 @@
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using DatabaseInteraction.Entity;
 using DatabaseInteraction.Interface;
 
 namespace DatabaseInteraction.Repository
 {
-    public class DrugCheckingSourceRepository : Repository<DrugCheckingSource>, IDrugCheckingSourceRepository
+    public class DrugCheckingSourceRepository : Repository<IDrugCheckingSource, DrugCheckingSource>, IDrugCheckingSourceRepository
     {
         private readonly DrugCheckingSourceQueries _queries = new DrugCheckingSourceQueries();
 
-        public DrugCheckingSourceRepository(ContainerFactory<DrugCheckingSource> containerFactory) 
-            : base(containerFactory)
+        public DrugCheckingSourceRepository(ContainerFactory<IDrugCheckingSource> containerFactory, EntityFactory entityFactory) 
+            : base(containerFactory, entityFactory)
         {
         }
 
-        public async Task<bool> Contains(DrugCheckingSource drugCheckingSource)
+        public async Task<bool> Contains(IDrugCheckingSource drugCheckingSource)
         {
-            return await Get(_queries.GetSameItemQuery(drugCheckingSource))
+            return await GetInternal(_queries.GetSameItemQuery(drugCheckingSource))
                 .AnyAsync();
         }
 
-        public async Task<DrugCheckingSource> SingleOrDefault(DrugCheckingSource drugCheckingSource)
+        public async Task<IDrugCheckingSource> SingleOrDefault(IDrugCheckingSource drugCheckingSource)
         {
-            return await Get(_queries.GetSameItemQuery(drugCheckingSource))
+            return await GetInternal(_queries.GetSameItemQuery(drugCheckingSource))
                 .SingleOrDefaultAsync();
         }
 
-        public IAsyncEnumerable<DrugCheckingSource> GetSameColor(Color color, int take)
+        public IAsyncEnumerable<IDrugCheckingSource> GetSameColor(Color color, int take)
         {
-            return Get(_queries.GetColorQuery(color, take));
+            return GetInternal(_queries.GetColorQuery(color, take));
         }
 
-        public IAsyncEnumerable<DrugCheckingSource> GetSameTagName(string tagName)
+        public IAsyncEnumerable<IDrugCheckingSource> GetSameTagName(string tagName)
         {
-            return Get(_queries.GetTagNameQuery(tagName));
+            return GetInternal(_queries.GetTagNameQuery(tagName));
         }
     }
 }

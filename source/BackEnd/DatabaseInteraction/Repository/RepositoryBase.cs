@@ -2,40 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DatabaseInteraction.Entity;
 using DatabaseInteraction.Interface;
 using Microsoft.Azure.Cosmos;
 
 namespace DatabaseInteraction.Repository
 {
-    public abstract class RepositoryBase<T> : IRepository<T> where T : Entity, new()
+    public abstract class RepositoryBase<TInterface, TImplementation> : IRepository<TInterface> 
+        where TInterface : IEntity
+        where TImplementation : Entity.Entity, TInterface
     {
-        protected RepositoryBase(ContainerFactory<T> containerFactory)
+        private readonly EntityFactory _entityFactory;
+
+        protected RepositoryBase(ContainerFactory<TInterface> containerFactory, EntityFactory entityFactory)
         {
+            _entityFactory = entityFactory;
             Container = containerFactory.Container;
         }
 
-        public abstract IAsyncEnumerable<T> Get();
-        public abstract IAsyncEnumerable<T> Get(Func<IQueryable<T>, IQueryable<T>> queries);
-
-        public virtual async Task Insert(T entity)
+        public IAsyncEnumerable<TInterface> Get()
         {
-            await Container.CreateItemAsync(entity);
+            return GetInternal();
         }
 
-        public virtual async Task Update(T toUpdate, Guid id)
+        public virtual async Task Insert(TInterface entity)
         {
-            toUpdate.Id = id;
+            var implementation = CreateEntity(entity);
+
+            await Container.CreateItemAsync(implementation);
+        }
+
+        public virtual async Task Update(TInterface toUpdate, Guid id)
+        {
+            var implementation = CreateEntity(toUpdate);
+            implementation.Id = id;
+
             await Container.ReplaceItemAsync(toUpdate, id.ToString());
         }
 
         protected Container Container { get; }
 
-        protected IOrderedQueryable<T> GetFeedIterator()
+        protected abstract IAsyncEnumerable<TImplementation> GetInternal();
+        protected abstract IAsyncEnumerable<TImplementation> GetInternal(Func<IQueryable<TImplementation>, IQueryable<TImplementation>> queries);
+
+        protected IOrderedQueryable<TImplementation> GetFeedIterator()
         {
-            return Container.GetItemLinqQueryable<T>(true);
+            return Container.GetItemLinqQueryable<TImplementation>(true);
         }
 
-        protected async IAsyncEnumerable<T> RetrieveList(FeedIterator<T> feedIterator)
+        protected async IAsyncEnumerable<TImplementation> RetrieveList(FeedIterator<TImplementation> feedIterator)
         {
             while (feedIterator.HasMoreResults)
             {
@@ -44,6 +59,11 @@ namespace DatabaseInteraction.Repository
                     yield return result;
                 }
             }
+        }
+
+        protected TImplementation CreateEntity(TInterface entity)
+        {
+            return _entityFactory.CreateImplementation<TInterface, TImplementation>(entity);
         }
     }
 }

@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DatabaseInteraction.Entity;
 using DatabaseInteraction.Interface;
 using Microsoft.Azure.Cosmos.Linq;
 
 namespace DatabaseInteraction.Repository
 {
-    public class Repository<T> : RepositoryBase<T> where T : Entity, new()
+    public class Repository<TInterface, TImplementation> : RepositoryBase<TInterface, TImplementation> 
+        where TInterface : IEntity
+        where TImplementation : Entity.Entity, TInterface
     {
-        public Repository(ContainerFactory<T> containerFactory) 
-            : base(containerFactory)
+        public Repository(ContainerFactory<TInterface> containerFactory, EntityFactory entityFactory) 
+            : base(containerFactory, entityFactory)
         {
         }
 
-        public override IAsyncEnumerable<T> Get()
+        protected override IAsyncEnumerable<TImplementation> GetInternal()
         {
             return RetrieveList(GetFeedIterator().ToFeedIterator());
         }
 
-        public override IAsyncEnumerable<T> Get(Func<IQueryable<T>, IQueryable<T>> queries)
+        protected override IAsyncEnumerable<TImplementation> GetInternal(Func<IQueryable<TImplementation>, IQueryable<TImplementation>> queries)
         {
             var feedIterator = queries(GetFeedIterator()).ToFeedIterator();
             return RetrieveList(feedIterator);

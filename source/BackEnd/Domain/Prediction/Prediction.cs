@@ -78,7 +78,7 @@ namespace Domain.Prediction
             }
         }
 
-        private static IPillWarning Convert(DrugCheckingSource drugCheckingSource)
+        private static IPillWarning Convert(IDrugCheckingSource drugCheckingSource)
         {
             return new PillWarning(drugCheckingSource);
         }

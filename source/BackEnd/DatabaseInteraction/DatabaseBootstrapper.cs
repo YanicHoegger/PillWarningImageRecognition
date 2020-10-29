@@ -1,4 +1,5 @@
-﻿using DatabaseInteraction.Interface;
+﻿using DatabaseInteraction.Entity;
+using DatabaseInteraction.Interface;
 using DatabaseInteraction.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,25 +17,40 @@ namespace DatabaseInteraction
             var isCached = configuration.ReadBool(_cachedConfiguration);
             if (isCached)
             {
-                services.AddRepository<CrawlerAction, IRepository<CrawlerAction>, CachedRepository<CrawlerAction>>();
-                services.AddRepository<DrugCheckingSource, IDrugCheckingSourceRepository, CachedDrugCheckingSourceRepository>();
+                services.AddRepository<ICrawlerAction, IRepository<ICrawlerAction>, CachedRepository<ICrawlerAction, CrawlerAction>>();
+                services.AddRepository<IDrugCheckingSource, IDrugCheckingSourceRepository, CachedDrugCheckingSourceRepository>();
             }
             else
             {
-                services.AddRepository<CrawlerAction, IRepository<CrawlerAction>, Repository<CrawlerAction>>();
-                services.AddRepository<DrugCheckingSource, IDrugCheckingSourceRepository, DrugCheckingSourceRepository>();
+                services.AddRepository<ICrawlerAction, IRepository<ICrawlerAction>, Repository<ICrawlerAction, CrawlerAction>>();
+                services.AddRepository<IDrugCheckingSource, IDrugCheckingSourceRepository, DrugCheckingSourceRepository>();
             }
 
-            services.AddSingleton<IEntityFactory, EntityFactory>();
+            services.AddEntity<ICrawlerAction, CrawlerAction>();
+            services.AddEntity<IDrugCheckingSource, DrugCheckingSource>();
+            services.AddEntity<IDrugCheckingInfo, DrugCheckingInfo>();
+
+            services.AddSingleton<EntityFactory>();
+            services.AddSingleton<IEntityFactory, EntityFactory>(serviceProvider => serviceProvider.GetService<EntityFactory>());
+
+            services.AddSingleton<ClientFactory>();
+            services.AddSingleton<JsonCosmosSerializer>();
         }
 
         private static void AddRepository<TEntity, TRepositoryInterface, TRepositoryImplementation>(this IServiceCollection services)
-            where TEntity : Entity, new()
+            where TEntity : IEntity
             where TRepositoryInterface : class, IRepository<TEntity>
             where TRepositoryImplementation : class, TRepositoryInterface
         {
             services.AddHostedSingletonService<ContainerFactory<TEntity>>();
             services.AddSingleton<TRepositoryInterface, TRepositoryImplementation>();
+        }
+
+        private static void AddEntity<TInterface, TImplementation>(this IServiceCollection services)
+            where TInterface : IEntity
+            where TImplementation : Entity.Entity, TInterface
+        {
+            services.AddSingleton<EntityMapping, EntityMapping.TypedEntityMapping<TInterface, TImplementation>>();
         }
     }
 }

@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace DatabaseInteraction.Interface
 {
-    public interface IDrugCheckingSourceRepository : IRepository<DrugCheckingSource>
+    public interface IDrugCheckingSourceRepository : IRepository<IDrugCheckingSource>
     {
-        Task<bool> Contains(DrugCheckingSource drugCheckingSource);
+        Task<bool> Contains(IDrugCheckingSource drugCheckingSource);
 
-        Task<DrugCheckingSource> SingleOrDefault(DrugCheckingSource drugCheckingSource);
+        Task<IDrugCheckingSource> SingleOrDefault(IDrugCheckingSource drugCheckingSource);
 
-        IAsyncEnumerable<DrugCheckingSource> GetSameColor(Color color, int take);
+        IAsyncEnumerable<IDrugCheckingSource> GetSameColor(Color color, int take);
 
-        IAsyncEnumerable<DrugCheckingSource> GetSameTagName(string tagName);
+        IAsyncEnumerable<IDrugCheckingSource> GetSameTagName(string tagName);
     }
 }

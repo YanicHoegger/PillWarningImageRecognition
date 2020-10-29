@@ -9,7 +9,7 @@ namespace Domain.Prediction
 {
     public class PillWarning : IPillWarning
     {
-        public PillWarning(DrugCheckingSource drugCheckingSource)
+        public PillWarning(IDrugCheckingSource drugCheckingSource)
         {
             Header = drugCheckingSource.Header;
             Name = drugCheckingSource.Name;

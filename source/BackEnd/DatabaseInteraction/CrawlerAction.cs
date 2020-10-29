@@ -1,8 +1,9 @@
 ﻿using System;
+using DatabaseInteraction.Interface;
 
-namespace DatabaseInteraction.Interface
+namespace DatabaseInteraction
 {
-    public class CrawlerAction : Entity
+    public class CrawlerAction : Entity.Entity, ICrawlerAction
     {
         public DateTime Executed { get; set; }
 

@@ -15,7 +15,7 @@ namespace Domain
             _logger = logger;
         }
 
-        public async Task StoreSources(DrugCheckingSource source)
+        public async Task StoreSources(IDrugCheckingSource source)
         {
             if (await _repository.Contains(source))
             {
@@ -25,7 +25,7 @@ namespace Domain
             await _repository.Insert(source);
         }
 
-        public async Task UpdateResources(DrugCheckingSource toUpdate)
+        public async Task UpdateResources(IDrugCheckingSource toUpdate)
         {
             var correspondingItem = await _repository.SingleOrDefault(toUpdate);
             if (correspondingItem == null)
