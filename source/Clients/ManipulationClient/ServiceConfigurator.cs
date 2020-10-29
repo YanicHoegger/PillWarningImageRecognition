@@ -1,4 +1,6 @@
-﻿using DatabaseInteraction;
+﻿using System;
+using System.Collections.Generic;
+using DatabaseInteraction;
 using Domain;
 using DrugCheckingCrawler;
 using ImageInteraction;
@@ -10,6 +12,13 @@ namespace ManipulationClient
 {
     public static class ServiceConfigurator
     {
+        private static readonly List<(string configValue, Action<IServiceCollection> registration)> _executer = new List<(string, Action<IServiceCollection>)>
+        {
+            ("Update", services => services.AddSingleton<IExecuter, DrugCheckingUpdater>()),
+            ("Crawl", services => services.AddSingleton<IExecuter, DrugCheckingCrawler>()),
+            ("CleanPrediction", services => services.AddSingleton<IExecuter, PredictedImagesCleaner>())
+        };
+
         public static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
             DomainBootstrapper.ConfigureServiceForManipulation(services);
@@ -17,18 +26,10 @@ namespace ManipulationClient
             ImageInteractionBootstrapper.ConfigureServicesForManipulation(services, configuration);
             ResourceCrawlerBootstrapper.ConfigureServices(services);
 
-            //TODO: Make Dictionary out of this (or mapping or something)
-            if (configuration.ReadBool("Update"))
+            foreach ((string configValue, Action<IServiceCollection> registration) in _executer)
             {
-                services.AddSingleton<IExecuter, DrugCheckingUpdater>();
-            }
-            if (configuration.ReadBool("Crawl"))
-            {
-                services.AddSingleton<IExecuter, DrugCheckingCrawler>();
-            }
-            if (configuration.ReadBool("CleanPrediction"))
-            {
-                services.AddSingleton<IExecuter, PredictedImagesCleaner>();
+                if (configuration.ReadBool(configValue))
+                    registration(services);
             }
         }
     }
