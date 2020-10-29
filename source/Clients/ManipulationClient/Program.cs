@@ -20,7 +20,7 @@ namespace ManipulationClient
                 var config = Startup.ServiceProvider.GetService<IConfiguration>();
                 var executer = Startup.ServiceProvider.GetServices<IExecuter>();
 
-                Task.WhenAll(executer.Select(x => x.Execute(config, Startup.ServiceProvider))).Wait();
+                Task.WaitAll(executer.Select(x => x.Execute(config, Startup.ServiceProvider)).ToArray());
             }
             catch (AggregateException aggregateException)
             {

@@ -3,6 +3,7 @@ using DatabaseInteraction.Interface;
 using DatabaseInteraction.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Utilities;
 
 namespace DatabaseInteraction
@@ -17,8 +18,8 @@ namespace DatabaseInteraction
             var isCached = configuration.ReadBool(_cachedConfiguration);
             if (isCached)
             {
-                services.AddRepository<ICrawlerAction, IRepository<ICrawlerAction>, CachedRepository<ICrawlerAction, CrawlerAction>>();
-                services.AddRepository<IDrugCheckingSource, IDrugCheckingSourceRepository, CachedDrugCheckingSourceRepository>();
+                services.AddHostedRepository<ICrawlerAction, IRepository<ICrawlerAction>, CachedRepository<ICrawlerAction, CrawlerAction>>();
+                services.AddHostedRepository<IDrugCheckingSource, IDrugCheckingSourceRepository, CachedDrugCheckingSourceRepository>();
             }
             else
             {
@@ -44,6 +45,15 @@ namespace DatabaseInteraction
         {
             services.AddHostedSingletonService<ContainerFactory<TEntity>>();
             services.AddSingleton<TRepositoryInterface, TRepositoryImplementation>();
+        }
+
+        private static void AddHostedRepository<TEntity, TRepositoryInterface, TRepositoryImplementation>(this IServiceCollection services)
+            where TEntity : IEntity
+            where TRepositoryInterface : class, IRepository<TEntity>
+            where TRepositoryImplementation : class, TRepositoryInterface, IHostedService
+        {
+            services.AddHostedSingletonService<ContainerFactory<TEntity>>();
+            services.AddHostedSingletonService<TRepositoryInterface, TRepositoryImplementation>();
         }
 
         private static void AddEntity<TInterface, TImplementation>(this IServiceCollection services)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DatabaseInteraction.Entity;
 using DatabaseInteraction.Interface;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Linq;
 
 namespace DatabaseInteraction.Repository
 {
@@ -13,11 +14,12 @@ namespace DatabaseInteraction.Repository
         where TImplementation : Entity.Entity, TInterface
     {
         private readonly EntityFactory _entityFactory;
+        private readonly Func<Container> _containerFunc;
 
         protected RepositoryBase(ContainerFactory<TInterface> containerFactory, EntityFactory entityFactory)
         {
             _entityFactory = entityFactory;
-            Container = containerFactory.Container;
+            _containerFunc = () => containerFactory.Container;
         }
 
         public IAsyncEnumerable<TInterface> Get()
@@ -40,18 +42,20 @@ namespace DatabaseInteraction.Repository
             await Container.ReplaceItemAsync(toUpdate, id.ToString());
         }
 
-        protected Container Container { get; }
+        protected Container Container => _containerFunc();
 
         protected abstract IAsyncEnumerable<TImplementation> GetInternal();
+        // ReSharper disable once UnusedMemberInSuper.Global
         protected abstract IAsyncEnumerable<TImplementation> GetInternal(Func<IQueryable<TImplementation>, IQueryable<TImplementation>> queries);
 
-        protected IOrderedQueryable<TImplementation> GetFeedIterator()
+        protected IAsyncEnumerable<TImplementation> RetrieveList()
         {
-            return Container.GetItemLinqQueryable<TImplementation>(true);
+            return RetrieveList(entities => entities);
         }
 
-        protected async IAsyncEnumerable<TImplementation> RetrieveList(FeedIterator<TImplementation> feedIterator)
+        protected async IAsyncEnumerable<TImplementation> RetrieveList(Func<IQueryable<TImplementation>, IQueryable<TImplementation>> queries)
         {
+            var feedIterator = queries(Container.GetItemLinqQueryable<TImplementation>(true)).ToFeedIterator();
             while (feedIterator.HasMoreResults)
             {
                 foreach (var result in await feedIterator.ReadNextAsync())
