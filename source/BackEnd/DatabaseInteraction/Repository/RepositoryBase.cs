@@ -39,7 +39,7 @@ namespace DatabaseInteraction.Repository
             var implementation = CreateEntity(toUpdate);
             implementation.Id = id;
 
-            await Container.ReplaceItemAsync(toUpdate, id.ToString());
+            await Container.ReplaceItemAsync(implementation, id.ToString());
         }
 
         protected Container Container => _containerFunc();

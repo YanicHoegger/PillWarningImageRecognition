@@ -2,9 +2,9 @@
 using DatabaseInteraction.Interface;
 using DrugCheckingCrawler.Interface;
 
-namespace Domain
+namespace Domain.DrugCheckingSource
 {
-    public interface IDrugCheckingSourceFactory
+    public interface IFactory
     {
         Task<IDrugCheckingSource> Create(ICrawlerResultItem item);
     }

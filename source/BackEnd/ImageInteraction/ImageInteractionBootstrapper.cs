@@ -14,6 +14,7 @@ namespace ImageInteraction
     public static class ImageInteractionBootstrapper
     {
         private const string _cleanPrediction = "CleanPrediction";
+        private const string _crawl = "Crawl";
 
         public static void ConfigureServicesForPillRecognition(IServiceCollection services)
         {
@@ -48,17 +49,19 @@ namespace ImageInteraction
                     serviceProvider.GetService<PredictedImagesProviderBase>());
             });
 
-            services.AddSingleton<ITrainedImagesManager, TrainedImagesManager>();
-
-            services.AddHostedSingletonService<ITrainerCommunicator, TrainerCommunicator>(serviceProvider => new TrainerCommunicator(serviceProvider.GetService<TrainerContext>()));
-            services.AddSingleton<IClassificationTrainer, ClassificationTrainer>();
+            // ReSharper disable once InvertIf
+            if (configuration.ReadBool(_crawl))
+            {
+                services.AddHostedSingletonService<ITrainerCommunicator, TrainerCommunicator>(serviceProvider => new TrainerCommunicator(serviceProvider.GetService<TrainerContext>()));
+                services.AddSingleton<IClassificationTrainer, ClassificationTrainer>();
+            }
         }
 
         private static void ConfigureForClassification(IServiceCollection services)
         {
             services.AddSingleton<PillClassificationContext>();
 
-            services.AddSingleton<IClassifier, PillClassification>(services => new PillClassification(services.GetService<PillClassificationContext>()));
+            services.AddSingleton<IClassifier, PillClassification>(serviceProvider => new PillClassification(serviceProvider.GetService<PillClassificationContext>()));
 
             services.AddSingleton<IVisionContext, VisionContext>();
             services.AddSingleton<IComputerVisionCommunication, ComputerVisionCommunication>();

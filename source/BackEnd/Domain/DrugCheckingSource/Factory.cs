@@ -4,14 +4,14 @@ using DatabaseInteraction.Interface;
 using DrugCheckingCrawler.Interface;
 using ImageInteraction.Interface;
 
-namespace Domain
+namespace Domain.DrugCheckingSource
 {
-    public class DrugCheckingSourceFactory : IDrugCheckingSourceFactory
+    public class Factory : IFactory
     {
         private readonly IColorAnalyzer _colorAnalyzer;
         private readonly IEntityFactory _entityFactory;
 
-        public DrugCheckingSourceFactory(IColorAnalyzer colorAnalyzer, IEntityFactory entityFactory)
+        public Factory(IColorAnalyzer colorAnalyzer, IEntityFactory entityFactory)
         {
             _colorAnalyzer = colorAnalyzer;
             _entityFactory = entityFactory;

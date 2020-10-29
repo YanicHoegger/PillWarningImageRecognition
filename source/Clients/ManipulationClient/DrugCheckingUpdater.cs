@@ -1,8 +1,8 @@
-﻿using Domain;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using Domain.DrugCheckingSource;
 
 namespace ManipulationClient
 {
@@ -10,8 +10,8 @@ namespace ManipulationClient
     {
         public async Task Execute(IConfiguration configuration, IServiceProvider serviceProvider)
         {
-            var manager = serviceProvider.GetService<DrugCheckingSourceManager>();
-            await manager.UpdateResources();
+            var updater = serviceProvider.GetService<Updater>();
+            await updater.UpdateResources();
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
+using Domain.DrugCheckingSource;
 
 namespace ManipulationClient
 {
@@ -10,7 +11,7 @@ namespace ManipulationClient
     {
         public async Task Execute(IConfiguration configuration, IServiceProvider serviceProvider)
         {
-            var crawler = serviceProvider.GetService<DrugCheckingSourceManager>();
+            var crawler = serviceProvider.GetService<ResourceCrawler>();
             await crawler.SetUpResources();
         }
     }

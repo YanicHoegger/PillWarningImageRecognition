@@ -1,4 +1,5 @@
-﻿using Domain.Interface;
+﻿using Domain.DrugCheckingSource;
+using Domain.Interface;
 using Domain.Prediction;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,12 +19,13 @@ namespace Domain
         {
             services.AddSingleton<IImagePillRecognizer, ImagePillRecognizer>();
 
-            services.AddSingleton<IDrugCheckingSourceFactory, DrugCheckingSourceFactory>();
+            services.AddSingleton<IFactory, Factory>();
             services.AddSingleton<IPillColorAnalyzer, PillColorAnalyzer>();
 
-            services.AddSingleton<DrugCheckingSourceManager>();
+            services.AddSingleton<ResourceCrawler>();
             services.AddSingleton<CrawlerInformationHandler>();
-            services.AddSingleton<DrugCheckingSourceHandler>();
+            services.AddSingleton<StorageHandler>();
+            services.AddSingleton<Updater>();
 
             services.AddSingleton<IPredictedImagesCleaner, PredictedImagesCleaner>();
 

@@ -5,8 +5,8 @@
       "environmentVariables": {
         "Update": "False",
         "Crawl": "False",
-        "CACHED_DATABASE": "False",
-        "CleanPrediction":  "False" 
+        "CleanPrediction": "False",
+        "CACHED_DATABASE": "False"
       }
     }
   }

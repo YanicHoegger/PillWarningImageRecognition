@@ -1,15 +1,15 @@
-﻿using DatabaseInteraction.Interface;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DatabaseInteraction.Interface;
 using Microsoft.Extensions.Logging;
 
-namespace Domain
+namespace Domain.DrugCheckingSource
 {
-    public class DrugCheckingSourceHandler
+    public class StorageHandler
     {
         private readonly IDrugCheckingSourceRepository _repository;
-        private readonly ILogger<DrugCheckingSourceHandler> _logger;
+        private readonly ILogger<StorageHandler> _logger;
 
-        public DrugCheckingSourceHandler(IDrugCheckingSourceRepository repository, ILogger<DrugCheckingSourceHandler> logger)
+        public StorageHandler(IDrugCheckingSourceRepository repository, ILogger<StorageHandler> logger)
         {
             _repository = repository;
             _logger = logger;

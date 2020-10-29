@@ -1,30 +1,30 @@
 ﻿using System.Collections.Generic;
-using DrugCheckingCrawler.Interface;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Prediction;
+using DrugCheckingCrawler.Interface;
 using ImageInteraction.Interface;
 
-namespace Domain
+namespace Domain.DrugCheckingSource
 {
-    public class DrugCheckingSourceManager
+    public class ResourceCrawler
     {
         private readonly CrawlerInformationHandler _crawlerInformationHandler;
-        private readonly DrugCheckingSourceHandler _drugCheckingSourceHandler;
+        private readonly StorageHandler _storageHandler;
         private readonly IClassificationTrainer _trainer;
         private readonly IResourceCrawler _resourceCrawler;
         private readonly IImagePillRecognizer _imagePillRecognizer;
-        private readonly IDrugCheckingSourceFactory _drugCheckingSourceFactory;
+        private readonly IFactory _drugCheckingSourceFactory;
 
-        public DrugCheckingSourceManager(CrawlerInformationHandler crawlerInformationHandler,
-            DrugCheckingSourceHandler drugCheckingSourceHandler,
+        public ResourceCrawler(CrawlerInformationHandler crawlerInformationHandler,
+            StorageHandler storageHandler,
             IClassificationTrainer trainer,
             IResourceCrawler resourceCrawler,
             IImagePillRecognizer imagePillRecognizer,
-            IDrugCheckingSourceFactory drugCheckingSourceFactory)
+            IFactory drugCheckingSourceFactory)
         {
             _crawlerInformationHandler = crawlerInformationHandler;
-            _drugCheckingSourceHandler = drugCheckingSourceHandler;
+            _storageHandler = storageHandler;
             _trainer = trainer;
             _resourceCrawler = resourceCrawler;
             _imagePillRecognizer = imagePillRecognizer;
@@ -40,17 +40,6 @@ namespace Domain
             var storeResources = await StoreAndReturnResources(filtered, crawlingResult);
 
             await TrainCustomVision(storeResources);
-        }
-
-        public async Task UpdateResources()
-        {
-            var crawlingResult = _resourceCrawler.Crawl(1);
-
-            await foreach (var item in crawlingResult.Items)
-            {
-                var entity = await _drugCheckingSourceFactory.Create(item);
-                await _drugCheckingSourceHandler.UpdateResources(entity);
-            }
         }
 
         private async Task<ICrawlerResult> CrawlResources()
@@ -84,7 +73,7 @@ namespace Domain
         private async Task StoreItem(ICrawlerResultItem item)
         {
             var entity = await _drugCheckingSourceFactory.Create(item);
-            await _drugCheckingSourceHandler.StoreSources(entity);
+            await _storageHandler.StoreSources(entity);
         }
 
         private async Task StoreCrawlingResult(int index, int count)

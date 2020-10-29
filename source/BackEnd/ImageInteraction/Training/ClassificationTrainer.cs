@@ -25,15 +25,15 @@ namespace ImageInteraction.Training
 
         public async Task Train(IEnumerable<ITrainingImage> trainingImages)
         {
-            var filtered = (await FilterInput(trainingImages)).ToList();
+            var trainingImagesList = trainingImages.ToList();
 
-            var tags = filtered
+            var tags = trainingImagesList
                 .SelectMany(x => x.Tags)
                 .GroupBy(x => x)
                 .ToDictionary(x => x.Key, x => x.Count());
 
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
-            foreach (var trainingImage in filtered)
+            foreach (var trainingImage in trainingImagesList)
             {
                 if (trainingImage.Tags.All(x =>
                 {
@@ -62,29 +62,6 @@ namespace ImageInteraction.Training
                 return tag;
 
             return await _trainerCommunicator.CreateTag(tagName);
-        }
-
-        //TODO: Check if this is not already managed by custom vision
-        /// <summary>
-        /// To filter images that already are present in training
-        /// </summary>
-        private async Task<IEnumerable<ITrainingImage>> FilterInput(IEnumerable<ITrainingImage> trainingImages)
-        {
-            //Make hash set for quicker comparision
-            var hashTable = new HashSet<byte[]>(new ByteArrayComparer());
-            await foreach (var task in _trainerCommunicator.DownloadImages())
-            {
-                hashTable.Add(task);
-            }
-
-            return trainingImages.Where(x =>
-            {
-                if (hashTable.Contains(x.Image))
-                    return false;
-
-                hashTable.Add(x.Image);
-                return true;
-            });
         }
     }
 }

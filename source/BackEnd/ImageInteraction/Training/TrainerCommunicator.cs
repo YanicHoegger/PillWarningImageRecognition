@@ -19,7 +19,6 @@ namespace ImageInteraction.Training
         private readonly CustomVisionTrainingClient _customVisionTrainingClient;
 
         private IList<Tag> _tags;
-        private IList<Image> _images;
 
         public TrainerCommunicator(IContext context)
         {
@@ -34,9 +33,6 @@ namespace ImageInteraction.Training
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             _tags = await _customVisionTrainingClient.GetTagsAsync(_context.ProjectId, cancellationToken: cancellationToken);
-            _images = (await GetTaggedImages(cancellationToken).ToListAsync(cancellationToken))
-                .Concat(await GetUntaggedImages(cancellationToken).ToListAsync(cancellationToken))
-                .ToList();
 
             IsInitialized = true;
         }
@@ -82,7 +78,7 @@ namespace ImageInteraction.Training
         {
             ThrowIfNotInitialized();
 
-            foreach (var image in _images)
+            await foreach (var image in GetTaggedImages().Concat(GetUntaggedImages()))
             {
                 yield return await new WebClient().DownloadDataTaskAsync(image.OriginalImageUri);
             }
@@ -94,18 +90,16 @@ namespace ImageInteraction.Training
                 throw new InvalidOperationException("Must be initialized first");
         }
 
-        private IAsyncEnumerable<Image> GetTaggedImages(CancellationToken cancellationToken)
+        private IAsyncEnumerable<Image> GetTaggedImages()
         {
             return GetImages(skip => _customVisionTrainingClient.GetTaggedImagesAsync(_context.ProjectId, 
-                cancellationToken: cancellationToken, 
                 take: _maxImagesPreRequest, 
                 skip: skip));
         }
 
-        private IAsyncEnumerable<Image> GetUntaggedImages(CancellationToken cancellationToken)
+        private IAsyncEnumerable<Image> GetUntaggedImages()
         {
             return GetImages(skip => _customVisionTrainingClient.GetUntaggedImagesAsync(_context.ProjectId,
-                cancellationToken: cancellationToken,
                 take: _maxImagesPreRequest,
                 skip: skip));
         }
