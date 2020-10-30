@@ -1,27 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Microsoft.Extensions.Logging;
+using Utilities.Aspects;
 
 namespace Utilities
 {
     public static class ServiceCollectionExtensions
     {
-        //TODO: Add decorators for logging and throw if not started
+        //TODO: Add decorators for logging
         public static void AddHostedSingletonService<TInterface, TImplementation>(this IServiceCollection serviceCollection)
             where TInterface : class
             where TImplementation : class, TInterface, IHostedService
         {
             serviceCollection.AddSingleton<TImplementation>();
-
             serviceCollection.RegisterAsInterfaceAndHostedService<TInterface, TImplementation>();
-        }
-
-        public static void AddHostedSingletonService<TImplementation>(this IServiceCollection serviceCollection)
-            where TImplementation : class, IHostedService
-        {
-            serviceCollection.AddSingleton<TImplementation>();
-
-            serviceCollection.AddHostedService(GetImplementationFactory<TImplementation>());
         }
 
         public static void AddHostedSingletonService<TInterface, TImplementation>(this IServiceCollection serviceCollection, Func<IServiceProvider, TImplementation> implementationFactory)
@@ -29,20 +22,37 @@ namespace Utilities
             where TImplementation : class, TInterface, IHostedService
         {
             serviceCollection.AddSingleton(implementationFactory);
-
             serviceCollection.RegisterAsInterfaceAndHostedService<TInterface, TImplementation>();
         }
 
         private static void RegisterAsInterfaceAndHostedService<TInterface, TImplementation>(this IServiceCollection serviceCollection)
-            where TInterface : class where TImplementation : class, TInterface, IHostedService
+            where TInterface : class 
+            where TImplementation : class, TInterface, IHostedService
         {
-            serviceCollection.AddSingleton<TInterface, TImplementation>(GetImplementationFactory<TImplementation>());
-            serviceCollection.AddHostedService(GetImplementationFactory<TImplementation>());
-        }
+            TInterface proxy = null;
+            HostedServiceState<TImplementation> hostedService = null;
 
-        private static Func<IServiceProvider, T> GetImplementationFactory<T>()
-        {
-            return x => x.GetRequiredService<T>();
+            void CheckCreated(IServiceProvider serviceProvider)
+            {
+                if (proxy == null || hostedService == null)
+                {
+                    (proxy, hostedService) =
+                        HostedServiceDecorator<TInterface>.Create(
+                            serviceProvider.GetRequiredService<TImplementation>(),
+                            serviceProvider.GetRequiredService<ILogger<TImplementation>>());
+                }
+            }
+
+            serviceCollection.AddSingleton(serviceProvider =>
+            {
+                CheckCreated(serviceProvider);
+                return proxy;
+            });
+            serviceCollection.AddHostedService(serviceProvider =>
+            {
+                CheckCreated(serviceProvider);
+                return hostedService;
+            });
         }
     }
 }

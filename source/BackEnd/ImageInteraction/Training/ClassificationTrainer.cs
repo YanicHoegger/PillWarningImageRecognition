@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ImageInteraction.Interface;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
-using Utilities;
 
 namespace ImageInteraction.Training
 {
@@ -17,9 +15,6 @@ namespace ImageInteraction.Training
 
         public ClassificationTrainer(ITrainerCommunicator trainerCommunicator)
         {
-            if (!trainerCommunicator.IsInitialized)
-                throw new ArgumentException($"{nameof(trainerCommunicator)} has to be initialized");
-
             _trainerCommunicator = trainerCommunicator;
         }
 

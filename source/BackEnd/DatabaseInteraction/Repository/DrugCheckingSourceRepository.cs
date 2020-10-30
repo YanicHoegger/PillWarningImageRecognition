@@ -11,7 +11,7 @@ namespace DatabaseInteraction.Repository
     {
         private readonly DrugCheckingSourceQueries _queries = new DrugCheckingSourceQueries();
 
-        public DrugCheckingSourceRepository(ContainerFactory<IDrugCheckingSource> containerFactory, EntityFactory entityFactory) 
+        public DrugCheckingSourceRepository(IContainerFactory<IDrugCheckingSource> containerFactory, EntityFactory entityFactory) 
             : base(containerFactory, entityFactory)
         {
         }

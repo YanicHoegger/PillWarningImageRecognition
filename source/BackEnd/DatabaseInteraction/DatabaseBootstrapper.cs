@@ -43,7 +43,7 @@ namespace DatabaseInteraction
             where TRepositoryInterface : class, IRepository<TEntity>
             where TRepositoryImplementation : class, TRepositoryInterface
         {
-            services.AddHostedSingletonService<ContainerFactory<TEntity>>();
+            services.AddHostedSingletonService<IContainerFactory<TEntity>, ContainerFactory<TEntity>>();
             services.AddSingleton<TRepositoryInterface, TRepositoryImplementation>();
         }
 
@@ -52,7 +52,7 @@ namespace DatabaseInteraction
             where TRepositoryInterface : class, IRepository<TEntity>
             where TRepositoryImplementation : class, TRepositoryInterface, IHostedService
         {
-            services.AddHostedSingletonService<ContainerFactory<TEntity>>();
+            services.AddHostedSingletonService<IContainerFactory<TEntity>, ContainerFactory<TEntity>>();
             services.AddHostedSingletonService<TRepositoryInterface, TRepositoryImplementation>();
         }
 

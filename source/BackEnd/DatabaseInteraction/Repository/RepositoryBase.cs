@@ -16,7 +16,7 @@ namespace DatabaseInteraction.Repository
         private readonly EntityFactory _entityFactory;
         private readonly Func<Container> _containerFunc;
 
-        protected RepositoryBase(ContainerFactory<TInterface> containerFactory, EntityFactory entityFactory)
+        protected RepositoryBase(IContainerFactory<TInterface> containerFactory, EntityFactory entityFactory)
         {
             _entityFactory = entityFactory;
             _containerFunc = () => containerFactory.Container;

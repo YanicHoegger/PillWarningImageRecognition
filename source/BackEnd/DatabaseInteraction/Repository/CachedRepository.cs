@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DatabaseInteraction.Entity;
 using DatabaseInteraction.Interface;
-using Microsoft.Azure.Cosmos.Linq;
 using Microsoft.Extensions.Hosting;
 
 namespace DatabaseInteraction.Repository
@@ -21,7 +20,7 @@ namespace DatabaseInteraction.Repository
     {
         private List<TImplementation> _cache;
 
-        public CachedRepository(ContainerFactory<TInterface> containerFactory, EntityFactory entityFactory) 
+        public CachedRepository(IContainerFactory<TInterface> containerFactory, EntityFactory entityFactory) 
             : base(containerFactory, entityFactory)
         {
         }

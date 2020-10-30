@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -14,7 +13,7 @@ using ImageInteraction.PredictedImagesManager.Dtos;
 
 namespace ImageInteraction.PredictedImagesManager
 {
-    public abstract class PredictedImagesProviderBase
+    public abstract class PredictedImagesProviderBase : IPredictedImagesProvider
     {
         private const int _maxCount = 128;
 

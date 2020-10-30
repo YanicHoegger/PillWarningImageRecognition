@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,10 +10,10 @@ namespace ImageInteraction.PredictedImagesManager
     public class PredictedImagesManager : IPredictedImagesManager
     {
         private readonly IContext _context;
-        private readonly PredictedImagesProviderBase _predictedImagesProviderBase;
+        private readonly IPredictedImagesProvider _predictedImagesProviderBase;
         private readonly HttpClient _client;
 
-        public PredictedImagesManager(IContext context, PredictedImagesProviderBase predictedImagesProviderBase)
+        public PredictedImagesManager(IContext context, IPredictedImagesProvider predictedImagesProviderBase)
         {
             _context = context;
             _predictedImagesProviderBase = predictedImagesProviderBase;

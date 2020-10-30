@@ -33,8 +33,6 @@ namespace ImageInteraction.Training
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             _tags = await _customVisionTrainingClient.GetTagsAsync(_context.ProjectId, cancellationToken: cancellationToken);
-
-            IsInitialized = true;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -42,12 +40,8 @@ namespace ImageInteraction.Training
             return Task.CompletedTask;
         }
 
-        public bool IsInitialized { get; private set; }
-
         public async Task<Tag> CreateTag(string name)
         {
-            ThrowIfNotInitialized();
-
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException($"{nameof(name)} can not be empty");
 
@@ -62,32 +56,20 @@ namespace ImageInteraction.Training
 
         public Tag GetTag(string tagName)
         {
-            ThrowIfNotInitialized();
-
             return _tags.SingleOrDefault(x => x.Name.Equals(tagName));
         }
 
         public async Task AddImage(Stream imageStream, IEnumerable<Tag> tags)
         {
-            ThrowIfNotInitialized();
-
             await _customVisionTrainingClient.CreateImagesFromDataAsync(_context.ProjectId, imageStream, tags.Select(x => x.Id).ToList());
         }
 
-        public async IAsyncEnumerable<byte[]> DownloadImages()
+        public IAsyncEnumerable<byte[]> DownloadImages()
         {
-            ThrowIfNotInitialized();
-
-            await foreach (var image in GetTaggedImages().Concat(GetUntaggedImages()))
-            {
-                yield return await new WebClient().DownloadDataTaskAsync(image.OriginalImageUri);
-            }
-        }
-
-        private void ThrowIfNotInitialized()
-        {
-            if (!IsInitialized)
-                throw new InvalidOperationException("Must be initialized first");
+            return GetTaggedImages()
+                .Concat(GetUntaggedImages())
+                .SelectAwait(async image => await new WebClient()
+                    .DownloadDataTaskAsync(image.OriginalImageUri));
         }
 
         private IAsyncEnumerable<Image> GetTaggedImages()

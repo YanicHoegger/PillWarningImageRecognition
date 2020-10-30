@@ -10,7 +10,7 @@ namespace DatabaseInteraction.Repository
         where TInterface : IEntity
         where TImplementation : Entity.Entity, TInterface
     {
-        public Repository(ContainerFactory<TInterface> containerFactory, EntityFactory entityFactory) 
+        public Repository(IContainerFactory<TInterface> containerFactory, EntityFactory entityFactory) 
             : base(containerFactory, entityFactory)
         {
         }

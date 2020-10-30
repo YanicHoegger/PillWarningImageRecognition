@@ -7,8 +7,6 @@ namespace ImageInteraction.Training
 {
     public interface ITrainerCommunicator
     {
-        bool IsInitialized { get; }
-
         Task AddImage(Stream imageStream, IEnumerable<Tag> tags);
         Task<Tag> CreateTag(string name);
         IAsyncEnumerable<byte[]> DownloadImages();

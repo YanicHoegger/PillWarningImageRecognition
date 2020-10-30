@@ -35,11 +35,11 @@ namespace ImageInteraction
             var isCleaning = configuration.ReadBool(_cleanPrediction);
             if (isCleaning)
             {
-                services.AddHostedSingletonService<PredictedImagesProviderBase, CachedPredictedImagesProvider>(serviceProvider => new CachedPredictedImagesProvider(serviceProvider.GetService<TrainerContext>()));
+                services.AddHostedSingletonService<IPredictedImagesProvider, CachedPredictedImagesProvider>(serviceProvider => new CachedPredictedImagesProvider(serviceProvider.GetService<TrainerContext>()));
             }
             else
             {
-                services.AddSingleton<PredictedImagesProviderBase, PredictedImagesProvider>(serviceProvider => new PredictedImagesProvider(serviceProvider.GetService<TrainerContext>()));
+                services.AddSingleton<IPredictedImagesProvider, PredictedImagesProvider>(serviceProvider => new PredictedImagesProvider(serviceProvider.GetService<TrainerContext>()));
             }
 
             services.AddSingleton<IPredictedImagesManager, PredictedImagesManager.PredictedImagesManager>(serviceProvider =>
